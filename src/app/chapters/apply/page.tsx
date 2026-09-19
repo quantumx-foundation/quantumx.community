@@ -2,11 +2,11 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ApplyForm } from "@/components/apply-form";
 import { PageHero, Tag, container } from "@/components/ui";
-import { EVENTS_EMAIL, FNB_URL, formingChapters, listNames, SWAG_URL } from "@/lib/site";
+import { EVENTS_EMAIL, FNB_URL, formingChapters, formingCities, listCities, listNames, SWAG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Start a chapter",
-  description: `Apply to lead a QuantumX Community chapter in your city. Chapters are forming in ${listNames(formingChapters)}, and anywhere else you want to start one.`,
+  description: `Apply to lead a QuantumX Community chapter in your city. Chapters are forming in ${listNames(formingChapters)}, city leads are wanted in ${listCities(formingCities)}, and anywhere else you want to start one.`,
   alternates: { canonical: "/chapters/apply" },
 };
 
@@ -68,8 +68,9 @@ export default function ApplyPage() {
   return (
     <>
       <PageHero eyebrow="Start a chapter" title="Apply to lead a chapter in your city">
-        Chapters are forming in {listNames(formingChapters)}. If your city isn&apos;t on that list, apply anyway:
-        the list is where we have momentum, not a limit.
+        Chapters are forming in {listNames(formingChapters)}, and we&apos;re looking for city leads across India in{" "}
+        {listCities(formingCities)}. If your city isn&apos;t on either list, apply anyway: they are where we have
+        momentum, not a limit.
       </PageHero>
 
       <section aria-label="What leading a chapter involves" className={`${container} grid gap-12 pb-20 md:grid-cols-3`}>

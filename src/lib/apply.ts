@@ -1,4 +1,4 @@
-import { chapters } from "./site";
+import { chapters, formingCities, listCities } from "./site";
 
 export const FORM_NAME = "chapter-application";
 /** Static file that exists purely so Netlify can detect the form at build time. */
@@ -17,7 +17,14 @@ export type Field = {
 export const fields: Field[] = [
   { name: "name", label: "Your name", type: "text", required: true },
   { name: "email", label: "Email", type: "email", required: true },
-  { name: "city", label: "City", type: "text", required: true, placeholder: "London" },
+  {
+    name: "city",
+    label: "City",
+    type: "text",
+    required: true,
+    placeholder: "London",
+    hint: `We're actively looking for leads in ${listCities(formingCities)}, and anywhere else you name.`,
+  },
   {
     name: "country",
     label: "Country",

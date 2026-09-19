@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowField } from "./animations";
 import { PixelFlag } from "./pixel-flag";
 import { Button, Tag } from "./ui";
-import { chapters, formingChapters, listNames, type Chapter } from "@/lib/site";
+import { chapters, formingChapters, formingCities, listNames, type Chapter } from "@/lib/site";
 
 function ChapterCard({ chapter, featured }: { chapter: Chapter; featured?: boolean }) {
   const live = chapter.status === "live";
@@ -75,6 +75,46 @@ export function ChapterTable() {
   );
 }
 
+const cityCard = "relative flex flex-col border border-line p-5 pt-12 sm:p-6 sm:pt-14";
+const cityLink = "mt-5 inline-block font-pixel text-xs uppercase tracking-[0.2em] text-pink hover:text-fg";
+
+/**
+ * Cities inside a live chapter that still need a lead of their own, plus an
+ * open card for the ones we haven't named.
+ */
+export function CityBoard() {
+  return (
+    <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+      {formingCities.map((city) => (
+        <article key={city.name} className={`${cityCard} bg-panel`}>
+          <div className="absolute left-0 top-0">
+            <Tag tone="outline">Lead wanted</Tag>
+          </div>
+          <h3 className="text-2xl tracking-tight">{city.name}</h3>
+          <p className="mt-2 text-sm text-muted">
+            No lead yet. Take the first meetup and the city is yours to run.
+          </p>
+          <Link href="/chapters/apply" className={cityLink}>
+            Lead {city.name} →
+          </Link>
+        </article>
+      ))}
+      <article className={`${cityCard} scanlines`}>
+        <div className="absolute left-0 top-0">
+          <Tag tone="outline">Open</Tag>
+        </div>
+        <h3 className="text-2xl tracking-tight text-muted">Any other city</h3>
+        <p className="mt-2 text-sm text-muted">
+          The named cities are where we have momentum, not a limit. Tell us yours and we&apos;ll start there.
+        </p>
+        <Link href="/chapters/apply" className={cityLink}>
+          Name your city →
+        </Link>
+      </article>
+    </div>
+  );
+}
+
 /** Arrow-field banner inviting people to lead a forming chapter. */
 export function StartChapterBanner({ href = "/chapters/apply" }: { href?: string }) {
   return (
@@ -86,8 +126,8 @@ export function StartChapterBanner({ href = "/chapters/apply" }: { href?: string
             New chapters are forming now
           </h2>
           <p className="max-w-md text-muted">
-            We&apos;re looking for founding members and chapter leads in {listNames(formingChapters)}. Or bring
-            QuantumX to your own city.
+            We&apos;re looking for chapter leads in {listNames(formingChapters)}, and city leads across India. Or
+            bring QuantumX to your own city.
           </p>
           <Button href={href}>Start a chapter</Button>
         </div>

@@ -1,9 +1,19 @@
 import type { Metadata } from "next";
-import { ChapterGrid, ChapterTable } from "@/components/chapters";
+import { ChapterGrid, ChapterTable, CityBoard } from "@/components/chapters";
 import { NewsCard } from "@/components/news-card";
 import { Button, PageHero, Tag, container } from "@/components/ui";
 import { news } from "@/content/news";
-import { DISCORD_URL, FNB_URL, formingChapters, liveChapters, listNames, SWAG_URL } from "@/lib/site";
+import {
+  DISCORD_URL,
+  FNB_URL,
+  formingChapters,
+  formingCities,
+  listCities,
+  liveChapters,
+  liveCities,
+  listNames,
+  SWAG_URL,
+} from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Chapters",
@@ -73,6 +83,10 @@ const faq = [
     q: "My country isn't listed. Can I still start one?",
     a: "Yes. The forming list is where we already have momentum, not a limit. Reach out from anywhere.",
   },
+  {
+    q: "India is already live. What does a city lead do there?",
+    a: `The India chapter exists, but each city runs on its own. If you lead ${listCities(formingCities)} or anywhere else in India, you run the local meetups, study circles and workshops, with the chapter behind you from day one.`,
+  },
 ];
 
 export default function ChaptersPage() {
@@ -82,7 +96,7 @@ export default function ChaptersPage() {
     <>
       <PageHero eyebrow={`${liveChapters.length} live · ${formingChapters.length} forming`} title="One community, many cities">
         QuantumX started in India and is live in {listNames(liveChapters)}. Chapters are forming in{" "}
-        {listNames(formingChapters)}.
+        {listNames(formingChapters)}, and Indian cities are opening up for leads.
       </PageHero>
 
       <section className={`${container} py-8`}>
@@ -91,6 +105,20 @@ export default function ChaptersPage() {
 
       <section className={`${container} py-20`}>
         <ChapterTable />
+      </section>
+
+      <section aria-labelledby="cities-title" className={`${container} py-16`}>
+        <Tag tone="outline">Cities</Tag>
+        <h2 id="cities-title" className="mt-6 max-w-3xl text-4xl tracking-tight sm:text-5xl">
+          India is live. These cities need a lead.
+        </h2>
+        <p className="mt-4 max-w-2xl text-muted">
+          A country goes live first, then each city gets someone to run it. {listCities(liveCities)} already
+          {liveCities.length === 1 ? " runs" : " run"}; we&apos;re looking for leads in {listCities(formingCities)}.
+        </p>
+        <div className="mt-12">
+          <CityBoard />
+        </div>
       </section>
 
       <section aria-labelledby="abroad-title" className={`${container} py-16`}>

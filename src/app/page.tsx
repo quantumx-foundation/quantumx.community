@@ -20,6 +20,8 @@ import {
   SITE_URL,
   chapters,
   formingChapters,
+  formingCities,
+  listCities,
   liveChapters,
   listNames,
 } from "@/lib/site";
@@ -169,6 +171,13 @@ export default function Home() {
         >
           Chapters
         </SectionHeading>
+        <p className="mt-4 max-w-2xl text-muted">
+          India is live, and its cities are opening up one by one:{" "}
+          <Link href="/chapters/apply" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+            {listCities(formingCities)} are looking for leads
+          </Link>
+          .
+        </p>
         <div className="mt-12">
           <ChapterGrid />
         </div>

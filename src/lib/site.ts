@@ -91,10 +91,39 @@ export const chapters: Chapter[] = [
 export const liveChapters = chapters.filter((c) => c.status === "live");
 export const formingChapters = chapters.filter((c) => c.status === "forming");
 
+export type City = {
+  name: string;
+  /** The chapter this city sits under. */
+  country: FlagCode;
+  /** "live" once a city has a lead running it, "forming" while we look for one. */
+  status: "live" | "forming";
+};
+
+/**
+ * Cities inside a live chapter. A country goes live first; the cities under it
+ * each need their own lead before they run on their own.
+ */
+export const cities: City[] = [
+  { name: "Bengaluru", country: "in", status: "live" },
+  { name: "Delhi", country: "in", status: "forming" },
+  { name: "Hyderabad", country: "in", status: "forming" },
+  { name: "Pune", country: "in", status: "forming" },
+  { name: "Kochi", country: "in", status: "forming" },
+  { name: "Chennai", country: "in", status: "forming" },
+];
+
+export const liveCities = cities.filter((c) => c.status === "live");
+export const formingCities = cities.filter((c) => c.status === "forming");
+
 /** "A, B and C" */
-export function listNames(items: Chapter[]) {
-  const names = items.map((c) => c.short);
+export function listNames(items: Array<string | { short: string }>) {
+  const names = items.map((item) => (typeof item === "string" ? item : item.short));
   return names.length < 2 ? names.join("") : `${names.slice(0, -1).join(", ")} and ${names.at(-1)}`;
+}
+
+/** "A, B and C" for cities, which have one name rather than a long and short one. */
+export function listCities(items: City[]) {
+  return listNames(items.map((c) => c.name));
 }
 
 export type Program = {
