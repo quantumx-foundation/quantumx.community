@@ -41,7 +41,7 @@ const expectations = [
         >
           swag
         </a>{" "}
-        — stickers, badges and tees — to hand out on the day.
+        (stickers, badges and tees) to hand out on the day.
       </>,
       "Event formats, run sheets and material that other chapters already use.",
       "Your events on the QuantumX Luma calendar, and your chapter listed on this site.",

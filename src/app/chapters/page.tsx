@@ -70,7 +70,7 @@ const faq = [
         >
           swag
         </a>{" "}
-        — stickers, badges and tees — to hand out on the day. Share the date and expected headcount with us
+        (stickers, badges and tees) to hand out on the day. Share the date and expected headcount with us
         ahead of time and we&apos;ll sort it with you.
       </>
     ),
