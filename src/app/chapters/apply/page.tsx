@@ -82,7 +82,8 @@ export default function ApplyPage() {
                   <span aria-hidden className="text-pink">
                     ·
                   </span>
-                  {item}
+                  {/* One span, so an item made of several nodes stays one flex item. */}
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
