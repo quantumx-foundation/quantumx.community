@@ -3,13 +3,29 @@
 import Link from "next/link";
 import { useState } from "react";
 import { Button } from "./ui";
-import { FORM_ACTION, FORM_NAME, fields } from "@/lib/apply";
+import { FORM_ACTION, type Field, type FormSpec } from "@/lib/forms";
 import { DISCORD_URL, EVENTS_EMAIL } from "@/lib/site";
 
 const inputClass =
   "mt-3 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink";
 
-function Label({ field }: { field: (typeof fields)[number] }) {
+/**
+ * Pins a date input's earliest allowed day, counted from today in the
+ * visitor's own timezone. Written to the DOM through a ref rather than
+ * rendered: the server has a different clock, and a date in the markup would
+ * not survive hydration.
+ */
+function limitDate(days: number | undefined) {
+  if (!days) return undefined;
+  return (node: HTMLInputElement | null) => {
+    if (!node) return;
+    const min = new Date();
+    min.setDate(min.getDate() + days);
+    node.min = `${min.getFullYear()}-${String(min.getMonth() + 1).padStart(2, "0")}-${String(min.getDate()).padStart(2, "0")}`;
+  };
+}
+
+function Label({ field }: { field: Field }) {
   return (
     <>
       <span className="font-mono text-xs uppercase tracking-wider text-muted">
@@ -21,7 +37,29 @@ function Label({ field }: { field: (typeof fields)[number] }) {
   );
 }
 
-export function ApplyForm() {
+/** A checkbox label, with the "%s" in it turned into a link when the field has one. */
+function Consent({ field }: { field: Field }) {
+  const [before, after] = field.link ? field.label.split("%s") : [field.label, ""];
+  return (
+    <label className="flex items-start gap-3 sm:col-span-2">
+      <input type="checkbox" name={field.name} required={field.required} value="yes" className="mt-1 size-4 accent-pink" />
+      <span className="text-sm text-muted">
+        {before}
+        {field.link && (
+          <>
+            <Link href={field.link.href} className="text-pink underline decoration-dotted underline-offset-4">
+              {field.link.text}
+            </Link>
+            {after}
+          </>
+        )}
+        {field.required && <span className="text-pink"> *</span>}
+      </span>
+    </label>
+  );
+}
+
+export function ApplyForm({ form }: { form: FormSpec }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -44,11 +82,8 @@ export function ApplyForm() {
   if (status === "sent") {
     return (
       <div className="border border-pink bg-panel p-8 sm:p-12">
-        <p className="font-pixel text-3xl text-pink">Application received</p>
-        <p className="mt-6 max-w-xl text-muted">
-          Thank you. We read every one and reply within about a week, usually sooner. While you wait, join the
-          Discord and say hello: that&apos;s where your first members will come from.
-        </p>
+        <p className="font-pixel text-3xl text-pink">{form.done.title}</p>
+        <p className="mt-6 max-w-xl text-muted">{form.done.body}</p>
         <div className="mt-8">
           <Button href={DISCORD_URL}>Join the Discord</Button>
         </div>
@@ -58,7 +93,7 @@ export function ApplyForm() {
 
   return (
     <form
-      name={FORM_NAME}
+      name={form.name}
       method="post"
       action={FORM_ACTION}
       data-netlify="true"
@@ -66,7 +101,7 @@ export function ApplyForm() {
       onSubmit={onSubmit}
       className="border border-line bg-panel p-6 sm:p-10"
     >
-      <input type="hidden" name="form-name" value={FORM_NAME} />
+      <input type="hidden" name="form-name" value={form.name} />
       <p hidden>
         <label>
           Leave this empty <input name="bot-field" tabIndex={-1} autoComplete="off" />
@@ -74,31 +109,10 @@ export function ApplyForm() {
       </p>
 
       <div className="grid gap-8 sm:grid-cols-2">
-        {fields.map((field) => {
-          const span = field.type === "textarea" || field.type === "checkbox" ? "sm:col-span-2" : "";
-          if (field.type === "checkbox") {
-            return (
-              <label key={field.name} className={`flex items-start gap-3 ${span}`}>
-                <input
-                  type="checkbox"
-                  name={field.name}
-                  required={field.required}
-                  value="yes"
-                  className="mt-1 size-4 accent-pink"
-                />
-                <span className="text-sm text-muted">
-                  I have read the{" "}
-                  <Link href="/code-of-conduct" className="text-pink underline decoration-dotted underline-offset-4">
-                    code of conduct
-                  </Link>{" "}
-                  and will run my chapter by it.
-                  <span className="text-pink"> *</span>
-                </span>
-              </label>
-            );
-          }
+        {form.fields.map((field) => {
+          if (field.type === "checkbox") return <Consent key={field.name} field={field} />;
           return (
-            <label key={field.name} className={`block ${span}`}>
+            <label key={field.name} className={`block ${field.type === "textarea" ? "sm:col-span-2" : ""}`}>
               <Label field={field} />
               {field.type === "textarea" ? (
                 <textarea name={field.name} required={field.required} rows={5} className={inputClass} />
@@ -119,6 +133,8 @@ export function ApplyForm() {
                   name={field.name}
                   required={field.required}
                   placeholder={field.placeholder}
+                  min={field.min}
+                  ref={limitDate(field.type === "date" ? field.minDaysAhead : undefined)}
                   className={inputClass}
                 />
               )}
@@ -133,10 +149,10 @@ export function ApplyForm() {
           disabled={status === "sending"}
           className="inline-flex cursor-pointer items-center gap-3 border border-pink bg-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-ink transition-opacity hover:opacity-90 disabled:opacity-60"
         >
-          {status === "sending" ? "Sending..." : "Send application"}
+          {status === "sending" ? "Sending..." : form.submit}
           <span aria-hidden>→</span>
         </button>
-        <p className="text-sm text-muted">No cost, no deadline. We reply to everyone.</p>
+        <p className="text-sm text-muted">{form.note}</p>
       </div>
 
       <p aria-live="polite" className="mt-6 text-sm text-pink">

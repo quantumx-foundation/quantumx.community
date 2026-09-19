@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import { EventsBrowser } from "@/components/events-browser";
 import { Place } from "@/components/country";
 import { PhotoStrip } from "@/components/photo-strip";
 import { Button, PageHero, Stat, Tag, container } from "@/components/ui";
 import { LUMA_URL, eventCities, events, isUpcoming, sortedEvents } from "@/content/events";
-import { EVENTS_EMAIL } from "@/lib/site";
 
 export const revalidate = 86400;
 
@@ -69,11 +69,11 @@ export default function EventsPage() {
             <Tag tone="soft">Never miss one</Tag>
             <h2 className="mt-4 text-3xl tracking-tight">Follow QuantumX on Luma</h2>
             <p className="mt-3 text-muted">
-              Subscribe to the calendar to hear about workshops, meetups and hackathons and RSVP in one tap. Want
-              to host one with us? Write to{" "}
-              <a href={`mailto:${EVENTS_EMAIL}`} className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
-                {EVENTS_EMAIL}
-              </a>
+              Subscribe to the calendar to hear about workshops, meetups and hackathons and RSVP in one tap.
+              Running your own quantum event? We&apos;ll send{" "}
+              <Link href="/events/support" className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
+                swag and cover the food
+              </Link>
               .
             </p>
           </div>

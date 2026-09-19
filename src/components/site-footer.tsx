@@ -7,6 +7,7 @@ import { DISCORD_URL, EVENTS_EMAIL, FOUNDATION_URL, formingChapters, liveChapter
 
 const more = [
   { label: "Start a chapter", href: "/chapters/apply" },
+  { label: "Event support", href: "/events/support" },
   { label: "Code of conduct", href: "/code-of-conduct" },
 ];
 

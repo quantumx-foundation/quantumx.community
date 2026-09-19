@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CircuitStrip } from "@/components/animations";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { EventRow, EventTableHead } from "@/components/event-row";
+import { EventSupportPanel } from "@/components/event-support";
 import { NewsCard } from "@/components/news-card";
 import { PhotoStrip } from "@/components/photo-strip";
 import { PixelLogo } from "@/components/pixel-logo";
@@ -131,6 +132,9 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      {/* Event support */}
+      <EventSupportPanel />
 
       {/* Moments */}
       <section aria-labelledby="moments-title" className="py-20">

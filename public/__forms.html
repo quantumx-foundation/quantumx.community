@@ -8,9 +8,9 @@
   <body>
     <!--
       Netlify detects forms by parsing static HTML at build time, so it cannot
-      see forms rendered by React. This file declares the form; the real one at
-      /chapters/apply posts here. Keep the field names in sync with
-      src/lib/apply.ts.
+      see forms rendered by React. This file declares them; the real ones at
+      /chapters/apply and /events/support post here. Keep the field names in
+      sync with src/lib/forms.ts.
     -->
     <form name="chapter-application" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
       <input type="hidden" name="form-name" value="chapter-application" />
@@ -23,6 +23,29 @@
       <textarea name="coleads"></textarea>
       <textarea name="plan"></textarea>
       <input type="text" name="links" />
+      <input type="checkbox" name="conduct" />
+    </form>
+
+    <form name="event-support" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="event-support" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="organiser" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="org" />
+      <input type="url" name="organiserLinks" />
+      <input type="text" name="title" />
+      <input type="text" name="format" />
+      <input type="date" name="date" />
+      <input type="text" name="city" />
+      <input type="text" name="country" />
+      <textarea name="venue"></textarea>
+      <input type="number" name="attendees" />
+      <input type="url" name="registration" />
+      <textarea name="about"></textarea>
+      <input type="text" name="support" />
+      <textarea name="needs"></textarea>
+      <input type="checkbox" name="branding" />
       <input type="checkbox" name="conduct" />
     </form>
   </body>

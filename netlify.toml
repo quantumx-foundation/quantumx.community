@@ -9,4 +9,5 @@
 
 # @netlify/plugin-nextjs is installed automatically for Next.js sites.
 # Set RESEND_API_KEY (and optionally RESEND_FROM, APPLICATIONS_TO) in
-# Site configuration > Environment variables so chapter applications get emailed.
+# Site configuration > Environment variables so chapter applications and event
+# support requests get emailed.

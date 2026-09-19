@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ApplyForm } from "@/components/apply-form";
 import { PageHero, Tag, container } from "@/components/ui";
+import { chapterForm } from "@/lib/forms";
 import { EVENTS_EMAIL, FNB_URL, formingChapters, formingCities, listCities, listNames, SWAG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -102,7 +103,7 @@ export default function ApplyPage() {
           budget yet.
         </p>
         <div className="mt-12">
-          <ApplyForm />
+          <ApplyForm form={chapterForm} />
         </div>
       </section>
 
