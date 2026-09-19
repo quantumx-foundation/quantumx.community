@@ -1,5 +1,10 @@
 [build]
-  command = "npm run build"
+  # Turbopack serialises the build environment (which includes
+  # RESEND_API_KEY) into its persistent cache, and the Next.js Runtime
+  # copies that cache into the deploy artifacts, where secrets scanning
+  # finds the key and fails the build. The cache is disposable, so drop it
+  # before the runtime picks it up rather than excluding it from scanning.
+  command = "npm run build && rm -rf .next/cache/turbopack"
   publish = ".next"
 
 # @netlify/plugin-nextjs is installed automatically for Next.js sites.
