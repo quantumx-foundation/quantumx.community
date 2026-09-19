@@ -1,5 +1,8 @@
 export const DISCORD_URL = "https://discord.gg/2w3pgqTQY";
 
+/** Google Analytics 4 measurement ID. Public by design: it ships in the HTML. */
+export const GA_MEASUREMENT_ID = "G-E3ZQDVV4WE";
+
 /**
  * Short links (/join, /discord) that redirect to Discord.
  *
