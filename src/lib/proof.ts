@@ -1,8 +1,10 @@
 import { events } from "@/content/events";
 import { news } from "@/content/news";
-import { speakers } from "@/content/speakers";
 
-/** Headline numbers, all derived from the content files so they stay honest. */
+/**
+ * Headline numbers. The ones that can be counted from the content files are,
+ * so they stay honest; the rounded ones are kept up to date by hand.
+ */
 const cities = new Set(events.filter((e) => e.country !== "online").map((e) => e.city));
 const countries = new Set<string>([
   ...events.flatMap((e) => (e.country === "online" ? [] : [e.country])),
@@ -10,10 +12,10 @@ const countries = new Set<string>([
 ]);
 
 export const proof = [
-  { value: String(events.length), label: "Events run or joined" },
+  { value: "2000+", label: "Community members" },
+  { value: "30+", label: "Events run or joined" },
   { value: String(cities.size), label: "Cities" },
   { value: String(countries.size), label: "Countries on the ground" },
-  { value: String(speakers.length), label: "Speakers" },
   { value: "200+", label: "Hackers at QX Hack" },
 ];
 
