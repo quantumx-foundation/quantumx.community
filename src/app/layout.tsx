@@ -18,6 +18,8 @@ const geistMono = Geist_Mono({
 
 const geistPixel = Geist_Pixel({
   adjustFontFallback: false,
+  // Turbopack has no metrics for this family; naming a fallback skips the lookup.
+  fallback: ["monospace"],
   variable: "--font-geist-pixel",
   subsets: ["latin"],
 });
