@@ -13,7 +13,7 @@ const forms: Record<string, (data: Submission) => Alert> = {
     text: renderApplicationText(data),
   }),
   "event-support": (data) => ({
-    subject: `Event support: ${eventTitle(data)} — ${eventPlace(data)}`,
+    subject: `Event support: ${eventTitle(data)} (${eventPlace(data)})`,
     html: renderEventEmail(data),
     text: renderEventText(data),
   }),

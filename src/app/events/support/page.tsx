@@ -22,7 +22,7 @@ const offer = [
         <a href={SWAG_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
           swag
         </a>{" "}
-        — stickers, badges and tees — shipped to you in time to hand out on the day.
+        (stickers, badges and tees) shipped to you in time to hand out on the day.
       </>,
       <>
         <a href={FNB_URL} target="_blank" rel="noopener noreferrer" className={linkClass}>
