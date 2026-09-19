@@ -1,4 +1,5 @@
 import type { FormSubmittedEvent } from "@netlify/functions";
+import { renderApplicationEmail, renderApplicationText } from "../lib/application-email.js";
 
 /**
  * Emails a chapter application to the events inbox through Resend.
@@ -19,9 +20,6 @@ const handlers = {
     const data = event.data ?? {};
     const applicant = String(data.name ?? "Someone");
     const where = [data.city, data.country].filter(Boolean).join(", ");
-    const lines = ["name", "email", "city", "country", "background", "coleads", "plan", "links"]
-      .map((field) => `${field}: ${data[field] || "(blank)"}`)
-      .join("\n");
 
     const response = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -31,7 +29,8 @@ const handlers = {
         to: [process.env.APPLICATIONS_TO ?? "events@quantumx.community"],
         reply_to: typeof data.email === "string" ? data.email : undefined,
         subject: `Chapter application: ${where || "new city"} (${applicant})`,
-        text: `${applicant} wants to start a QuantumX chapter in ${where || "a new city"}.\n\n${lines}\n`,
+        html: renderApplicationEmail(data),
+        text: renderApplicationText(data),
       }),
     });
 
