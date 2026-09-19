@@ -113,7 +113,7 @@ export default function Home() {
 
       {/* Proof */}
       <section aria-label="Community in numbers" className={`${container} py-20`}>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-6">
           {proof.map((stat) => (
             <Stat key={stat.label} {...stat} />
           ))}

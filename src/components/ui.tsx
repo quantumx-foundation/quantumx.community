@@ -87,9 +87,13 @@ export function PageHero({
 
 /** A big number with a small label, for proof strips. */
 export function Stat({ value, label }: { value: string; label: string }) {
+  // A money figure is far longer than a count and would run past its column
+  // at the headline size, so anything long steps down. Every count on the
+  // site is seven characters or fewer and keeps the big type.
+  const size = value.length > 7 ? "text-xl" : "text-4xl sm:text-5xl";
   return (
     <div className="border-l border-line pl-5">
-      <p className="font-pixel text-4xl text-fg sm:text-5xl">{value}</p>
+      <p className={`font-pixel text-fg ${size}`}>{value}</p>
       <p className="mt-2 font-mono text-xs uppercase tracking-wider text-muted">{label}</p>
     </div>
   );

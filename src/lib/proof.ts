@@ -17,6 +17,7 @@ export const proof = [
   { value: String(cities.size), label: "Cities" },
   { value: String(countries.size), label: "Countries on the ground" },
   { value: "300+", label: "Hackers at QX Hack" },
+  { value: "$1,57,355.00", label: "Deployed on community" },
 ];
 
 /** Hosts and venues from the events list, shown Select-sponsor style. */
