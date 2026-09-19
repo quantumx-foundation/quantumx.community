@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Form definitions</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <!--
+      Netlify detects forms by parsing static HTML at build time, so it cannot
+      see forms rendered by React. This file declares the form; the real one at
+      /chapters/apply posts here. Keep the field names in sync with
+      src/lib/apply.ts.
+    -->
+    <form name="chapter-application" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="chapter-application" />
+      <input type="text" name="bot-field" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="text" name="city" />
+      <input type="text" name="country" />
+      <input type="text" name="background" />
+      <textarea name="coleads"></textarea>
+      <textarea name="plan"></textarea>
+      <input type="text" name="links" />
+      <input type="checkbox" name="conduct" />
+    </form>
+  </body>
+</html>
