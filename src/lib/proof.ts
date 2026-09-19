@@ -16,7 +16,7 @@ export const proof = [
   { value: "30+", label: "Events run or joined" },
   { value: String(cities.size), label: "Cities" },
   { value: String(countries.size), label: "Countries on the ground" },
-  { value: "200+", label: "Hackers at QX Hack" },
+  { value: "300+", label: "Hackers at QX Hack" },
 ];
 
 /** Hosts and venues from the events list, shown Select-sponsor style. */

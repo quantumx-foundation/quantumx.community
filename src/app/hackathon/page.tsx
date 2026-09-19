@@ -6,7 +6,7 @@ import { hackathon } from "@/content/hackathon";
 export const metadata: Metadata = {
   title: "QX Hack",
   description:
-    "QX Hack, the Quantum for Social Good Hackathon: 200+ hackers, 50+ teams and 10 hours building quantum MVPs at Startup Park Bengaluru.",
+    "QX Hack, the Quantum for Social Good Hackathon: 300+ hackers, 50+ teams and 10 hours building quantum MVPs at Startup Park Bengaluru.",
   alternates: { canonical: "/hackathon" },
 };
 

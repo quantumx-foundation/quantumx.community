@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { ArrowField } from "./animations";
-import { PixelFlag } from "./pixel-flag";
+import { BlankFlag, PixelFlag } from "./pixel-flag";
 import { Button, Tag } from "./ui";
 import { chapters, formingChapters, formingCities, listNames, type Chapter } from "@/lib/site";
 
@@ -29,12 +29,39 @@ function ChapterCard({ chapter, featured }: { chapter: Chapter; featured?: boole
   );
 }
 
+/**
+ * Closes the grid with a slot for a city we haven't named. India spans two
+ * columns, so eight chapters leave a hole at the end of the second row; this
+ * fills it and turns it into the invitation.
+ */
+function OpenChapterCard() {
+  return (
+    <Link
+      href="/chapters/apply"
+      className="group scanlines relative flex flex-col border border-line p-5 pt-12 transition-colors hover:border-pink sm:p-6 sm:pt-14"
+    >
+      <div className="absolute left-0 top-0">
+        <Tag tone="outline">Open</Tag>
+      </div>
+      <div className="flex flex-1 items-center justify-center py-4">
+        <BlankFlag className="w-full max-w-40 opacity-70 transition-opacity group-hover:opacity-100" />
+      </div>
+      <h3 className="mt-6 text-lg leading-tight">Bring your city</h3>
+      <p className="mt-1 text-sm text-muted">
+        Not on the map yet? Start a chapter where you are.
+      </p>
+      <span className="mt-3 font-pixel text-xs uppercase tracking-[0.2em] text-pink">Apply &rarr;</span>
+    </Link>
+  );
+}
+
 export function ChapterGrid() {
   return (
     <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
       {chapters.map((chapter, i) => (
         <ChapterCard key={chapter.code} chapter={chapter} featured={i === 0} />
       ))}
+      <OpenChapterCard />
     </div>
   );
 }

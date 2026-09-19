@@ -115,6 +115,37 @@ const names: Record<FlagCode, string> = {
   sa: "Saudi Arabia",
 };
 
+/**
+ * The flag of a city that has no chapter yet: the same dot matrix as a real
+ * one, left empty apart from a pixel plus, so it reads as a slot to fill
+ * rather than a country we forgot to draw.
+ */
+export function BlankFlag({ className = "" }: { className?: string }) {
+  const cx = Math.floor(W / 2);
+  const cy = Math.floor(H / 2);
+  const dots = [];
+  for (let y = 0; y < H; y++) {
+    for (let x = 0; x < W; x++) {
+      const onPlus = (y === cy && Math.abs(x - cx) <= 4) || (x === cx && Math.abs(y - cy) <= 4);
+      dots.push(
+        <rect
+          key={`${x}-${y}`}
+          x={x + 0.08}
+          y={y + 0.08}
+          width={0.84}
+          height={0.84}
+          fill={onPlus ? "var(--pink)" : "var(--line)"}
+        />,
+      );
+    }
+  }
+  return (
+    <svg viewBox={`0 0 ${W} ${H}`} aria-hidden shapeRendering="crispEdges" className={className}>
+      {dots}
+    </svg>
+  );
+}
+
 /** A flag drawn as a dot-matrix of pixels. */
 export function PixelFlag({ code, className = "" }: { code: FlagCode; className?: string }) {
   const dots = [];

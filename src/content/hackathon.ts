@@ -13,7 +13,7 @@ export const hackathon = {
   summary:
     "A 10-hour offline hackathon with Startup Park Bengaluru where teams shipped working quantum MVPs aimed at real social problems.",
   stats: [
-    { value: "200+", label: "Hackers" },
+    { value: "300+", label: "Hackers" },
     { value: "50+", label: "Teams" },
     { value: "10h", label: "Build time" },
     { value: "19", label: "Problem statements" },
