@@ -65,8 +65,10 @@ export default function Home() {
       />
 
       {/* Hero */}
-      <section className={`${container} grid gap-12 pb-20 pt-12 sm:pt-20 md:grid-cols-3`}>
-        <h1>
+      <section
+        className={`${container} grid gap-10 pb-20 pt-12 sm:gap-12 sm:pt-20 md:grid-cols-2 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)]`}
+      >
+        <h1 className="md:col-span-2 lg:col-span-1">
           <span className="sr-only">QuantumX Community, global</span>
           <span aria-hidden>
             <PixelLogo />
@@ -108,7 +110,7 @@ export default function Home() {
 
       {/* Proof */}
       <section aria-label="Community in numbers" className={`${container} py-20`}>
-        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-5">
+        <div className="grid grid-cols-2 gap-x-6 gap-y-10 md:grid-cols-3 lg:grid-cols-5">
           {proof.map((stat) => (
             <Stat key={stat.label} {...stat} />
           ))}
@@ -190,13 +192,13 @@ export default function Home() {
 
       {/* Flagship */}
       <section aria-labelledby="hack-title" className={`${container} py-16`}>
-        <div className="grid border border-line bg-panel md:grid-cols-[2fr_3fr]">
-          <div className="relative aspect-square md:aspect-auto">
+        <div className="grid border border-line bg-panel lg:grid-cols-[2fr_3fr]">
+          <div className="relative aspect-square lg:aspect-auto">
             <Image
               src={hackathon.poster}
               alt="Quantum for Social Good Hackathon poster"
               fill
-              sizes="(min-width: 768px) 460px, 100vw"
+              sizes="(min-width: 1024px) 460px, 100vw"
               className="object-cover"
             />
           </div>
@@ -211,7 +213,7 @@ export default function Home() {
               QX Hack: {hackathon.title}
             </h2>
             <p className="mt-4 max-w-lg text-muted">{hackathon.summary}</p>
-            <div className="mt-10 grid grid-cols-2 gap-8 sm:grid-cols-4">
+            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8">
               {hackathon.stats.map((stat) => (
                 <Stat key={stat.label} {...stat} />
               ))}
@@ -244,7 +246,7 @@ export default function Home() {
           Rooms we&apos;ve been in
         </h2>
         <p className="mt-4 max-w-xl text-muted">Hosts, venues and programmes we&apos;ve run sessions with or joined.</p>
-        <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
+        <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
           {hosts.map((host, i) => (
             <li
               key={host.name}

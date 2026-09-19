@@ -36,9 +36,9 @@ export default function EventsPage() {
 
       {next && (
         <section aria-labelledby="next-title" className={`${container} py-8`}>
-          <div className="grid border border-line bg-panel md:grid-cols-[3fr_2fr]">
-            <div className="relative aspect-video md:aspect-auto md:min-h-80">
-              <Image src={next.image} alt="" fill sizes="(min-width: 768px) 640px, 100vw" className="object-cover" />
+          <div className="grid border border-line bg-panel lg:grid-cols-[3fr_2fr]">
+            <div className="relative aspect-video lg:aspect-auto lg:min-h-80">
+              <Image src={next.image} alt="" fill sizes="(min-width: 1024px) 640px, 100vw" className="object-cover" />
             </div>
             <div className="relative flex flex-col p-6 pt-14 sm:p-10 sm:pt-16">
               <div className="absolute left-0 top-0">

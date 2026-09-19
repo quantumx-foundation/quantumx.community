@@ -15,7 +15,7 @@ export function Programs() {
         <span aria-hidden className="font-pixel text-3xl text-pink">
           →
         </span>
-        <div role="tablist" aria-label="Program tracks" className="flex gap-6">
+        <div role="tablist" aria-label="Program tracks" className="flex flex-wrap gap-x-5 gap-y-2 sm:gap-x-6">
           {tabs.map((tab) => (
             <button
               key={tab}
@@ -37,7 +37,7 @@ export function Programs() {
       </div>
 
       <div id="programs-panel" role="tabpanel" aria-labelledby={`tab-${active}`} className="mt-14">
-        <div className="hidden grid-cols-[8rem_14rem_1fr_12rem] gap-6 border-b border-line pb-4 text-sm uppercase tracking-wider text-muted md:grid">
+        <div className="hidden grid-cols-[8rem_14rem_minmax(0,1fr)_12rem] gap-6 border-b border-line pb-4 text-sm uppercase tracking-wider text-muted lg:grid">
           <span>Code</span>
           <span>Format</span>
           <span>What happens</span>
@@ -46,12 +46,12 @@ export function Programs() {
         {programs[active].map((program) => (
           <div
             key={program.id}
-            className="grid grid-cols-[5.5rem_1fr] gap-x-6 gap-y-1 border-b border-line py-6 md:grid-cols-[8rem_14rem_1fr_12rem]"
+            className="grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4 gap-y-1 border-b border-line py-6 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-x-6 lg:grid-cols-[8rem_14rem_minmax(0,1fr)_12rem]"
           >
-            <span className="font-mono text-sm text-muted md:pt-1">{program.id}</span>
+            <span className="font-mono text-sm text-muted lg:pt-1">{program.id}</span>
             <span className="text-lg">{program.title}</span>
-            <p className="col-start-2 text-muted md:col-start-auto md:text-fg">{program.description}</p>
-            <span className="col-start-2 text-sm text-muted md:col-start-auto md:pt-1">{program.audience}</span>
+            <p className="col-start-2 text-muted lg:col-start-auto lg:text-fg">{program.description}</p>
+            <span className="col-start-2 text-sm text-muted lg:col-start-auto lg:pt-1">{program.audience}</span>
           </div>
         ))}
       </div>

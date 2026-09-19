@@ -27,9 +27,9 @@ export function SiteHeader() {
           Discord ↗
         </a>
       </div>
-      <nav aria-label="Main (mobile)" className="-mx-4 mt-5 flex gap-5 overflow-x-auto px-4 text-sm text-muted md:hidden">
+      <nav aria-label="Main (mobile)" className="-mx-4 mt-4 flex gap-5 overflow-x-auto px-4 text-sm text-muted [scrollbar-width:none] md:hidden">
         {navLinks.map((link) => (
-          <Link key={link.href} href={link.href} className="shrink-0 hover:text-fg">
+          <Link key={link.href} href={link.href} className="shrink-0 py-2 hover:text-fg">
             {link.label}
           </Link>
         ))}

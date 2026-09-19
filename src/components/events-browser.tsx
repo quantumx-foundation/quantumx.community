@@ -22,7 +22,7 @@ export function EventsBrowser({ items }: { items: (EventItem & { upcoming: boole
         <span aria-hidden className="font-pixel text-3xl text-pink">
           →
         </span>
-        <div role="tablist" aria-label="Filter events" className="flex gap-6">
+        <div role="tablist" aria-label="Filter events" className="flex flex-wrap gap-x-5 gap-y-2 sm:gap-x-6">
           {(Object.keys(groups) as Filter[]).map((tab) => (
             <button
               key={tab}

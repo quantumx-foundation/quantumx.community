@@ -85,7 +85,10 @@ export default function HackathonPage() {
             </h2>
             <dl className="mt-10">
               {hackathon.format.map((row) => (
-                <div key={row.key} className="grid grid-cols-[8rem_1fr] gap-6 border-b border-line py-5">
+                <div
+                  key={row.key}
+                  className="grid grid-cols-[6rem_minmax(0,1fr)] gap-4 border-b border-line py-5 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6"
+                >
                   <dt className="font-mono text-sm uppercase text-muted">{row.key}</dt>
                   <dd>{row.value}</dd>
                 </div>

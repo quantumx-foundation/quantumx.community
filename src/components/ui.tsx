@@ -79,7 +79,7 @@ export function PageHero({
   return (
     <section className={`${container} pb-16 pt-16 sm:pt-24`}>
       <Tag>{eyebrow}</Tag>
-      <h1 className="mt-6 max-w-4xl text-5xl leading-[1.05] tracking-tight sm:text-7xl">{title}</h1>
+      <h1 className="mt-6 max-w-4xl text-5xl leading-[1.05] tracking-tight md:text-6xl lg:text-7xl">{title}</h1>
       {children && <div className="mt-8 max-w-2xl text-xl leading-snug text-muted">{children}</div>}
     </section>
   );

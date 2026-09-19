@@ -90,7 +90,7 @@ export default function ApplyPage() {
         </h2>
         <ol className="mt-12">
           {next.map((step, i) => (
-            <li key={step.when} className="grid grid-cols-[3rem_1fr] gap-6 border-b border-line py-6 md:grid-cols-[4rem_12rem_1fr]">
+            <li key={step.when} className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-6 gap-y-1 border-b border-line py-6 md:grid-cols-[4rem_12rem_minmax(0,1fr)]">
               <span className="font-pixel text-2xl text-pink">0{i + 1}</span>
               <span className="text-lg">{step.when}</span>
               <p className="col-start-2 text-muted md:col-start-auto">{step.what}</p>

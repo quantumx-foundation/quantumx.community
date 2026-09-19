@@ -31,7 +31,7 @@ function ChapterCard({ chapter, featured }: { chapter: Chapter; featured?: boole
 
 export function ChapterGrid() {
   return (
-    <div className="grid grid-cols-2 gap-3 md:grid-cols-5 md:gap-4">
+    <div className="grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
       {chapters.map((chapter, i) => (
         <ChapterCard key={chapter.code} chapter={chapter} featured={i === 0} />
       ))}
@@ -40,10 +40,11 @@ export function ChapterGrid() {
 }
 
 export function ChapterTable() {
-  const row = "grid grid-cols-[5.5rem_1fr] gap-x-6 gap-y-1 py-6 md:grid-cols-[8rem_14rem_1fr]";
+  const row =
+    "grid grid-cols-[4.5rem_minmax(0,1fr)] gap-x-4 gap-y-1 py-6 sm:grid-cols-[5.5rem_minmax(0,1fr)] sm:gap-x-6 md:grid-cols-[7rem_12rem_minmax(0,1fr)] lg:grid-cols-[8rem_14rem_minmax(0,1fr)]";
   return (
     <div>
-      <div className="hidden grid-cols-[8rem_14rem_1fr] gap-6 border-b border-line pb-4 text-sm uppercase tracking-wider text-muted md:grid">
+      <div className="hidden grid-cols-[7rem_12rem_minmax(0,1fr)] gap-6 border-b border-line pb-4 text-sm uppercase tracking-wider text-muted md:grid lg:grid-cols-[8rem_14rem_minmax(0,1fr)]">
         <span>Status</span>
         <span>Chapter</span>
         <span>What&apos;s happening</span>
