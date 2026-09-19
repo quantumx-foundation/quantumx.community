@@ -3,7 +3,7 @@ import { ChapterGrid, ChapterTable } from "@/components/chapters";
 import { NewsCard } from "@/components/news-card";
 import { Button, PageHero, Tag, container } from "@/components/ui";
 import { news } from "@/content/news";
-import { DISCORD_URL, formingChapters, liveChapters, listNames } from "@/lib/site";
+import { DISCORD_URL, FNB_URL, formingChapters, liveChapters, listNames, SWAG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Chapters",
@@ -29,12 +29,6 @@ const steps = [
     body: "Your chapter gets its flag on this page, a spot on the QuantumX Luma calendar and a line into every other chapter.",
   },
 ];
-
-const FNB_URL =
-  "https://www.tillamook.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fj8tkpy1gjhi5%2F5OvVmigx6VIUsyoKz1EHUs%2Fb8173b7dcfbd6da341ce11bcebfa86ea%2FSalami-pizza-hero.jpg&w=3840&q=75";
-
-const SWAG_URL =
-  "https://xaqtrumkglthinogblad.supabase.co/storage/v1/object/public/email-images/2026/09/4a7960b3-image.jpg";
 
 const faq = [
   {

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ApplyForm } from "@/components/apply-form";
 import { PageHero, Tag, container } from "@/components/ui";
-import { EVENTS_EMAIL, formingChapters, listNames } from "@/lib/site";
+import { EVENTS_EMAIL, FNB_URL, formingChapters, listNames, SWAG_URL } from "@/lib/site";
 
 export const metadata: Metadata = {
   title: "Start a chapter",
@@ -23,6 +23,26 @@ const expectations = [
     title: "What you get",
     items: [
       "Speakers from the QuantumX network, online or in person.",
+      <>
+        <a
+          href={FNB_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink"
+        >
+          Food and beverages
+        </a>{" "}
+        for the room, and QuantumX{" "}
+        <a
+          href={SWAG_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink"
+        >
+          swag
+        </a>{" "}
+        — stickers, badges and tees — to hand out on the day.
+      </>,
       "Event formats, run sheets and material that other chapters already use.",
       "Your events on the QuantumX Luma calendar, and your chapter listed on this site.",
     ],
@@ -57,8 +77,8 @@ export default function ApplyPage() {
           <div key={block.title}>
             <h2 className="text-lg">{block.title}</h2>
             <ul className="mt-5 space-y-3 text-muted">
-              {block.items.map((item) => (
-                <li key={item} className="flex gap-3">
+              {block.items.map((item, i) => (
+                <li key={i} className="flex gap-3">
                   <span aria-hidden className="text-pink">
                     ·
                   </span>

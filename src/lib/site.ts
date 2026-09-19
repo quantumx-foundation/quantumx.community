@@ -27,6 +27,13 @@ export function inviteFor(source: string, ref?: string | null) {
 }
 export const EVENTS_EMAIL = "events@quantumx.community";
 
+/** What a chapter event gets from us. Shown on the chapters FAQ and the apply page. */
+export const FNB_URL =
+  "https://www.tillamook.com/_next/image?url=https%3A%2F%2Fimages.ctfassets.net%2Fj8tkpy1gjhi5%2F5OvVmigx6VIUsyoKz1EHUs%2Fb8173b7dcfbd6da341ce11bcebfa86ea%2FSalami-pizza-hero.jpg&w=3840&q=75";
+
+export const SWAG_URL =
+  "https://xaqtrumkglthinogblad.supabase.co/storage/v1/object/public/email-images/2026/09/4a7960b3-image.jpg";
+
 export const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/quantumx-foundation/" },
   { label: "X", href: "https://x.com/_Quantum_X_" },
