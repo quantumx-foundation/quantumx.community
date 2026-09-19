@@ -52,7 +52,7 @@ export const navLinks = [
 export const SITE_URL = "https://quantumx.community";
 export const FOUNDATION_URL = "https://quantumx.foundation";
 
-export type FlagCode = "in" | "ae" | "gb" | "us" | "sg" | "my" | "au" | "kz" | "sa";
+export type FlagCode = "in" | "ae" | "gb" | "sg" | "my" | "au" | "kz" | "sa";
 
 export type Chapter = {
   code: FlagCode;
@@ -80,7 +80,6 @@ export const chapters: Chapter[] = [
     summary: "Meetups, speaker sessions and workshops.",
   },
   { code: "gb", name: "United Kingdom", short: "UK", status: "forming", summary: forming },
-  { code: "us", name: "United States", short: "US", status: "forming", summary: forming },
   { code: "sg", name: "Singapore", short: "Singapore", status: "forming", summary: forming },
   { code: "my", name: "Malaysia", short: "Malaysia", status: "forming", summary: forming },
   { code: "au", name: "Australia", short: "Australia", status: "forming", summary: forming },

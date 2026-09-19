@@ -48,15 +48,6 @@ const paint: Record<FlagCode, Paint> = {
     return "#000000";
   },
   gb: (x, y) => unionJack(x, y, W, H),
-  us: (x, y) => {
-    const col = Math.floor(x);
-    const row = Math.floor(y);
-    if (col < 16 && row < 14) {
-      const star = row % 2 === 1 && col % 3 === (row % 4 === 1 ? 1 : 2);
-      return star ? "#FFFFFF" : "#3C3B6E";
-    }
-    return Math.floor(row / 2) % 2 === 0 ? "#B22234" : "#FFFFFF";
-  },
   sg: (x, y) => {
     if (y >= H / 2) return "#FFFFFF";
     if (inCrescent(x, y, 8, 6.5, 4.4, 1.9, 4)) return "#FFFFFF";
@@ -117,7 +108,6 @@ const names: Record<FlagCode, string> = {
   in: "India",
   ae: "United Arab Emirates",
   gb: "United Kingdom",
-  us: "United States",
   sg: "Singapore",
   my: "Malaysia",
   au: "Australia",
