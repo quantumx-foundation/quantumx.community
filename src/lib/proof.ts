@@ -23,13 +23,18 @@ export const proof = [
 /** Hosts and venues from the events list, shown Select-sponsor style. */
 export const hosts = [
   { name: "IBM Qiskit Fall Fest", note: "Official host 2026" },
-  { name: "Startup Park Bengaluru" },
+  { name: "University of Oxford" },
+  { name: "Imperial College London" },
+  { name: "University of Bristol" },
   { name: "IIT Delhi" },
-  { name: "TinkerHub Foundation" },
+  { name: "IISc Bengaluru" },
+  { name: "DIFC Innovation Hub" },
+  { name: "ISTE" },
   { name: "Manipal Institute of Technology" },
   { name: "IIIT Hyderabad" },
+  { name: "BQIT:26" },
+  { name: "Engine Shed Bristol" },
+  { name: "TinkerHub Foundation" },
+  { name: "Startup Park Bengaluru" },
   { name: "HKBK Group of Institutions" },
-  { name: "ISTE" },
-  { name: "University of Bristol" },
-  { name: "Imperial College London" },
 ];
