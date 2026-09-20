@@ -240,7 +240,7 @@ export default function Home() {
 
       {/* Speakers */}
       <section aria-labelledby="speakers-title" className={`${container} py-24`}>
-        <SectionHeading id="speakers-title" href="/speakers" linkLabel={`All ${speakers.length} speakers`}>
+        <SectionHeading id="speakers-title" href="/speakers" linkLabel="All speakers">
           Speakers
         </SectionHeading>
         <div className="mt-12">
