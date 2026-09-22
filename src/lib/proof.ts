@@ -36,5 +36,10 @@ export const hosts = [
   { name: "Engine Shed Bristol" },
   { name: "TinkerHub Foundation" },
   { name: "Startup Park Bengaluru" },
+  { name: "Girls in Quantum" },
   { name: "HKBK Group of Institutions" },
+  { name: "Kristu Jayanti University" },
+  { name: "VIT Chennai" },
+  { name: "Woi.eco" },
+  { name: "QETCI" },
 ];
