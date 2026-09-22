@@ -42,4 +42,6 @@ export const hosts = [
   { name: "VIT Chennai" },
   { name: "Woi.eco" },
   { name: "QETCI" },
+  { name: "Freshworks" },
+  { name: "Women in Product" },
 ];
