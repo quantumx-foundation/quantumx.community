@@ -1,4 +1,4 @@
-import qetci from "./qetci-jobs.json";
+import hub from "./hub-jobs.json";
 
 export const gigTypes = ["Full-time", "Internship", "PhD or research", "Part-time", "Contract"] as const;
 export const orgTypes = ["Startup", "Corporate", "Academia", "Government"] as const;
@@ -20,8 +20,8 @@ export type Gig = {
   /** YYYY-MM-DD. The listing drops off the board after this day. */
   closes: string | null;
   pay?: string | null;
-  /** Who listed it: posted to us directly, or from the QETCI Ecosystem Hub. */
-  source: "QuantumX" | "QETCI";
+  /** Who listed it: posted to us directly, or from our partner hub. */
+  source: "QuantumX" | "Hub";
 };
 
 /**
@@ -46,14 +46,14 @@ export type Gig = {
 const ours: Gig[] = [];
 
 /**
- * Indian quantum roles from the QETCI Ecosystem Hub, shown with their
- * permission. Refreshed by hand with `python3 scripts/import-qetci-jobs.py`.
+ * Indian quantum roles from our partner hub, shown with their permission.
+ * Refreshed by hand with `python3 scripts/import-hub-jobs.py`.
  */
-const fromQetci = qetci.jobs as Gig[];
+const fromHub = hub.jobs as Gig[];
 
 /** Open listings, newest first; undated ones last. "today" is YYYY-MM-DD. */
 export function openGigs(today: string) {
-  return [...ours, ...fromQetci]
+  return [...ours, ...fromHub]
     .filter((g) => !g.closes || g.closes >= today)
     .sort((a, b) => (b.posted ?? "").localeCompare(a.posted ?? ""));
 }

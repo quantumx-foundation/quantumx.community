@@ -1,13 +1,12 @@
-"""Snapshot the Indian quantum jobs from the QETCI Ecosystem Hub into the gig board.
+"""Snapshot the Indian quantum jobs from our partner hub into the gig board.
 
-Usage: python3 scripts/import-qetci-jobs.py [path/to/jobs.json]
-With no argument it downloads the hub's jobs.json once; pass a file instead if
-QETCI sends an export. Writes src/content/qetci-jobs.json.
+Usage: python3 scripts/import-hub-jobs.py <jobs.json URL or file>
+Pass the hub's jobs.json address, or a file if they send an export. Writes
+src/content/hub-jobs.json.
 
-QuantumX has permission from QETCI to show these listings. Their terms still
+QuantumX has permission from the hub to show these listings. Their terms still
 apply: run this by hand to refresh (never on a schedule or from the site),
-and keep the use non-commercial.
-Logos are not copied; the board shows initials.
+and keep the use non-commercial. Logos are not copied.
 """
 
 import json
@@ -16,8 +15,7 @@ import sys
 import urllib.request
 from pathlib import Path
 
-URL = "https://ecosystem.qetci.org/data/jobs.json"
-OUT = Path("src/content/qetci-jobs.json")
+OUT = Path("src/content/hub-jobs.json")
 
 ORG_TYPES = {"startup": "Startup", "corporate": "Corporate", "academia": "Academia", "government": "Government"}
 
@@ -42,14 +40,16 @@ def role_type(role):
 
 
 def load(source):
-    if source and not source.startswith("http"):
+    if not source.startswith("http"):
         return json.loads(Path(source).read_text())
-    request = urllib.request.Request(source or URL, headers={"User-Agent": "Mozilla/5.0 (QuantumX Community import)"})
+    request = urllib.request.Request(source, headers={"User-Agent": "Mozilla/5.0 (QuantumX Community import)"})
     return json.load(urllib.request.urlopen(request))
 
 
 def main():
-    data = load(sys.argv[1] if len(sys.argv) > 1 else None)
+    if len(sys.argv) < 2:
+        sys.exit("Usage: python3 scripts/import-hub-jobs.py <jobs.json URL or file>")
+    data = load(sys.argv[1])
     jobs = []
     for j in data["items"]:
         if not j.get("role") or not j.get("org"):
@@ -68,7 +68,7 @@ def main():
                 "posted": j.get("posted"),
                 "closes": j.get("deadline"),
                 "pay": j.get("pay"),
-                "source": "QETCI",
+                "source": "Hub",
             }
         )
     OUT.write_text(json.dumps({"built": data.get("built"), "jobs": jobs}, ensure_ascii=False, indent=1) + "\n")
