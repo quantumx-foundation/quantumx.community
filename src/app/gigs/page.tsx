@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { ApplyForm } from "@/components/apply-form";
+import { JobBoard } from "@/components/job-board";
 import { PageHero, Tag, container } from "@/components/ui";
 import { openGigs } from "@/content/gigs";
 import { gigForm } from "@/lib/forms";
@@ -15,53 +16,19 @@ export const metadata: Metadata = {
   alternates: { canonical: "/gigs" },
 };
 
-function shortDate(date: string) {
-  return new Date(`${date}T00:00:00Z`).toLocaleDateString("en-GB", { day: "numeric", month: "short", timeZone: "UTC" });
-}
-
 export default function GigsPage() {
   const gigs = openGigs(new Date().toISOString().slice(0, 10));
 
   return (
     <>
       <PageHero eyebrow="Gig board" title="Work in quantum">
-        Jobs, internships and research positions across the quantum industry, not only at QuantumX. Hiring? Post
-        your role below for free.
+        Jobs, internships and research positions across the quantum industry, not only at QuantumX. Search and
+        filter by role, organisation and city. Hiring? Post your role below for free.
       </PageHero>
 
       <section aria-label="Open roles" className={`${container} py-8`}>
         {gigs.length ? (
-          <>
-            <div className="hidden grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)_minmax(0,1.2fr)_8rem_5rem] gap-6 border-b border-line pb-4 font-mono text-xs uppercase tracking-wider text-muted md:grid">
-              <span>Role</span>
-              <span>Company</span>
-              <span>Location</span>
-              <span>Type</span>
-              <span>Closes</span>
-            </div>
-            <ul>
-              {gigs.map((gig) => (
-                <li key={gig.url} className="border-b border-line">
-                  <a
-                    href={gig.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group grid gap-x-6 gap-y-1 py-6 md:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)_minmax(0,1.2fr)_8rem_5rem] md:items-baseline"
-                  >
-                    <span className="text-lg leading-snug group-hover:text-pink">
-                      {gig.role} <span aria-hidden>↗</span>
-                    </span>
-                    <span>{gig.company}</span>
-                    <span className="text-muted">
-                      {gig.location} · {gig.setup}
-                    </span>
-                    <span className="font-mono text-sm text-muted">{gig.type}</span>
-                    <span className="font-mono text-sm text-muted">{gig.closes ? shortDate(gig.closes) : "Open"}</span>
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </>
+          <JobBoard gigs={gigs} />
         ) : (
           <div className="scanlines border border-line p-6 sm:p-10">
             <Tag tone="outline">Opening soon</Tag>

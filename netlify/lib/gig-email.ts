@@ -31,6 +31,7 @@ export function renderGigEmail(data: Submission) {
   const entries: Entry[] = [
     ["Role", escapeHtml(role)],
     ["Company or lab", escapeHtml(company)],
+    ["Organisation type", escapeHtml(get("orgType")) || blank],
     ["Location", escapeHtml(get("location")) || blank],
     ["Where the work happens", escapeHtml(get("setup")) || blank],
     ["Type", escapeHtml(get("type")) || blank],
@@ -59,5 +60,5 @@ export function renderGigEmail(data: Submission) {
 
 export function renderGigText(data: Submission) {
   const intro = `${gigCompany(data)} wants to list ${gigRole(data)} on the QuantumX gig board.`;
-  return renderText(intro, data, ["role", "company", "location", "setup", "type", "url", "closes", "about", "contact", "email"]);
+  return renderText(intro, data, ["role", "company", "orgType", "location", "setup", "type", "url", "closes", "about", "contact", "email"]);
 }

@@ -62,12 +62,16 @@ Everything below is built and checked locally (desktop and mobile). It goes live
 
 **Ask:** A go-to page for openings across the quantum industry, not just QuantumX.
 
-**Built:** A `/gigs` page (in the main nav) listing role, company, location, type and closing date, linking out to the company's own listing. Roles drop off automatically after their closing date. Companies post through a "Post a role" form. Each post is emailed to events@ for a check, and the poster gets an acknowledgement. Until the first role is added, the page shows an "Opening soon" message.
+**Built:** A `/gigs` job board (in the main nav) with search and filters for role type (full-time, internship, PhD or research, contract), organisation type (startup, corporate, academia, government) and location (cities, or remote/hybrid). Each filter shows how many roles it would leave. Every role links out to the original listing, and roles drop off after their closing date.
 
-**To add a role:** add it to `src/content/gigs.ts` after checking the listing is real.
+It launched with 147 open Indian quantum roles from the [QETCI Indian Quantum Ecosystem Hub](https://ecosystem.qetci.org/jobs.html) and shown with their permission. Companies can also post directly through the "Post a role" form. Each post is emailed to events@ for a check, and the poster gets an acknowledgement.
+
+**To refresh QETCI's roles:** run `python3 scripts/import-qetci-jobs.py` by hand and commit the result. Their terms ban automated crawling, so don't put it on a schedule.
+
+**To add a role posted to us:** add it to `src/content/gigs.ts` after checking the listing is real.
 
 **Still needed:**
-- ⬜ A few launch roles, so the board isn't empty on day one.
+- ⬜ Keep QETCI's permission in writing (email is fine), and check it covers showing their jobs on our site without their citation (their public terms require one).
 
 ---
 

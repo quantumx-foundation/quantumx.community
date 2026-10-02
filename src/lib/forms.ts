@@ -1,4 +1,4 @@
-import { gigTypes } from "@/content/gigs";
+import { gigTypes, orgTypes } from "@/content/gigs";
 import { chapters, formingCities, listCities } from "./site";
 
 /** Static file that exists purely so Netlify can detect the forms at build time. */
@@ -149,6 +149,7 @@ export const gigForm: FormSpec = {
   fields: [
     { name: "role", label: "Role", type: "text", required: true, placeholder: "Quantum Software Engineer" },
     { name: "company", label: "Company or lab", type: "text", required: true },
+    { name: "orgType", label: "Organisation type", type: "select", required: true, options: [...orgTypes] },
     { name: "location", label: "Location", type: "text", required: true, placeholder: "Bengaluru, India" },
     { name: "setup", label: "Where the work happens", type: "select", required: true, options: ["On-site", "Hybrid", "Remote"] },
     { name: "type", label: "Type", type: "select", required: true, options: [...gigTypes] },

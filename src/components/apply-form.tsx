@@ -117,7 +117,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
               {field.type === "textarea" ? (
                 <textarea name={field.name} required={field.required} rows={5} className={inputClass} />
               ) : field.type === "select" ? (
-                <select name={field.name} required={field.required} defaultValue="" className={inputClass}>
+                <select name={field.name} required={field.required} defaultValue="" className={`select ${inputClass}`}>
                   <option value="" disabled>
                     Pick one
                   </option>
