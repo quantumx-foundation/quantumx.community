@@ -1,3 +1,4 @@
+import { gigTypes } from "@/content/gigs";
 import { chapters, formingCities, listCities } from "./site";
 
 /** Static file that exists purely so Netlify can detect the forms at build time. */
@@ -83,6 +84,91 @@ export const chapterForm: FormSpec = {
     },
     { name: "links", label: "A link to you", type: "text", placeholder: "LinkedIn, GitHub or a site" },
     { ...conduct, label: "I have read the %s and will run my chapter by it." },
+  ],
+};
+
+export const volunteerForm: FormSpec = {
+  name: "volunteer",
+  submit: "Join the crew",
+  note: "No experience needed. We reply to everyone.",
+  done: {
+    title: "You're on the list",
+    body: "Thank you. We'll reach out before the next event near you. Join the Discord in the meantime: that's where the crew plans each event.",
+  },
+  fields: [
+    { name: "name", label: "Your name", type: "text", required: true },
+    { name: "email", label: "Email", type: "email", required: true },
+    {
+      name: "phone",
+      label: "Phone or WhatsApp",
+      type: "tel",
+      hint: "So the event lead can reach you on the day.",
+    },
+    { name: "city", label: "City", type: "text", required: true, placeholder: "Bengaluru" },
+    { name: "country", label: "Country", type: "select", required: true, options: countries },
+    {
+      name: "background",
+      label: "What you do",
+      type: "text",
+      required: true,
+      placeholder: "Second year physics student, Christ University",
+      hint: "Student, researcher, engineer, designer: whatever fits.",
+    },
+    {
+      name: "availability",
+      label: "How often you can help",
+      type: "select",
+      required: true,
+      options: ["Every event near me", "Once every month or two", "A few times a year"],
+    },
+    {
+      name: "why",
+      label: "Why you want to help",
+      type: "textarea",
+      required: true,
+      hint: "A line or two is plenty. Tell us if you've helped run events before.",
+    },
+    { name: "links", label: "A link to you", type: "text", placeholder: "LinkedIn, GitHub or Instagram" },
+    {
+      name: "photo",
+      label: "If I join the crew, QuantumX can show my name, photo and role on this site.",
+      type: "checkbox",
+    },
+    { ...conduct, label: "I have read the %s and will follow it at events." },
+  ],
+};
+
+export const gigForm: FormSpec = {
+  name: "gig",
+  submit: "Send the role",
+  note: "Free to post. We check every listing before it goes up.",
+  done: {
+    title: "Role received",
+    body: "Thank you. We check every listing and put it on the board within a few days, then let you know. Join the Discord to tell the community about it too.",
+  },
+  fields: [
+    { name: "role", label: "Role", type: "text", required: true, placeholder: "Quantum Software Engineer" },
+    { name: "company", label: "Company or lab", type: "text", required: true },
+    { name: "location", label: "Location", type: "text", required: true, placeholder: "Bengaluru, India" },
+    { name: "setup", label: "Where the work happens", type: "select", required: true, options: ["On-site", "Hybrid", "Remote"] },
+    { name: "type", label: "Type", type: "select", required: true, options: [...gigTypes] },
+    {
+      name: "url",
+      label: "Link to the listing",
+      type: "url",
+      required: true,
+      placeholder: "https://...",
+      hint: "Your own careers page or job post. That's where people apply.",
+    },
+    { name: "closes", label: "Closing date", type: "date", hint: "Leave it empty if it's open until filled." },
+    {
+      name: "about",
+      label: "Anything we should know",
+      type: "textarea",
+      hint: "Who it suits, whether students can apply, visa sponsorship. Optional.",
+    },
+    { name: "contact", label: "Your name", type: "text", required: true },
+    { name: "email", label: "Your email", type: "email", required: true, hint: "We use it only to confirm the listing." },
   ],
 };
 

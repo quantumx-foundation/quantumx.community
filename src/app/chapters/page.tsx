@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { ChapterGrid, ChapterTable, CityBoard } from "@/components/chapters";
 import { NewsCard } from "@/components/news-card";
 import { Button, PageHero, Tag, container } from "@/components/ui";
+import { WorldMap } from "@/components/world-map";
 import { news } from "@/content/news";
 import {
   DISCORD_URL,
@@ -100,7 +101,10 @@ export default function ChaptersPage() {
       </PageHero>
 
       <section className={`${container} py-8`}>
-        <ChapterGrid />
+        <WorldMap />
+        <div className="mt-12">
+          <ChapterGrid />
+        </div>
       </section>
 
       <section className={`${container} py-20`}>

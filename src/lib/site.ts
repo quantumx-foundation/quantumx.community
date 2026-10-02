@@ -37,7 +37,7 @@ export const SWAG_URL =
 export const socials = [
   { label: "LinkedIn", href: "https://www.linkedin.com/company/quantumx-foundation/" },
   { label: "X", href: "https://x.com/_Quantum_X_" },
-  { label: "Instagram", href: "https://www.instagram.com/quantumx.school/" },
+  { label: "Instagram", href: "https://www.instagram.com/quantumx.foundation/" },
   { label: "Luma", href: "https://luma.com/user/quantumx" },
 ];
 
@@ -45,6 +45,8 @@ export const navLinks = [
   { label: "Events", href: "/events" },
   { label: "Chapters", href: "/chapters" },
   { label: "Speakers", href: "/speakers" },
+  { label: "Resources", href: "/resources" },
+  { label: "Gigs", href: "/gigs" },
   { label: "QX Hack", href: "/hackathon" },
   { label: "News", href: "/news" },
 ];
@@ -60,6 +62,8 @@ export type Chapter = {
   short: string;
   status: "live" | "forming";
   summary: string;
+  /** Where the chapter sits on the world map: its main city. */
+  pin: { lat: number; lng: number };
 };
 
 const forming = "Looking for founding members and chapter leads.";
@@ -71,6 +75,7 @@ export const chapters: Chapter[] = [
     short: "India",
     status: "live",
     summary: "Meetups, study circles, workshops and hackathons.",
+    pin: { lat: 12.97, lng: 77.59 },
   },
   {
     code: "ae",
@@ -78,13 +83,14 @@ export const chapters: Chapter[] = [
     short: "UAE",
     status: "live",
     summary: "Meetups, speaker sessions and workshops.",
+    pin: { lat: 25.2, lng: 55.27 },
   },
-  { code: "gb", name: "United Kingdom", short: "UK", status: "forming", summary: forming },
-  { code: "sg", name: "Singapore", short: "Singapore", status: "forming", summary: forming },
-  { code: "my", name: "Malaysia", short: "Malaysia", status: "forming", summary: forming },
-  { code: "au", name: "Australia", short: "Australia", status: "forming", summary: forming },
-  { code: "kz", name: "Kazakhstan", short: "Kazakhstan", status: "forming", summary: forming },
-  { code: "sa", name: "Saudi Arabia", short: "Saudi Arabia", status: "forming", summary: forming },
+  { code: "gb", name: "United Kingdom", short: "UK", status: "forming", summary: forming, pin: { lat: 51.51, lng: -0.13 } },
+  { code: "sg", name: "Singapore", short: "Singapore", status: "forming", summary: forming, pin: { lat: 1.35, lng: 103.82 } },
+  { code: "my", name: "Malaysia", short: "Malaysia", status: "forming", summary: forming, pin: { lat: 3.14, lng: 101.69 } },
+  { code: "au", name: "Australia", short: "Australia", status: "forming", summary: forming, pin: { lat: -33.87, lng: 151.21 } },
+  { code: "kz", name: "Kazakhstan", short: "Kazakhstan", status: "forming", summary: forming, pin: { lat: 51.17, lng: 71.43 } },
+  { code: "sa", name: "Saudi Arabia", short: "Saudi Arabia", status: "forming", summary: forming, pin: { lat: 24.71, lng: 46.68 } },
 ];
 
 export const liveChapters = chapters.filter((c) => c.status === "live");

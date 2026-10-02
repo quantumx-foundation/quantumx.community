@@ -23,6 +23,8 @@ export const proof = [
 /** Hosts and venues from the events list, shown Select-sponsor style. */
 export const hosts = [
   { name: "IBM Qiskit Fall Fest", note: "Official host 2026" },
+  { name: "National Quantum Mission" },
+  { name: "Department of Science & Technology, India" },
   { name: "University of Oxford" },
   { name: "Imperial College London" },
   { name: "University of Bristol" },

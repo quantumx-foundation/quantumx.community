@@ -1,21 +1,21 @@
 """Turn speaker photos into two-tone dithered portraits (Select-style).
 
 Usage: python3 scripts/dither.py
-Reads public/images/speakers/*.webp, writes public/images/speakers/dither/<name>.png
+Reads public/images/{speakers,crew}/*.webp, writes <folder>/dither/<name>.png
 """
 
 from pathlib import Path
 
 from PIL import Image, ImageEnhance, ImageOps
 
-SRC = Path("public/images/speakers")
-OUT = SRC / "dither"
+FOLDERS = [Path("public/images/speakers"), Path("public/images/crew")]
 DARK = (12, 10, 15)
 LIGHT = (214, 204, 218)
 W, H, SCALE = 160, 200, 2  # 4:5 portrait, upscaled 2x so dots stay crisp
 
-OUT.mkdir(exist_ok=True)
-for path in sorted(SRC.glob("*.webp")):
+for path in sorted(p for src in FOLDERS for p in src.glob("*.webp")):
+    out = path.parent / "dither"
+    out.mkdir(exist_ok=True)
     im = Image.open(path).convert("L")
     im = ImageOps.fit(im, (W, H), centering=(0.5, 0.3))
     im = ImageOps.autocontrast(im, cutoff=1)
@@ -24,5 +24,5 @@ for path in sorted(SRC.glob("*.webp")):
     duo = ImageOps.colorize(bits.convert("L"), DARK, LIGHT)
     duo = duo.resize((W * SCALE, H * SCALE), Image.Resampling.NEAREST)
     duo = duo.quantize(colors=2)
-    duo.save(OUT / f"{path.stem}.png", optimize=True)
+    duo.save(out / f"{path.stem}.png", optimize=True)
     print("wrote", path.stem)

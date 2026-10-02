@@ -2,14 +2,19 @@ import Image from "next/image";
 import Link from "next/link";
 import { CircuitStrip } from "@/components/animations";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
+import { CrewGrid } from "@/components/crew";
 import { EventRow, EventTableHead } from "@/components/event-row";
 import { EventSupportPanel } from "@/components/event-support";
+import { FortuneCookie } from "@/components/fortune-cookie";
 import { NewsCard } from "@/components/news-card";
 import { PhotoStrip } from "@/components/photo-strip";
 import { PixelLogo } from "@/components/pixel-logo";
 import { Programs } from "@/components/programs";
+import { QuantumLoops } from "@/components/quantum-loops";
 import { SpeakerGrid } from "@/components/speaker-grid";
 import { Button, SectionHeading, Stat, Tag, container } from "@/components/ui";
+import { WorldMap } from "@/components/world-map";
+import { crew } from "@/content/crew";
 import { isUpcoming, sortedEvents } from "@/content/events";
 import { hackathon } from "@/content/hackathon";
 import { news } from "@/content/news";
@@ -161,6 +166,17 @@ export default function Home() {
         ))}
       </section>
 
+      {/* Loops */}
+      <section aria-labelledby="loops-title" className={`${container} py-16`}>
+        <h2 id="loops-title" className="text-4xl tracking-tight sm:text-5xl">
+          Quantum, but make it funny
+        </h2>
+        <p className="mt-4 max-w-xl text-muted">For everyone who has ever waited on a job queue.</p>
+        <div className="mt-12">
+          <QuantumLoops />
+        </div>
+      </section>
+
       {/* Chapters */}
       <section aria-labelledby="chapters-title" className={`${container} py-16`}>
         <SectionHeading
@@ -182,6 +198,9 @@ export default function Home() {
           </Link>
           .
         </p>
+        <div className="mt-12">
+          <WorldMap />
+        </div>
         <div className="mt-12">
           <ChapterGrid />
         </div>
@@ -248,9 +267,39 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Crew */}
+      <section aria-labelledby="crew-title" className={`${container} py-24`}>
+        <SectionHeading id="crew-title" href="/crew" linkLabel={crew.length ? "Meet the crew" : "Volunteer"}>
+          The crew
+        </SectionHeading>
+        <p className="mt-4 max-w-xl text-muted">
+          The volunteers who set up the room, look after speakers and make every event happen. Help at one near you
+          and your face goes up here.
+        </p>
+        <div className="mt-12">
+          <CrewGrid items={crew.slice(0, 11)} />
+        </div>
+      </section>
+
       {/* Programs */}
       <section id="programs" className={`${container} scroll-mt-8 py-24`}>
         <Programs />
+      </section>
+
+      {/* Fortune cookie */}
+      <section aria-labelledby="fortune-title" className={`${container} py-24`}>
+        <div className="grid items-center gap-10 border border-line p-6 sm:p-10 md:grid-cols-2">
+          <div>
+            <h2 id="fortune-title" className="text-4xl tracking-tight sm:text-5xl">
+              Quantum fortune
+            </h2>
+            <p className="mt-4 max-w-sm text-muted">
+              Crack the cookie and see what the wavefunction has in store for you. Results not guaranteed until
+              measured.
+            </p>
+          </div>
+          <FortuneCookie />
+        </div>
       </section>
 
       {/* Hosts */}

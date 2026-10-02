@@ -1,8 +1,10 @@
 import type { FormSubmittedEvent } from "@netlify/functions";
-import { chapterAck, eventAck } from "../lib/ack-email.js";
+import { chapterAck, eventAck, gigAck, volunteerAck } from "../lib/ack-email.js";
 import { applicantName, applicationPlace, renderApplicationEmail, renderApplicationText } from "../lib/application-email.js";
 import { eventPlace, eventTitle, renderEventEmail, renderEventText } from "../lib/event-email.js";
 import type { Submission } from "../lib/email.js";
+import { gigCompany, gigRole, renderGigEmail, renderGigText } from "../lib/gig-email.js";
+import { renderVolunteerEmail, renderVolunteerText, volunteerName, volunteerPlace } from "../lib/volunteer-email.js";
 
 type Letter = { subject: string; html: string; text: string };
 
@@ -23,6 +25,22 @@ const forms: Record<string, { alert: (data: Submission) => Letter; ack: (data: S
       text: renderEventText(data),
     }),
     ack: eventAck,
+  },
+  volunteer: {
+    alert: (data) => ({
+      subject: `Volunteer: ${volunteerPlace(data)} (${volunteerName(data)})`,
+      html: renderVolunteerEmail(data),
+      text: renderVolunteerText(data),
+    }),
+    ack: volunteerAck,
+  },
+  gig: {
+    alert: (data) => ({
+      subject: `Gig board: ${gigRole(data)} (${gigCompany(data)})`,
+      html: renderGigEmail(data),
+      text: renderGigText(data),
+    }),
+    ack: gigAck,
   },
 };
 
