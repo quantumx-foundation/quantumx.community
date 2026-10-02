@@ -3,47 +3,87 @@
 import { useRef, useState } from "react";
 import { fortunes } from "@/content/fortunes";
 
-const W = 26;
-const H = 13;
+const W = 30;
+const H = 24;
 const MID = W / 2;
 
-type Px = { x: number; y: number; tone: "body" | "shade" | "crease" | "paper" };
+type Tone = "outline" | "rim" | "top" | "light" | "chip" | "face" | "shine" | "blush";
+type Px = { x: number; y: number; tone: Tone };
+
+/** Baked-cookie browns, plus the site's pink for the cheeks. */
+const fills: Record<Tone, string> = {
+  outline: "#8a5530",
+  rim: "#d08f55",
+  top: "#e8ad74",
+  light: "#f5cf9f",
+  chip: "#6b3f22",
+  face: "#3a2316",
+  shine: "#fff8f0",
+  blush: "var(--pink)",
+};
+
+const ellipse = (x: number, y: number, cx: number, cy: number, rx: number, ry: number) =>
+  ((x - cx) / rx) ** 2 + ((y - cy) / ry) ** 2;
+
+/** Slightly lumpy, like it came off a real tray. */
+function inside(x: number, y: number) {
+  const X = x + 0.5;
+  const Y = y + 0.5;
+  const bump = 1 + 0.035 * Math.sin(Math.atan2(Y - 12, X - MID) * 7);
+  return ellipse(X, Y, MID, 12, 14.3 * bump, 11.6 * bump) <= 1;
+}
+
+const chips = [
+  [6, 9],
+  [21, 5],
+  [24, 10],
+  [9, 17],
+  [21, 16],
+  [15, 19],
+  [12, 4],
+];
+const eyes = [
+  [10, 10],
+  [18, 10],
+];
 
 /**
- * A folded fortune cookie as pixels: a domed ellipse with a notch at the
- * bottom where the fold tucks in, a crease down the middle, shading round the
- * edge and the tip of the fortune poking out. Built once, so the server and
- * client render the same cells.
+ * A kawaii chocolate chip cookie as pixels: a baked rim, a lighter top with a
+ * highlight, chips, and a face. Built once, so the server and client render
+ * the same cells.
  */
 const pixels: Px[] = (() => {
   const out: Px[] = [];
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
-      const dx = (x + 0.5 - MID) / MID;
-      const dy = (y + 0.5 - H / 2) / (H / 2);
-      const r = dx * dx + (dy * (dy < 0 ? 1.1 : 1)) ** 2;
-      const off = Math.abs(x + 0.5 - MID);
-      if (r > 1) continue;
-      if (y >= 8 && off < (y - 7) * 1.5) {
-        if (off < 1.5 && y <= 10) out.push({ x, y, tone: "paper" });
-        continue;
+      if (!inside(x, y)) continue;
+      const X = x + 0.5;
+      const Y = y + 0.5;
+      let tone: Tone = ellipse(X, Y, MID, 10.6, 12.6, 9.6) > 1 ? "rim" : "top";
+      if (tone === "top" && ellipse(X, Y, 8.5, 5.5, 3.6, 1.8) <= 1) tone = "light";
+      if (chips.some(([cx, cy]) => x - cx >= 0 && x - cx <= 1 && y - cy >= 0 && y - cy <= 1)) tone = "chip";
+      for (const [ex, ey] of eyes) {
+        if (x - ex >= 0 && x - ex <= 1 && y - ey >= 0 && y - ey <= 1) tone = x === ex && y === ey ? "shine" : "face";
       }
-      const tone = off < 0.9 && y < 8 ? "crease" : dy > 0.35 || r > 0.72 ? "shade" : "body";
+      if ((y === 13 && (x === 13 || x === 16)) || (y === 14 && (x === 14 || x === 15))) tone = "face";
+      if (y === 12 && [7, 8, 21, 22].includes(x)) tone = "blush";
+      if (!inside(x - 1, y) || !inside(x + 1, y) || !inside(x, y - 1) || !inside(x, y + 1)) tone = "outline";
       out.push({ x, y, tone });
     }
   }
   return out;
 })();
 
-const tones = { body: "fill-yellow", shade: "fill-amber", crease: "fill-amber", paper: "fill-pale" };
+/** Where the cookie snaps: a zigzag down the middle, so it breaks rather than slices. */
+const crack = (y: number) => MID + [0, 1, 1, 0, -1, -1][y % 6];
 
 function Cells({ cells }: { cells: Px[] }) {
-  return cells.map((p) => <rect key={`${p.x}-${p.y}`} x={p.x} y={p.y} width={1} height={1} className={tones[p.tone]} />);
+  return cells.map((p) => <rect key={`${p.x}-${p.y}`} x={p.x} y={p.y} width={1} height={1} fill={fills[p.tone]} />);
 }
 
 function Half({ side, open }: { side: "left" | "right"; open: boolean }) {
-  const cells = pixels.filter((p) => p.tone !== "paper" && (side === "left" ? p.x < MID : p.x >= MID));
-  const shift = side === "left" ? "-translate-x-[18%] -rotate-[18deg]" : "translate-x-[18%] rotate-[18deg]";
+  const cells = pixels.filter((p) => (side === "left" ? p.x < crack(p.y) : p.x >= crack(p.y)));
+  const shift = side === "left" ? "-translate-x-[14%] -rotate-[14deg]" : "translate-x-[14%] rotate-[14deg]";
   return (
     <g
       className={`transition-transform duration-500 ease-out [transform-box:fill-box] ${
@@ -66,8 +106,13 @@ export function FortuneCookie() {
   const [fortune, setFortune] = useState<{ text: string; numbers: number[] } | null>(null);
   const last = useRef(-1);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
+  const sound = useRef<HTMLAudioElement>(null);
 
   function crack() {
+    // Loaded on the first crack rather than with the page, and only ever after a click.
+    sound.current ??= new Audio("/sounds/egg-crack.mp3");
+    sound.current.currentTime = 0;
+    sound.current.play().catch(() => {});
     let i = Math.floor(Math.random() * fortunes.length);
     if (i === last.current) i = (i + 1) % fortunes.length;
     last.current = i;
@@ -92,16 +137,13 @@ export function FortuneCookie() {
         className="group cursor-pointer p-4 outline-none"
       >
         <svg
-          viewBox={`-6 -2 ${W + 12} ${H + 4}`}
+          viewBox={`-8 -2 ${W + 16} ${H + 4}`}
           shapeRendering="crispEdges"
           className={`w-64 transition-transform duration-300 sm:w-80 ${
             open ? "" : "group-hover:-rotate-3 group-hover:scale-105 group-focus-visible:scale-105"
           }`}
           aria-hidden
         >
-          <g className={`transition-opacity duration-200 ${open ? "opacity-0" : ""}`}>
-            <Cells cells={pixels.filter((p) => p.tone === "paper")} />
-          </g>
           <Half side="left" open={open} />
           <Half side="right" open={open} />
         </svg>

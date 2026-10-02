@@ -11,9 +11,8 @@
   --soft: #f0b3cf;
   --pale: #fbe3ee;
   --ink: #2d1b55;
-  /* Secondary accent, used sparingly (the fortune cookie). Pink stays the brand colour. */
+  /* Secondary accent, used sparingly (the fortune cookie's prompt). Pink stays the brand colour. */
   --yellow: #f2c94c;
-  --amber: #c9972b;
 }
 
 @theme inline {
@@ -28,7 +27,6 @@
   --color-pale: var(--pale);
   --color-ink: var(--ink);
   --color-yellow: var(--yellow);
-  --color-amber: var(--amber);
   --font-sans: var(--font-geist-sans), system-ui, sans-serif;
   --font-mono: var(--font-geist-mono), ui-monospace, monospace;
   --font-pixel: var(--font-geist-pixel), var(--font-geist-mono), ui-monospace, monospace;

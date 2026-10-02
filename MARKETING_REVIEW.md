@@ -43,7 +43,7 @@ Everything below is built and checked locally (desktop and mobile). It goes live
 
 **Ask:** An interactive fortune cookie. Click it, it cracks open and shows a random line.
 
-**Built:** A "Quantum fortune" section on the homepage (after Programs). Click the pixel cookie and it cracks in two, and a fortune slides out with lucky numbers. Click again for a new one. 30 quantum-themed fortunes.
+**Built:** A "Quantum fortune" section on the homepage (after Programs). A kawaii pixel chocolate chip cookie: click it, it snaps in two with a crack sound, and a fortune slides out with lucky numbers. Click again for a new one. 30 quantum-themed fortunes.
 
 **To edit the fortunes:** `src/content/fortunes.ts`.
 
@@ -89,7 +89,7 @@ Changed from `instagram.com/quantumx.school` to [instagram.com/quantumx.foundati
 
 **Ask:** Think about Community branding. Pink is the favourite, yellow is also an option.
 
-**Done:** Pink stays the brand colour. Yellow is added as a secondary accent and used only on the fortune cookie, so we can see how it feels before using it anywhere else.
+**Done:** Pink stays the brand colour. Yellow is added as a secondary accent and used only on the fortune cookie's "Tap to crack it open" prompt, so we can see how it feels before using it anywhere else.
 
 **Still needed:**
 - ⬜ Her call: keep yellow as that one-off accent, use it more widely, or drop it.
