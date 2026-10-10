@@ -9,7 +9,8 @@
     <!--
       Netlify detects forms by parsing static HTML at build time, so it cannot
       see forms rendered by React. This file declares them; the real ones at
-      /chapters/apply, /events/support, /crew and /gigs post here. Keep the field names in
+      /chapters/apply, /events/support, /crew and /gigs (and every
+      "Join the Discord" button) post here. Keep the field names in
       sync with src/lib/forms.ts.
     -->
     <form name="chapter-application" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
@@ -79,6 +80,14 @@
       <textarea name="about"></textarea>
       <input type="text" name="contact" />
       <input type="email" name="email" />
+    </form>
+
+    <form name="discord" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="discord" />
+      <input type="text" name="bot-field" />
+      <input type="email" name="email" />
+      <input type="text" name="source" />
+      <input type="text" name="ref" />
     </form>
   </body>
 </html>

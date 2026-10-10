@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { LogoMark } from "./logo-mark";
 import { container } from "./ui";
-import { DISCORD_URL, navLinks } from "@/lib/site";
+import { navLinks } from "@/lib/site";
 
 export function SiteHeader() {
   return (
@@ -18,14 +18,9 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <a
-          href={DISCORD_URL}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="font-pixel text-sm uppercase tracking-[0.2em] text-pink hover:text-fg"
-        >
-          Discord ↗
-        </a>
+        <Link href="/join" className="font-pixel text-sm uppercase tracking-[0.2em] text-pink hover:text-fg">
+          Discord →
+        </Link>
       </div>
       <nav aria-label="Main (mobile)" className="-mx-4 mt-4 flex gap-5 overflow-x-auto px-4 text-sm text-muted [scrollbar-width:none] md:hidden">
         {navLinks.map((link) => (

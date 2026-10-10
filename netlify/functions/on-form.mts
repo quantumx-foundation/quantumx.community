@@ -86,7 +86,10 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
 const handlers = {
   async formSubmitted(event: FormSubmittedEvent) {
     const data = (event.data ?? {}) as Submission;
-    const form = forms[String(data["form-name"] ?? "")];
+    const name = String(data["form-name"] ?? "");
+    // Discord signups are only collected; Netlify keeps them, nobody needs an email.
+    if (name === "discord") return;
+    const form = forms[name];
     if (!form) {
       console.warn("No alert is configured for form:", data["form-name"]);
       return;

@@ -2,9 +2,9 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "./ui";
+import { DiscordGate, unlockDiscord } from "./discord-gate";
 import { FORM_ACTION, type Field, type FormSpec } from "@/lib/forms";
-import { DISCORD_URL, EVENTS_EMAIL } from "@/lib/site";
+import { EVENTS_EMAIL } from "@/lib/site";
 
 const inputClass =
   "mt-3 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink";
@@ -73,6 +73,8 @@ export function ApplyForm({ form }: { form: FormSpec }) {
         body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
       });
       if (!response.ok) throw new Error(String(response.status));
+      // They just gave us their email, so the Discord button needn't ask again.
+      if (data.get("email")) unlockDiscord();
       setStatus("sent");
     } catch {
       setStatus("error");
@@ -85,7 +87,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
         <p className="font-pixel text-3xl text-pink">{form.done.title}</p>
         <p className="mt-6 max-w-xl text-muted">{form.done.body}</p>
         <div className="mt-8">
-          <Button href={DISCORD_URL}>Join the Discord</Button>
+          <DiscordGate source="form" />
         </div>
       </div>
     );

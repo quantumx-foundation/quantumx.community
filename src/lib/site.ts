@@ -4,7 +4,7 @@ export const DISCORD_URL = "https://discord.gg/2w3pgqTQY";
 export const GA_MEASUREMENT_ID = "G-E3ZQDVV4WE";
 
 /**
- * Short links (/join, /discord) that redirect to Discord.
+ * Invite URLs handed out once someone gives their email (see DiscordGate).
  *
  * Discord reports uses per invite code, not per query string, so the only way
  * to see how many people arrive through each link is to create a separate

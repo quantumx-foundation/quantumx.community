@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { BitStrip } from "./animations";
+import { DiscordGate } from "./discord-gate";
 import { LogoMark } from "./logo-mark";
 import { PixelLogo } from "./pixel-logo";
-import { Button, container } from "./ui";
-import { DISCORD_URL, EVENTS_EMAIL, FOUNDATION_URL, formingChapters, liveChapters, listNames, navLinks, socials } from "@/lib/site";
+import { container } from "./ui";
+import { EVENTS_EMAIL, FOUNDATION_URL, formingChapters, liveChapters, listNames, navLinks, socials } from "@/lib/site";
 
 const more = [
   { label: "Start a chapter", href: "/chapters/apply" },
@@ -27,7 +28,7 @@ export function SiteFooter() {
             .
           </p>
           <div className="mt-8">
-            <Button href={DISCORD_URL}>Join the Discord</Button>
+            <DiscordGate source="footer" />
           </div>
         </div>
         <div>

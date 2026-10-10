@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { inviteFor } from "@/lib/site";
 
 // Always run on request so the hit shows up in logs and analytics.
 export const dynamic = "force-dynamic";
 
-/** Short link: quantumx.community/discord -> the Discord invite. */
+/** Short link: quantumx.community/discord -> /join, which asks for an email before the invite. */
 export function GET(request: Request) {
-  const ref = new URL(request.url).searchParams.get("ref");
+  const url = new URL(request.url);
+  const ref = url.searchParams.get("ref");
   console.log(`short-link /discord${ref ? ` ref=${ref}` : ""}`);
-  return NextResponse.redirect(inviteFor("discord", ref), 307);
+  return NextResponse.redirect(new URL(`/join${url.search}`, url), 307);
 }

@@ -3,6 +3,7 @@ import Link from "next/link";
 import { CircuitStrip } from "@/components/animations";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { CrewGrid } from "@/components/crew";
+import { DiscordGate } from "@/components/discord-gate";
 import { EventRow, EventTableHead } from "@/components/event-row";
 import { EventSupportPanel } from "@/components/event-support";
 import { FortuneCookie } from "@/components/fortune-cookie";
@@ -21,7 +22,6 @@ import { news } from "@/content/news";
 import { speakers } from "@/content/speakers";
 import { hosts, proof } from "@/lib/proof";
 import {
-  DISCORD_URL,
   FOUNDATION_URL,
   SITE_URL,
   chapters,
@@ -30,6 +30,7 @@ import {
   listCities,
   liveChapters,
   listNames,
+  socials,
 } from "@/lib/site";
 
 // Upcoming vs past is decided at render time; refresh daily.
@@ -41,7 +42,7 @@ const jsonLd = {
   name: "QuantumX Community",
   url: SITE_URL,
   logo: `${SITE_URL}/app-icon.png`,
-  sameAs: [DISCORD_URL],
+  sameAs: socials.map((s) => s.href),
   parentOrganization: { "@type": "Organization", name: "QuantumX Foundation", url: FOUNDATION_URL },
   areaServed: chapters.map((c) => c.name),
 };
@@ -106,7 +107,7 @@ export default function Home() {
             <span className="text-muted"> Everything starts on Discord.</span>
           </p>
           <div className="mt-8 flex flex-col items-start gap-4">
-            <Button href={DISCORD_URL}>Join the Discord</Button>
+            <DiscordGate source="home" />
             <Link href="/events" className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-pink">
               See upcoming events →
             </Link>

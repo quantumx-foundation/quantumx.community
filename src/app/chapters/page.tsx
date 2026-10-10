@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { ChapterGrid, ChapterTable, CityBoard } from "@/components/chapters";
+import { DiscordGate } from "@/components/discord-gate";
 import { NewsCard } from "@/components/news-card";
 import { Button, PageHero, Tag, container } from "@/components/ui";
 import { WorldMap } from "@/components/world-map";
 import { news } from "@/content/news";
 import {
-  DISCORD_URL,
   FNB_URL,
   formingChapters,
   formingCities,
@@ -155,7 +155,7 @@ export default function ChaptersPage() {
         </ol>
         <div className="mt-16 flex flex-wrap gap-4">
           <Button href="/chapters/apply">Apply to start a chapter</Button>
-          <Button href={DISCORD_URL}>Say hello on Discord</Button>
+          <DiscordGate label="Say hello on Discord" source="chapters" />
         </div>
       </section>
 
