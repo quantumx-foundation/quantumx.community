@@ -10,6 +10,7 @@ const more = [
   { label: "Start a chapter", href: "/chapters/apply" },
   { label: "Volunteer", href: "/crew" },
   { label: "Event support", href: "/events/support" },
+  { label: "Qubit Blaster", href: "/game" },
   { label: "Code of conduct", href: "/code-of-conduct" },
 ];
 

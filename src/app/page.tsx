@@ -11,6 +11,7 @@ import { NewsCard } from "@/components/news-card";
 import { PhotoStrip } from "@/components/photo-strip";
 import { PixelLogo } from "@/components/pixel-logo";
 import { Programs } from "@/components/programs";
+import { QubitPreview } from "@/components/qubit-preview";
 import { QuantumLoops } from "@/components/quantum-loops";
 import { SpeakerGrid } from "@/components/speaker-grid";
 import { Button, SectionHeading, Stat, Tag, container } from "@/components/ui";
@@ -285,6 +286,25 @@ export default function Home() {
       {/* Programs */}
       <section id="programs" className={`${container} scroll-mt-8 py-24`}>
         <Programs />
+      </section>
+
+      {/* Game */}
+      <section aria-labelledby="game-title" className={`${container} py-24`}>
+        <div className="grid items-center gap-10 border border-line p-6 sm:p-10 md:grid-cols-2">
+          <div>
+            <h2 id="game-title" className="text-4xl tracking-tight sm:text-5xl">
+              Qubit Blaster
+            </h2>
+            <p className="mt-4 max-w-sm text-muted">
+              A tiny arcade game about qubits. Match 0 and 1, measure a superposition and watch an entangled pair
+              collapse together. Two minutes, no maths, works on your phone.
+            </p>
+            <div className="mt-8">
+              <Button href="/game">Play now</Button>
+            </div>
+          </div>
+          <QubitPreview />
+        </div>
       </section>
 
       {/* Fortune cookie */}

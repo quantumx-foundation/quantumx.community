@@ -127,3 +127,42 @@ body {
   background-repeat: no-repeat;
   background-size: 0.75rem;
 }
+
+/* Homepage Qubit Blaster preview: a superposed qubit shows 0 and 1 in turn. */
+.qubit-flicker {
+  animation: qubit-flicker 0.25s steps(1, end) infinite;
+}
+
+.qubit-flicker-alt {
+  animation-name: qubit-flicker-alt;
+}
+
+@keyframes qubit-flicker {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+@keyframes qubit-flicker-alt {
+  0%,
+  100% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .qubit-flicker {
+    animation: none;
+  }
+
+  .qubit-flicker-alt {
+    opacity: 0;
+  }
+}
