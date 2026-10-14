@@ -170,10 +170,20 @@ export function QuantumShooter() {
 
     canvas.focus();
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
-    canvas.width = W * dpr;
-    canvas.height = H * dpr;
-    ctx.scale(dpr, dpr);
+    // The game is laid out in a fixed W×H space; the backing store follows the
+    // size the canvas is actually shown at, so it stays sharp however large
+    // the layout lets it grow. `scale` maps game units to device pixels.
+    let scale = 1;
+    function fit() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const shown = canvas!.getBoundingClientRect().width || W;
+      scale = (shown / W) * dpr;
+      canvas!.width = Math.round(W * scale);
+      canvas!.height = Math.round(H * scale);
+    }
+    fit();
+    const resize = new ResizeObserver(fit);
+    resize.observe(canvas);
 
     const font =
       getComputedStyle(document.documentElement).getPropertyValue("--font-geist-mono").trim() ||
@@ -464,6 +474,7 @@ export function QuantumShooter() {
 
     function draw() {
       const c = ctx!;
+      c.setTransform(scale, 0, 0, scale, 0, 0);
       c.fillStyle = C.ground;
       c.fillRect(0, 0, W, H);
 
@@ -499,8 +510,9 @@ export function QuantumShooter() {
         c.lineTo(92, 345);
         c.stroke();
         c.setLineDash([]);
+        // Same seed: an entangled pair always shows the same value.
         drawQubit(48, 345, null, 1);
-        drawQubit(92, 345, null, 2);
+        drawQubit(92, 345, null, 1);
         text("Entangled: measure", 120, 337, { align: "left" });
         text("one, both match.", 120, 355, { align: "left", color: C.dim });
 
@@ -536,7 +548,12 @@ export function QuantumShooter() {
       }
       c.setLineDash([]);
 
-      for (const q of qubits) drawQubit(q.x, q.y, q.state, q.id, q.flash);
+      // An entangled pair shares one flicker seed, so the two always show the
+      // same value, which is the whole point of entanglement.
+      for (const q of qubits) {
+        const seed = q.partner === null ? q.id : Math.min(q.id, q.partner);
+        drawQubit(q.x, q.y, q.state, seed, q.flash);
+      }
 
       for (const b of bullets) {
         c.fillStyle = stateColor(b.mode);
@@ -699,6 +716,7 @@ export function QuantumShooter() {
 
     return () => {
       cancelAnimationFrame(raf);
+      resize.disconnect();
       canvas.removeEventListener("pointerdown", onPointerDown);
       canvas.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerUp);
@@ -722,9 +740,9 @@ export function QuantumShooter() {
         tabIndex={-1}
         style={{ outline: "none", WebkitTouchCallout: "none" }}
         aria-label="Qubit Blaster game. Use the mouse or arrow keys to move, click or Space to fire, X to switch state."
-        className="block aspect-[2/3] w-full max-w-[min(100%,calc((100dvh_-_8.5rem)*2/3))] sm:max-w-[min(400px,calc((100svh_-_15rem)*2/3))] cursor-crosshair touch-none select-none"
+        className="block aspect-[2/3] w-full max-w-[min(100%,calc((100dvh_-_8.5rem)*2/3))] sm:w-[min(600px,calc(100vw_-_4rem),calc((100svh_-_12.5rem)*2/3))] sm:max-w-none cursor-crosshair touch-none select-none"
       />
-      <div className="flex w-full max-w-[min(100%,calc((100dvh_-_8.5rem)*2/3))] gap-2 sm:max-w-[min(400px,calc((100svh_-_15rem)*2/3))]">
+      <div className="flex w-full max-w-[min(100%,calc((100dvh_-_8.5rem)*2/3))] gap-2 sm:w-[min(600px,calc(100vw_-_4rem),calc((100svh_-_12.5rem)*2/3))] sm:max-w-none">
         <button
           type="button"
           // Switches on touch-down, not click: a phone player is often holding

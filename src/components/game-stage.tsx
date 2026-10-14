@@ -26,7 +26,7 @@ export function GameStage() {
     <section
       ref={stage}
       aria-label="Qubit Blaster, a quantum game"
-      className="mx-auto flex min-h-dvh w-full max-w-md flex-col px-4 pb-4 sm:min-h-0 sm:pb-12"
+      className="mx-auto flex min-h-dvh w-full max-w-md flex-col sm:w-fit sm:max-w-none px-4 pb-4 sm:min-h-0 sm:pb-12"
     >
       <h1 className="flex items-center gap-2.5 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink">
         <LogoMark className="h-4 w-auto" />
