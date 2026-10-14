@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Geist_Pixel } from "next/font/google";
 import Script from "next/script";
 import { formingChapters, GA_MEASUREMENT_ID, liveChapters, listNames } from "@/lib/site";
+import { SiteChrome } from "@/components/site-chrome";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 import "./globals.css";
@@ -54,9 +55,13 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       className={`${geistSans.variable} ${geistMono.variable} ${geistPixel.variable} h-full antialiased`}
     >
       <body className="flex min-h-full flex-col font-sans">
-        <SiteHeader />
+        <SiteChrome>
+          <SiteHeader />
+        </SiteChrome>
         <main className="flex-1">{children}</main>
-        <SiteFooter />
+        <SiteChrome>
+          <SiteFooter />
+        </SiteChrome>
         <Script src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} />
         <Script id="gtag-init">
           {`window.dataLayer = window.dataLayer || [];
