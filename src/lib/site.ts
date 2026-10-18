@@ -1,4 +1,4 @@
-export const DISCORD_URL = "https://discord.gg/2w3pgqTQY";
+export const DISCORD_URL = "https://discord.gg/gFZvXRsxr";
 
 /** Google Analytics 4 measurement ID. Public by design: it ships in the HTML. */
 export const GA_MEASUREMENT_ID = "G-E3ZQDVV4WE";

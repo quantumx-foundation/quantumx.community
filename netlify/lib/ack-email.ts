@@ -13,7 +13,7 @@ import { gigRole } from "./gig-email.js";
 import { volunteerPlace } from "./volunteer-email.js";
 
 /** Kept in step with DISCORD_URL in src/lib/site.ts. */
-const DISCORD_URL = "https://discord.gg/2w3pgqTQY";
+const DISCORD_URL = "https://discord.gg/gFZvXRsxr";
 
 export type Ack = { subject: string; html: string; text: string };
 
