@@ -12,8 +12,8 @@ import { eventTitle } from "./event-email.js";
 import { gigRole } from "./gig-email.js";
 import { volunteerPlace } from "./volunteer-email.js";
 
-/** Kept in step with DISCORD_URL in src/lib/site.ts. */
-const DISCORD_URL = "https://discord.gg/gFZvXRsxr";
+/** Kept in step with DISCORD_URL in src/lib/site.ts, tagged the way inviteFor() tags the site's links. */
+const DISCORD_URL = "https://discord.gg/gFZvXRsxr?utm_source=quantumx.community&utm_medium=email";
 
 export type Ack = { subject: string; html: string; text: string };
 
