@@ -114,7 +114,7 @@ function GateForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="mt-2 inline-flex cursor-pointer items-center justify-center gap-3 border border-purple bg-purple px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="mt-2 inline-flex cursor-pointer items-center justify-center gap-3 border border-purple bg-purple px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-colors hover:border-ink hover:bg-ink disabled:opacity-60"
         >
           {status === "sending" ? "Sending..." : "Get invite"}
         </button>
