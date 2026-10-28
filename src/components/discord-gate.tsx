@@ -176,9 +176,21 @@ export function DiscordGate({
   }
 
   // Only called once unlocked, which never happens on the server: it reads window.location.
-  const invite = () => <Button href={inviteFor(currentFrom() ?? source, currentRef())}>{label}</Button>;
+  const invite = () => (
+    <Button filled href={inviteFor(currentFrom() ?? source, currentRef())}>
+      {label}
+    </Button>
+  );
 
-  if (!ask) return unlocked ? invite() : <Button href={`/join?from=${source}`}>{label}</Button>;
+  if (!ask) {
+    return unlocked ? (
+      invite()
+    ) : (
+      <Button filled href={`/join?from=${source}`}>
+        {label}
+      </Button>
+    );
+  }
 
   if (!unlocked) return <GateForm source={source} status={status} attempt={attempt} onSubmit={onSubmit} />;
 

@@ -2,11 +2,22 @@ import Link from "next/link";
 
 export const container = "mx-auto w-full max-w-6xl px-4 sm:px-8";
 
-const buttonClass =
-  "inline-flex items-center gap-3 border border-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-purple transition-colors hover:bg-purple hover:text-bg focus-visible:bg-purple focus-visible:text-bg focus-visible:outline-none";
+const buttonBase =
+  "inline-flex items-center gap-3 border border-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] transition-colors focus-visible:outline-none";
+const outlineClass = `${buttonBase} text-purple hover:bg-purple hover:text-bg focus-visible:bg-purple focus-visible:text-bg`;
+const filledClass = `${buttonBase} bg-purple text-bg hover:border-ink hover:bg-ink focus-visible:border-ink focus-visible:bg-ink`;
 
-/** Outline pixel button. External hrefs open in a new tab with an ↗. */
-export function Button({ href, children }: { href: string; children: React.ReactNode }) {
+/** Outline pixel button, or `filled` for the main call to action. External hrefs open in a new tab with an ↗. */
+export function Button({
+  href,
+  children,
+  filled = false,
+}: {
+  href: string;
+  children: React.ReactNode;
+  filled?: boolean;
+}) {
+  const buttonClass = filled ? filledClass : outlineClass;
   if (href.startsWith("http") || href.startsWith("mailto:")) {
     return (
       <a href={href} target="_blank" rel="noopener noreferrer" className={buttonClass}>
