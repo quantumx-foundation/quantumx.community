@@ -47,7 +47,7 @@ export const events: EventItem[] = [
     country: "in",
     kind: "Hackathon",
     image: "/images/events/qiskit-fall-fest-2026-quantum-hack-day-kochi.webp",
-    url: "https://luma.com/ndjvmw7w",
+    url: "https://qff26.quantumx.foundation/kochi-hack",
   },
   {
     title: "Qiskit Fall Fest 2026: Quantum and Qiskit 101",

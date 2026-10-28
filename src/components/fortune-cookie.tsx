@@ -139,7 +139,7 @@ export function FortuneCookie() {
         <svg
           viewBox={`-8 -2 ${W + 16} ${H + 4}`}
           shapeRendering="crispEdges"
-          className={`w-64 transition-transform duration-300 sm:w-80 ${
+          className={`w-48 transition-transform duration-300 min-[360px]:w-64 sm:w-80 ${
             open ? "" : "group-hover:-rotate-3 group-hover:scale-105 group-focus-visible:scale-105"
           }`}
           aria-hidden
