@@ -13,7 +13,7 @@
 import { renderNote } from "./email.js";
 
 /** Kept in step with DISCORD_URL in src/lib/site.ts, tagged the way inviteFor() tags the site's links. */
-const DISCORD_URL = "https://discord.gg/gFZvXRsxr?utm_source=quantumx.community&utm_medium=email";
+const DISCORD_URL = "https://discord.gg/xC6h4ZfzEP?utm_source=quantumx.community&utm_medium=email";
 
 export type Ack = { subject: string; html: string; text: string };
 
@@ -95,6 +95,20 @@ export function volunteerAck(): Ack {
       "Join the Discord in the meantime: that is where the crew plans each event.",
     ],
     because: "Someone signed up to volunteer on quantumx.community with this address.",
+  });
+}
+
+export function speakerAck(): Ack {
+  return ack({
+    subject: "Your QuantumX speaker application",
+    eyebrow: "Application received",
+    heading: "Thanks for offering to speak at QuantumX.",
+    preheader: "We'll be in touch when there's a session that fits.",
+    lines: [
+      "We'll be in touch when there's a session that fits, usually within a couple of weeks.",
+      "Join the Discord in the meantime: that is where chapters look for speakers.",
+    ],
+    because: "Someone applied to speak at QuantumX on quantumx.community with this address.",
   });
 }
 
