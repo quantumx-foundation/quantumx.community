@@ -23,16 +23,62 @@ export default function HackathonPage() {
         ))}
       </section>
 
-      <div className="relative h-56 sm:h-96">
-        <Image
-          src={hackathon.banner}
-          alt="Startup Park Bengaluru, the venue for QX Hack"
-          fill
-          preload
-          sizes="100vw"
-          className="object-cover"
-        />
-      </div>
+      {/* Venue */}
+      <section aria-labelledby="venue-title" className={`${container} py-8`}>
+        <div className="grid border border-line bg-panel lg:grid-cols-[2fr_3fr]">
+          <div className="relative aspect-square lg:aspect-auto">
+            <Image
+              src={hackathon.poster}
+              alt="Quantum for Social Good Hackathon poster"
+              fill
+              preload
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="relative p-6 pt-14 sm:p-10 sm:pt-16">
+            <div className="absolute left-0 top-0">
+              <Tag>Hosted with</Tag>
+            </div>
+            {/* White-on-transparent logo, inverted for the light panel. */}
+            <div className="relative h-14 w-56 sm:h-16 sm:w-64">
+              <Image src={hackathon.banner} alt="" fill sizes="256px" className="object-contain object-left invert" />
+            </div>
+            <h2 id="venue-title" className="mt-8 text-3xl tracking-tight sm:text-4xl">
+              {hackathon.venue}
+            </h2>
+            <p className="mt-4 max-w-lg text-muted">
+              One room, one day: teams built side by side from the morning kickoff to the final pitches, with
+              mentors on the floor and food on us.
+            </p>
+            <dl className="mt-10 border-t border-line">
+              {[
+                { key: "Date", value: hackathon.date },
+                ...hackathon.format.filter((row) => row.key === "Mode" || row.key === "Entry"),
+              ].map((row) => (
+                <div
+                  key={row.key}
+                  className="grid grid-cols-[6rem_minmax(0,1fr)] gap-4 border-b border-line py-4 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6"
+                >
+                  <dt className="font-mono text-sm uppercase text-muted">{row.key}</dt>
+                  <dd>{row.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Button href={hackathon.lumaUrl}>Event page</Button>
+              <a
+                href={hackathon.venueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-purple"
+              >
+                Get directions ↗
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section aria-labelledby="winners-title" className={`${container} py-24`}>
         <h2 id="winners-title" className="text-4xl tracking-tight sm:text-5xl">
