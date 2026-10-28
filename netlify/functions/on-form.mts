@@ -95,6 +95,30 @@ async function passesTurnstile(token: string | undefined) {
   }
 }
 
+/** A field only that form has, for when Netlify hands over the fields without the form's name. */
+const telltales: [field: string, form: string][] = [
+  ["plan", "chapter-application"],
+  ["organiser", "event-support"],
+  ["availability", "volunteer"],
+  ["role", "gig"],
+  ["source", "discord"],
+];
+
+/**
+ * The form's name and its fields. Netlify strips form-name from the fields
+ * and keeps it as form_name on the submission, and the event may carry
+ * either the fields alone or the whole submission with the fields under
+ * data, so every shape is tried before falling back to telltale fields.
+ */
+function readSubmission(event: FormSubmittedEvent) {
+  const outer = (event.data ?? {}) as Record<string, unknown>;
+  const inner = outer.data && typeof outer.data === "object" ? (outer.data as Record<string, unknown>) : undefined;
+  const data = (inner ?? outer) as Submission;
+  const declared = outer.form_name ?? (event as unknown as Record<string, unknown>).form_name ?? data["form-name"];
+  const name = typeof declared === "string" && declared ? declared : telltales.find(([field]) => field in data)?.[1] ?? "";
+  return { name, data };
+}
+
 /**
  * Posts one email through Resend. Never throws: a failed acknowledgement must
  * not take the alert down with it, and the submission is already saved either way.
@@ -135,13 +159,13 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
  */
 const handlers = {
   async formSubmitted(event: FormSubmittedEvent) {
-    const data = (event.data ?? {}) as Submission;
-    const name = String(data["form-name"] ?? "");
+    const { name, data } = readSubmission(event);
     // Discord signups are only collected; Netlify keeps them, nobody needs an email.
     if (name === "discord") return;
     const form = forms[name];
     if (!form) {
-      console.warn("No alert is configured for form:", data["form-name"]);
+      // Names only, never values: these logs are not the place for applicants' details.
+      console.warn("No alert is configured for form:", name || "(unknown)", "fields:", Object.keys(data).join(", "));
       return;
     }
 
