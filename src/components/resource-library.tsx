@@ -33,7 +33,7 @@ export function ResourceLibrary() {
               aria-pressed={type === t}
               onClick={() => setType(t)}
               className={`cursor-pointer border px-3 py-1.5 font-pixel text-xs uppercase tracking-widest transition-colors ${
-                type === t ? "border-pink bg-pink text-ink" : "border-line text-muted hover:border-pink hover:text-fg"
+                type === t ? "border-pink bg-pink text-bg" : "border-line text-muted hover:border-pink hover:text-fg"
               }`}
             >
               {t}

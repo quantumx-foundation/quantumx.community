@@ -6,18 +6,26 @@ import { PixelLogo } from "./pixel-logo";
 import { container } from "./ui";
 import { EVENTS_EMAIL, FOUNDATION_URL, formingChapters, liveChapters, listNames, navLinks, socials } from "@/lib/site";
 
-const more = [
-  { label: "Start a chapter", href: "/chapters/apply" },
-  { label: "Volunteer", href: "/crew" },
-  { label: "Event support", href: "/events/support" },
-  { label: "Qubit Blaster", href: "/game" },
-  { label: "Code of conduct", href: "/code-of-conduct" },
+const groups = [
+  {
+    title: "Explore",
+    links: [...navLinks, { label: "Qubit Blaster", href: "/game" }],
+  },
+  {
+    title: "Get involved",
+    links: [
+      { label: "Start a chapter", href: "/chapters/apply" },
+      { label: "Volunteer", href: "/crew" },
+      { label: "Event support", href: "/events/support" },
+      { label: "Code of conduct", href: "/code-of-conduct" },
+    ],
+  },
 ];
 
 export function SiteFooter() {
   return (
     <footer className="mt-24">
-      <div className={`${container} grid gap-12 py-16 md:grid-cols-[1.4fr_1fr_1fr]`}>
+      <div className={`${container} grid gap-12 py-16 lg:grid-cols-[1.4fr_3fr]`}>
         <div>
           <LogoMark className="mb-6 h-10 w-auto text-pink" />
           <PixelLogo size="sm" />
@@ -32,34 +40,38 @@ export function SiteFooter() {
             <DiscordGate source="footer" />
           </div>
         </div>
-        <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-muted">Community</p>
-          <ul className="mt-4 space-y-3">
-            {[...navLinks, ...more].map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="hover:text-pink">
-                  {link.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div>
-          <p className="font-mono text-xs uppercase tracking-wider text-muted">Elsewhere</p>
-          <ul className="mt-4 space-y-3">
-            {socials.map((link) => (
-              <li key={link.href}>
-                <a href={link.href} target="_blank" rel="noopener noreferrer" className="hover:text-pink">
-                  {link.label} ↗
+        <div className="grid grid-cols-2 gap-12 sm:grid-cols-3">
+          {groups.map((group) => (
+            <div key={group.title}>
+              <p className="font-mono text-xs uppercase tracking-wider text-muted">{group.title}</p>
+              <ul className="mt-4 space-y-3">
+                {group.links.map((link) => (
+                  <li key={link.href}>
+                    <Link href={link.href} className="hover:text-pink">
+                      {link.label}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+          <div>
+            <p className="font-mono text-xs uppercase tracking-wider text-muted">Elsewhere</p>
+            <ul className="mt-4 space-y-3">
+              {socials.map((link) => (
+                <li key={link.href}>
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="hover:text-pink">
+                    {link.label} ↗
+                  </a>
+                </li>
+              ))}
+              <li>
+                <a href={`mailto:${EVENTS_EMAIL}`} className="break-all hover:text-pink">
+                  {EVENTS_EMAIL}
                 </a>
               </li>
-            ))}
-            <li>
-              <a href={`mailto:${EVENTS_EMAIL}`} className="hover:text-pink">
-                {EVENTS_EMAIL}
-              </a>
-            </li>
-          </ul>
+            </ul>
+          </div>
         </div>
       </div>
       <p className={`${container} pb-8 text-sm text-muted`}>© {new Date().getFullYear()} QuantumX Community</p>

@@ -196,7 +196,7 @@ export function JobBoard({ gigs }: { gigs: Gig[] }) {
           <button
             type="button"
             onClick={() => setShown((n) => n + PAGE)}
-            className="cursor-pointer border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-ink"
+            className="cursor-pointer border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg"
           >
             Show more ({results.length - shown} left)
           </button>

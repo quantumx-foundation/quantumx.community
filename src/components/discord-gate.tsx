@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useSyncExternalStore } from "react";
+import { useRef, useState, useSyncExternalStore } from "react";
 import { Button } from "./ui";
 import { FORM_ACTION } from "@/lib/forms";
 import { inviteFor } from "@/lib/site";
@@ -9,7 +9,7 @@ import { inviteFor } from "@/lib/site";
 const UNLOCK_KEY = "qx-discord-unlocked";
 
 const buttonClass =
-  "inline-flex cursor-pointer items-center gap-3 border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-ink focus-visible:bg-pink focus-visible:text-ink focus-visible:outline-none disabled:opacity-60";
+  "inline-flex cursor-pointer items-center gap-3 border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg focus-visible:bg-pink focus-visible:text-bg focus-visible:outline-none disabled:opacity-60";
 
 function isUnlocked() {
   try {
@@ -44,56 +44,23 @@ function currentRef() {
   return new URLSearchParams(window.location.search).get("ref");
 }
 
-/**
- * "Join the Discord", behind an email. The first click opens an email field;
- * once it's sent to the "discord" Netlify form the button becomes the invite.
- * `source` tags the invite and the submission with where the visitor came from.
- */
-export function DiscordGate({
-  label = "Join the Discord",
-  source = "site",
-  ask = false,
+const inputClass =
+  "mt-2 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink";
+
+type Status = "idle" | "sending" | "error";
+
+/** Name and email, posted to the "discord" Netlify form. Used inline on /join and inside the popup. */
+function GateForm({
+  source,
+  status,
+  autoFocus,
+  onSubmit,
 }: {
-  label?: string;
-  source?: string;
-  /** Show the email field straight away rather than behind a first click. */
-  ask?: boolean;
+  source: string;
+  status: Status;
+  autoFocus: boolean;
+  onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }) {
-  const [status, setStatus] = useState<"locked" | "asking" | "sending" | "error">(ask ? "asking" : "locked");
-  // The server can't see localStorage, so it always renders the locked gate.
-  const unlocked = useSyncExternalStore(subscribe, isUnlocked, () => false);
-
-  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    setStatus("sending");
-    const data = new FormData(event.currentTarget);
-    data.set("ref", currentRef() ?? "");
-    try {
-      const response = await fetch(FORM_ACTION, {
-        method: "POST",
-        headers: { "Content-Type": "application/x-www-form-urlencoded" },
-        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
-      });
-      if (!response.ok) throw new Error(String(response.status));
-      unlockDiscord();
-    } catch {
-      setStatus("error");
-    }
-  }
-
-  if (unlocked) {
-    return <Button href={inviteFor(source, currentRef())}>{label}</Button>;
-  }
-
-  if (status === "locked") {
-    return (
-      <button type="button" onClick={() => setStatus("asking")} className={buttonClass}>
-        {label}
-        <span aria-hidden>→</span>
-      </button>
-    );
-  }
-
   return (
     <form
       name="discord"
@@ -111,28 +78,40 @@ export function DiscordGate({
           Leave this empty <input name="bot-field" tabIndex={-1} autoComplete="off" />
         </label>
       </p>
-      <label className="block">
-        <span className="font-mono text-xs uppercase tracking-wider text-muted">Your email, and the invite is yours</span>
-        <div className="mt-3 flex flex-col gap-3 sm:flex-row">
+      <div className="grid gap-4">
+        <label className="block">
+          <span className="font-mono text-xs uppercase tracking-wider text-muted">Your name</span>
+          <input
+            type="text"
+            name="name"
+            required
+            autoFocus={autoFocus}
+            autoComplete="name"
+            maxLength={200}
+            placeholder="Ada Lovelace"
+            className={inputClass}
+          />
+        </label>
+        <label className="block">
+          <span className="font-mono text-xs uppercase tracking-wider text-muted">Your email</span>
           <input
             type="email"
             name="email"
             required
-            autoFocus={!ask}
             autoComplete="email"
             maxLength={254}
             placeholder="you@example.com"
-            className="min-w-0 flex-1 border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink"
+            className={inputClass}
           />
-          <button
-            type="submit"
-            disabled={status === "sending"}
-            className="inline-flex cursor-pointer items-center justify-center gap-3 border border-pink bg-pink px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-ink transition-opacity hover:opacity-90 disabled:opacity-60"
-          >
-            {status === "sending" ? "Sending..." : "Get invite"}
-          </button>
-        </div>
-      </label>
+        </label>
+        <button
+          type="submit"
+          disabled={status === "sending"}
+          className="mt-2 inline-flex cursor-pointer items-center justify-center gap-3 border border-pink bg-pink px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+        >
+          {status === "sending" ? "Sending..." : "Get invite"}
+        </button>
+      </div>
       <p aria-live="polite" className="mt-3 text-sm text-muted">
         {status === "error" ? (
           <span className="text-pink">That didn&apos;t send. Please try again.</span>
@@ -141,5 +120,102 @@ export function DiscordGate({
         )}
       </p>
     </form>
+  );
+}
+
+/**
+ * "Join the Discord", behind a name and email. A click opens a popup asking
+ * for both; once they're sent to the "discord" Netlify form the popup hands
+ * over the invite, and every gate on the page becomes the invite button.
+ * `ask` shows the form inline instead, for /join where it is the whole page.
+ * `source` tags the invite and the submission with where the visitor came from.
+ */
+export function DiscordGate({
+  label = "Join the Discord",
+  source = "site",
+  ask = false,
+}: {
+  label?: string;
+  source?: string;
+  /** Show the form on the page rather than behind a click. */
+  ask?: boolean;
+}) {
+  const [status, setStatus] = useState<Status>("idle");
+  const dialog = useRef<HTMLDialogElement>(null);
+  // The server can't see localStorage, so it always renders the locked gate.
+  const unlocked = useSyncExternalStore(subscribe, isUnlocked, () => false);
+
+  async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    setStatus("sending");
+    const data = new FormData(event.currentTarget);
+    data.set("ref", currentRef() ?? "");
+    try {
+      const response = await fetch(FORM_ACTION, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: new URLSearchParams(data as unknown as Record<string, string>).toString(),
+      });
+      if (!response.ok) throw new Error(String(response.status));
+      setStatus("idle");
+      unlockDiscord();
+    } catch {
+      setStatus("error");
+    }
+  }
+
+  // Only called once unlocked, which never happens on the server: it reads window.location.
+  const invite = () => <Button href={inviteFor(source, currentRef())}>{label}</Button>;
+
+  if (ask) {
+    return unlocked ? invite() : <GateForm source={source} status={status} autoFocus={false} onSubmit={onSubmit} />;
+  }
+
+  return (
+    <>
+      {unlocked ? (
+        invite()
+      ) : (
+        <button type="button" onClick={() => dialog.current?.showModal()} className={buttonClass}>
+          {label}
+          <span aria-hidden>→</span>
+        </button>
+      )}
+
+      <dialog
+        ref={dialog}
+        aria-labelledby={`discord-gate-${source}`}
+        // A click on the backdrop lands on the dialog itself, not its contents.
+        onClick={(event) => event.target === event.currentTarget && event.currentTarget.close()}
+        className="m-auto w-[calc(100%-2rem)] max-w-md border border-line bg-panel p-0 text-fg backdrop:bg-bg/80 backdrop:backdrop-blur-sm"
+      >
+        <div className="relative p-6 sm:p-8">
+          <button
+            type="button"
+            onClick={() => dialog.current?.close()}
+            aria-label="Close"
+            className="absolute right-3 top-3 cursor-pointer px-2 py-1 font-mono text-lg text-muted transition-colors hover:text-pink"
+          >
+            ×
+          </button>
+          <p id={`discord-gate-${source}`} className="pr-8 font-pixel text-2xl text-pink">
+            {unlocked ? "You're in" : "Join the Discord"}
+          </p>
+          {unlocked ? (
+            <>
+              <p className="mt-4 text-muted">
+                Chapters, events, study circles and the people behind them, all in one place.
+              </p>
+              <div className="mt-8">{invite()}</div>
+            </>
+          ) : (
+            <>
+              <p className="mt-4 mb-6 text-muted">Tell us who you are and the invite is yours.</p>
+              <GateForm source={source} status={status} autoFocus onSubmit={onSubmit} />
+            </>
+          )}
+        </div>
+      </dialog>
+    </>
   );
 }

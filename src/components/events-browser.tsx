@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { EventRow, EventTableHead } from "./event-row";
+import { EventCard, EventGrid } from "./event-card";
 import { type EventItem } from "@/content/events";
 
 type Filter = "All" | "Upcoming" | "Past";
 
-/** Agenda table with All / Upcoming / Past tabs. `upcoming` is decided on the server. */
+/** Event card grid with All / Upcoming / Past tabs. `upcoming` is decided on the server. */
 export function EventsBrowser({ items }: { items: (EventItem & { upcoming: boolean })[] }) {
   const [filter, setFilter] = useState<Filter>("All");
   const groups: Record<Filter, typeof items> = {
@@ -43,11 +43,14 @@ export function EventsBrowser({ items }: { items: (EventItem & { upcoming: boole
         </div>
       </div>
       <div id="events-panel" role="tabpanel" className="mt-14">
-        <EventTableHead />
         {groups[filter].length === 0 ? (
           <p className="py-10 text-muted">Nothing here yet. Follow us on Luma to hear about the next one.</p>
         ) : (
-          groups[filter].map((event) => <EventRow key={event.title} event={event} upcoming={event.upcoming} />)
+          <EventGrid>
+            {groups[filter].map((event) => (
+              <EventCard key={event.title} event={event} upcoming={event.upcoming} />
+            ))}
+          </EventGrid>
         )}
       </div>
     </div>

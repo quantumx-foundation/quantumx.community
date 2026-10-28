@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 :root {
-  --bg: #0c0a0f;
-  --panel: #131018;
-  --fg: #f4eef6;
-  --muted: #958c9f;
-  --line: #2a2331;
-  --dim: #7a4563;
-  --pink: #e485b0;
+  --bg: #ffffff;
+  --panel: #f8f4f8;
+  --fg: #1a1320;
+  --muted: #6b6276;
+  --line: #ebe3ee;
+  --dim: #b98aa2;
+  --pink: #c8407f;
   --soft: #f0b3cf;
   --pale: #fbe3ee;
   --ink: #2d1b55;
   /* Secondary accent, used sparingly (the fortune cookie's prompt). Pink stays the brand colour. */
-  --yellow: #f2c94c;
+  --yellow: #9a6a00;
 }
 
 @theme inline {
@@ -33,7 +33,7 @@
 }
 
 html {
-  color-scheme: dark;
+  color-scheme: light;
   scroll-behavior: smooth;
 }
 
@@ -44,7 +44,7 @@ body {
 
 ::selection {
   background: var(--pink);
-  color: var(--ink);
+  color: var(--bg);
 }
 
 .scanlines {
@@ -122,7 +122,7 @@ body {
 .select {
   appearance: none;
   padding-right: 2.75rem;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%23958c9f' stroke-width='1.4'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' fill='none'%3E%3Cpath d='M3 4.5l3 3 3-3' stroke='%236b6276' stroke-width='1.4'/%3E%3C/svg%3E");
   background-position: right 1rem center;
   background-repeat: no-repeat;
   background-size: 0.75rem;

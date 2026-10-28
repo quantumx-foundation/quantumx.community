@@ -48,7 +48,8 @@ const FLOOR = H - 76;
 const TAU = Math.PI * 2;
 const BEST_KEY = "qx-community-qubit-blaster-best";
 
-// The community palette (globals.css): near-black ground, brand pink for |1⟩
+// The original dark community palette, kept fixed so the game reads as an
+// arcade screen on the light site: near-black ground, brand pink for |1⟩
 // and ink on the qubits. |0⟩ keeps the QFF mist blue so the two states stay
 // distinguishable at a glance.
 const C = {
@@ -755,7 +756,7 @@ export function QuantumShooter() {
           onClick={(e) => {
             if (e.detail === 0) api.current?.toggle();
           }}
-          className="flex-1 touch-manipulation select-none border border-pink px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-ink"
+          className="flex-1 touch-manipulation select-none border border-pink px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg"
         >
           Switch to |{next}⟩{" "}
           <span className="hidden opacity-60 [@media(pointer:fine)]:inline">(X)</span>

@@ -4,7 +4,7 @@ import { CircuitStrip } from "@/components/animations";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { CrewGrid } from "@/components/crew";
 import { DiscordGate } from "@/components/discord-gate";
-import { EventRow, EventTableHead } from "@/components/event-row";
+import { EventCard, EventGrid } from "@/components/event-card";
 import { EventSupportPanel } from "@/components/event-support";
 import { FortuneCookie } from "@/components/fortune-cookie";
 import { NewsCard } from "@/components/news-card";
@@ -48,23 +48,8 @@ const jsonLd = {
   areaServed: chapters.map((c) => c.name),
 };
 
-const pillars = [
-  {
-    title: "Learn it properly.",
-    body: "Study circles and workshops that take you from linear algebra to running your own circuits, with no gatekeeping.",
-  },
-  {
-    title: "Build with others.",
-    body: "Hackathons, open projects and demo nights, run by each chapter and shared across all of them.",
-  },
-  {
-    title: "Meet the field.",
-    body: "Mentors, researchers and speakers from labs, startups and industry, in person and online.",
-  },
-];
-
 export default function Home() {
-  const upcoming = sortedEvents().slice(0, 5);
+  const upcoming = sortedEvents().slice(0, 3);
   const onTheRoad = news.filter((n) => n.kind === "On the road");
 
   return (
@@ -133,10 +118,11 @@ export default function Home() {
           Next up
         </SectionHeading>
         <div className="mt-12">
-          <EventTableHead />
-          {upcoming.map((event) => (
-            <EventRow key={event.title} event={event} upcoming={isUpcoming(event.date)} />
-          ))}
+          <EventGrid>
+            {upcoming.map((event) => (
+              <EventCard key={event.title} event={event} upcoming={isUpcoming(event.date)} />
+            ))}
+          </EventGrid>
         </div>
       </section>
 
@@ -156,16 +142,6 @@ export default function Home() {
         <div className="mt-12">
           <PhotoStrip />
         </div>
-      </section>
-
-      {/* Pillars */}
-      <section className={`${container} grid gap-12 py-24 md:grid-cols-3`}>
-        {pillars.map((item) => (
-          <div key={item.title}>
-            <h2 className="text-lg">{item.title}</h2>
-            <p className="mt-4 max-w-sm leading-relaxed text-muted">{item.body}</p>
-          </div>
-        ))}
       </section>
 
       {/* Loops */}

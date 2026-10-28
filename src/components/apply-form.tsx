@@ -166,7 +166,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex cursor-pointer items-center gap-3 border border-pink bg-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-ink transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="inline-flex cursor-pointer items-center gap-3 border border-pink bg-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === "sending" ? "Sending..." : form.submit}
           <span aria-hidden>→</span>

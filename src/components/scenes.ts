@@ -108,7 +108,7 @@ export const circuitScene: Scene = () => {
         const wire = x > measure ? "═" : "─";
         const char = gate ? gate.char : wire;
         if (hot.has(k)) {
-          cell(x, y, gate ? char : "◆", c.ink, gate ? c.fg : c.pink);
+          cell(x, y, gate ? char : "◆", gate ? c.pale : c.ink, gate ? c.fg : c.pink);
         } else if (trail.has(k)) {
           cell(x, y, char, c.ink, trail.get(k) === 1 ? c.soft : c.pale);
         } else if (gate?.kind === "gate" || gate?.kind === "measure") {
@@ -133,7 +133,7 @@ export const circuitScene: Scene = () => {
           fill(x, y, tones[y % 3], (Math.max(1, Math.round(v * 4)) / 4) * 0.9);
         } else {
           const arrow = ARROWS[((Math.round(phase / (Math.PI / 4)) % 8) + 8) % 8];
-          if (Math.sin(phase * 3 + x) > 0.85) cell(x, y, arrow, c.ink, c.fg);
+          if (Math.sin(phase * 3 + x) > 0.85) cell(x, y, arrow, c.pale, c.fg);
           else cell(x, y, arrow, c.pink);
         }
       }
@@ -185,7 +185,7 @@ export const bitScene: Scene = () => {
         const n = Math.sin((x + t * 3) * 0.23 + y * 1.3) + Math.sin((x - t * 2) * 0.11 + y * 0.7);
         const level = Math.min(4, Math.floor(((n + 2) / 4) * 5));
         if (level === 0) cell(x, y, bits[i], c.pink);
-        else cell(x, y, bits[i], c.ink, tones[level - 1]);
+        else cell(x, y, bits[i], level === 4 ? c.pale : c.ink, tones[level - 1]);
       }
     }
   };
