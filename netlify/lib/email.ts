@@ -136,13 +136,17 @@ export type Email = {
   source: { label: string; url: string };
 };
 
-/** The pink outlined button. Tables, because a styled <a> alone loses its box in Outlook. */
+/**
+ * The filled pink button, ink on pink like the site's primary buttons. Tables,
+ * because a styled <a> alone loses its box in Outlook; bgcolor as well as the
+ * style, because some clients drop one or the other.
+ */
 export function button(href: string, label: string) {
   return `<tr><td style="padding-bottom:28px;">
   <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tbody><tr>
-    <td style="border:1px solid ${C.pink};">
+    <td bgcolor="${C.pink}" style="background:${C.pink};border:1px solid ${C.pink};">
       <a href="${escapeHtml(href)}"
-         style="display:inline-block;padding:14px 26px;font-family:${MONO};font-size:12px;letter-spacing:2px;text-transform:uppercase;color:${C.pink};text-decoration:none;">
+         style="display:inline-block;padding:14px 26px;font-family:${MONO};font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${C.ink};text-decoration:none;">
         ${escapeHtml(label)} &rarr;
       </a>
     </td>
