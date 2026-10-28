@@ -7,7 +7,6 @@ export type Speaker = {
 
 /** People who have spoken at QuantumX events, workshops and community sessions. */
 export const speakers: Speaker[] = [
-  { name: "Shaik Aleem Ur Rehaman", title: "Principal Design Engineer, Microsoft", slug: "shaik-aleem-ur-rehaman" },
   { name: "Toji Thomas", title: "Technical Support Engineer, Thorlabs", slug: "toji-thomas" },
   { name: "Vandna Chaturvedi", title: "C-DAC India", slug: "vandna-chaturvedi" },
   { name: "Ajmal Ibn Mohammed Althaf", title: "Founder, CEO & Scientific Lead, QuantumX Foundation", slug: "ajmal" },
@@ -21,8 +20,6 @@ export const speakers: Speaker[] = [
   { name: "Akash Deb", title: "Founder & CEO, Elato AI", slug: "akash-deb" },
   { name: "Akshat Agarwal", title: "Founder, Arrayah Australia", slug: "akshat-agarwal" },
   { name: "Shreyansu Panda", title: "Research Engineer, QuantumX Foundation", slug: "shreyansu-panda" },
-  { name: "Sampark Bhol", title: "Research Engineer, QuantumX Foundation", slug: "sampark-bhol" },
-  { name: "Arundas Janardhanan", title: "CEO, Startup Park Bengaluru", slug: "arundas-janardhanan" },
+  { name: "Shaik Aleem Ur Rehaman", title: "Principal Design Engineer, Microsoft", slug: "shaik-aleem-ur-rehaman" },
   { name: "Raul John Aju", title: "CEO, ThinkCraft.learn", slug: "raul-john-aju" },
-  { name: "Delvin Danny", title: "Founder, PitchStudio", slug: "delvin-danny" },
 ];
