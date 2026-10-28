@@ -4,136 +4,110 @@
  *
  * Kept deliberately brief: what we have, when we reply, one thing to do while
  * they wait. The detail is already in the alert that reaches the team.
+ *
+ * Nothing the sender typed goes into these. The address on a form is not
+ * verified, so anything we echoed back (a name, an event title) would let
+ * anyone send their own words to any inbox from our domain.
  */
 
-import { applicationPlace } from "./application-email.js";
-import { type Submission, escapeHtml, reader, renderNote } from "./email.js";
-import { eventTitle } from "./event-email.js";
-import { gigRole } from "./gig-email.js";
-import { volunteerPlace } from "./volunteer-email.js";
+import { renderNote } from "./email.js";
 
 /** Kept in step with DISCORD_URL in src/lib/site.ts, tagged the way inviteFor() tags the site's links. */
 const DISCORD_URL = "https://discord.gg/gFZvXRsxr?utm_source=quantumx.community&utm_medium=email";
 
 export type Ack = { subject: string; html: string; text: string };
 
-/** What to call someone in a greeting, from whatever they typed in the name field. */
-function firstName(full: string) {
-  return full.trim().split(/\s+/)[0] || "there";
-}
-
-export function chapterAck(data: Submission): Ack {
-  const where = applicationPlace(data);
-  const name = firstName(reader(data)("name"));
-
+function ack({
+  subject,
+  eyebrow,
+  heading,
+  preheader,
+  lines,
+  because,
+}: {
+  subject: string;
+  eyebrow: string;
+  heading: string;
+  preheader: string;
+  /** Two lines: when we reply, then why to join the Discord. The second is followed by the invite. */
+  lines: [string, string];
+  because: string;
+}): Ack {
+  const footnote = `${because} If this wasn't you, you can ignore this email.`;
   return {
-    subject: `We have your QuantumX chapter application (${where})`,
+    subject,
     html: renderNote({
-      eyebrow: "Application received",
-      heading: `Thanks, ${escapeHtml(name)}. Your application to start a chapter in ${escapeHtml(where)} is with us.`,
-      preheader: `We have your chapter application for ${where}. We reply within about a week.`,
-      lines: [
-        "We read every one and reply within about a week, usually sooner.",
-        "Join the Discord while you wait: that is where your first members come from.",
-      ],
+      eyebrow,
+      heading,
+      preheader,
+      lines,
       cta: { href: DISCORD_URL, label: "Join the Discord" },
-      because: "You applied to start a chapter on quantumx.community.",
+      because: footnote,
     }),
     text: [
-      `Thanks, ${name}. Your application to start a QuantumX chapter in ${where} is with us.`,
+      heading,
       "",
+      lines[0],
+      `${lines[1]} ${DISCORD_URL}`,
+      "",
+      footnote,
+      "",
+    ].join("\n"),
+  };
+}
+
+export function chapterAck(): Ack {
+  return ack({
+    subject: "We have your QuantumX chapter application",
+    eyebrow: "Application received",
+    heading: "Thanks. Your application to start a QuantumX chapter is with us.",
+    preheader: "We have your chapter application. We reply within about a week.",
+    lines: [
       "We read every one and reply within about a week, usually sooner.",
-      `Join the Discord while you wait: ${DISCORD_URL}`,
-      "",
-      "You applied to start a chapter on quantumx.community. Reply to this email if anything needs correcting.",
-      "",
-    ].join("\n"),
-  };
+      "Join the Discord while you wait: that is where your first members come from.",
+    ],
+    because: "Someone applied to start a chapter on quantumx.community with this address.",
+  });
 }
 
-export function eventAck(data: Submission): Ack {
-  const title = eventTitle(data);
-  const name = firstName(reader(data)("organiser"));
-
-  return {
-    subject: `We have your QuantumX support request (${title})`,
-    html: renderNote({
-      eyebrow: "Request received",
-      heading: `Thanks, ${escapeHtml(name)}. Your support request for ${escapeHtml(title)} is with us.`,
-      preheader: `We have your support request for ${title}. We reply within a week.`,
-      lines: [
-        "We will come back within a week with what we can cover, and questions if we have any.",
-        "Join the Discord in the meantime: we can put your event in front of everyone nearby.",
-      ],
-      cta: { href: DISCORD_URL, label: "Join the Discord" },
-      because: "You asked QuantumX to support an event on quantumx.community.",
-    }),
-    text: [
-      `Thanks, ${name}. Your support request for ${title} is with us.`,
-      "",
+export function eventAck(): Ack {
+  return ack({
+    subject: "We have your QuantumX event support request",
+    eyebrow: "Request received",
+    heading: "Thanks. Your event support request is with us.",
+    preheader: "We have your support request. We reply within a week.",
+    lines: [
       "We will come back within a week with what we can cover, and questions if we have any.",
-      `Join the Discord in the meantime: ${DISCORD_URL}`,
-      "",
-      "You asked QuantumX to support an event on quantumx.community. Reply to this email if anything needs correcting.",
-      "",
-    ].join("\n"),
-  };
+      "Join the Discord in the meantime: we can put your event in front of everyone nearby.",
+    ],
+    because: "Someone asked QuantumX to support an event on quantumx.community with this address.",
+  });
 }
 
-export function volunteerAck(data: Submission): Ack {
-  const where = volunteerPlace(data);
-  const name = firstName(reader(data)("name"));
-
-  return {
+export function volunteerAck(): Ack {
+  return ack({
     subject: "You're on the QuantumX crew list",
-    html: renderNote({
-      eyebrow: "Signup received",
-      heading: `Thanks, ${escapeHtml(name)}. You're on the list to volunteer at events in ${escapeHtml(where)}.`,
-      preheader: "We'll reach out before the next QuantumX event near you.",
-      lines: [
-        "We'll reach out before the next event near you with what we need on the day.",
-        "Join the Discord in the meantime: that is where the crew plans each event.",
-      ],
-      cta: { href: DISCORD_URL, label: "Join the Discord" },
-      because: "You signed up to volunteer on quantumx.community.",
-    }),
-    text: [
-      `Thanks, ${name}. You're on the list to volunteer at QuantumX events in ${where}.`,
-      "",
+    eyebrow: "Signup received",
+    heading: "Thanks. You're on the list to volunteer at QuantumX events.",
+    preheader: "We'll reach out before the next QuantumX event near you.",
+    lines: [
       "We'll reach out before the next event near you with what we need on the day.",
-      `Join the Discord in the meantime: ${DISCORD_URL}`,
-      "",
-      "You signed up to volunteer on quantumx.community. Reply to this email if anything needs correcting.",
-      "",
-    ].join("\n"),
-  };
+      "Join the Discord in the meantime: that is where the crew plans each event.",
+    ],
+    because: "Someone signed up to volunteer on quantumx.community with this address.",
+  });
 }
 
-export function gigAck(data: Submission): Ack {
-  const role = gigRole(data);
-  const name = firstName(reader(data)("contact"));
-
-  return {
-    subject: `We have your QuantumX gig board listing (${role})`,
-    html: renderNote({
-      eyebrow: "Listing received",
-      heading: `Thanks, ${escapeHtml(name)}. Your listing for ${escapeHtml(role)} is with us.`,
-      preheader: `We have your gig board listing for ${role}. It goes up within a few days.`,
-      lines: [
-        "We check every listing and put it on the board within a few days, then let you know.",
-        "Join the Discord to tell the community about it too.",
-      ],
-      cta: { href: DISCORD_URL, label: "Join the Discord" },
-      because: "You posted a role to the gig board on quantumx.community.",
-    }),
-    text: [
-      `Thanks, ${name}. Your listing for ${role} is with us.`,
-      "",
+export function gigAck(): Ack {
+  return ack({
+    subject: "We have your QuantumX gig board listing",
+    eyebrow: "Listing received",
+    heading: "Thanks. Your gig board listing is with us.",
+    preheader: "We have your gig board listing. It goes up within a few days.",
+    lines: [
       "We check every listing and put it on the board within a few days, then let you know.",
-      `Join the Discord to tell the community about it too: ${DISCORD_URL}`,
-      "",
-      "You posted a role to the gig board on quantumx.community. Reply to this email if anything needs correcting.",
-      "",
-    ].join("\n"),
-  };
+      "Join the Discord to tell the community about it too.",
+    ],
+    because: "Someone posted a role to the gig board on quantumx.community with this address.",
+  });
 }

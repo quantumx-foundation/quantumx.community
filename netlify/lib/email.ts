@@ -60,9 +60,21 @@ export function mailtoLink(email: string) {
 
 export const blank = `<span style="color:${C.muted};">(blank)</span>`;
 
-/** Reads a submission field, trimmed, so callers never juggle undefined. */
+/**
+ * The longest a field can be. Matches the maxLength on the site's textareas;
+ * anything longer was not typed into the form, so it is cut rather than mailed.
+ */
+export const MAX_FIELD = 4000;
+
+/** Reads a submission field, trimmed and capped, so callers never juggle undefined. */
 export function reader(data: Submission) {
-  return (key: string) => (data[key] ?? "").trim();
+  return (key: string) => String(data[key] ?? "").slice(0, MAX_FIELD).trim();
+}
+
+/** Enough to catch a typo'd or empty address before we hand it to Resend. */
+export function emailAddress(value: unknown) {
+  const address = typeof value === "string" ? value.trim() : "";
+  return address.length <= 254 && /^[^\s@?&]+@[^\s@?&]+\.[^\s@?&]+$/.test(address) ? address : undefined;
 }
 
 /**

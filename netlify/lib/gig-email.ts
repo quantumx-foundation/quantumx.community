@@ -5,6 +5,7 @@ import {
   type Submission,
   blank,
   escapeHtml,
+  emailAddress,
   escapeMultiline,
   mailtoLink,
   reader,
@@ -25,7 +26,7 @@ export function renderGigEmail(data: Submission) {
   const get = reader(data);
   const role = gigRole(data);
   const company = gigCompany(data);
-  const email = get("email");
+  const email = emailAddress(get("email"));
   const contact = get("contact") || "Someone";
 
   const entries: Entry[] = [
@@ -39,7 +40,7 @@ export function renderGigEmail(data: Submission) {
     ["Closes", escapeHtml(get("closes")) || "Open until filled"],
     ["Anything we should know", escapeMultiline(get("about")) || blank],
     ["Posted by", escapeHtml(contact)],
-    ["Email", email ? mailtoLink(email) : blank],
+    ["Email", email ? mailtoLink(email) : escapeHtml(get("email")) || blank],
   ];
 
   return renderEmail({

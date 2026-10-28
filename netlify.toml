@@ -1,9 +1,10 @@
 [build]
-  # Turbopack serialises the build environment (which includes
-  # RESEND_API_KEY) into its persistent cache, and the Next.js Runtime
-  # copies that cache into the deploy artifacts, where secrets scanning
-  # finds the key and fails the build. The cache is disposable, so drop it
-  # before the runtime picks it up rather than excluding it from scanning.
+  # RESEND_API_KEY and TURNSTILE_SECRET_KEY are only read by the form
+  # function, so scope both to Functions in the Netlify UI and they never
+  # reach the build. If one does, Turbopack serialises it into its
+  # persistent cache, the Next.js Runtime copies that cache into the deploy
+  # artifacts, and secrets scanning fails the build. The cache is
+  # disposable, so it is dropped here either way as a second line.
   command = "npm run build && rm -rf .next/cache/turbopack"
   publish = ".next"
 
@@ -11,3 +12,17 @@
 # Set RESEND_API_KEY (and optionally RESEND_FROM, APPLICATIONS_TO) in
 # Site configuration > Environment variables so chapter applications, event
 # support requests, volunteer signups and gig board roles get emailed.
+# Set NEXT_PUBLIC_TURNSTILE_SITE_KEY (Builds) and TURNSTILE_SECRET_KEY
+# (Functions) to turn on the Cloudflare bot check on those forms.
+
+# Applies to every response, pages and static files alike. The CSP only
+# carries directives that cannot break a script or a style: who may frame
+# the site, where forms may post, and no plugins or <base> tricks.
+[[headers]]
+  for = "/*"
+  [headers.values]
+    Content-Security-Policy = "frame-ancestors 'none'; form-action 'self'; base-uri 'self'; object-src 'none'"
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=()"

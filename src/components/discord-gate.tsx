@@ -120,6 +120,7 @@ export function DiscordGate({
             required
             autoFocus={!ask}
             autoComplete="email"
+            maxLength={254}
             placeholder="you@example.com"
             className="min-w-0 flex-1 border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink"
           />

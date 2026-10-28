@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { DiscordGate, unlockDiscord } from "./discord-gate";
+import { Turnstile } from "./turnstile";
 import { FORM_ACTION, type Field, type FormSpec } from "@/lib/forms";
 import { EVENTS_EMAIL } from "@/lib/site";
 
@@ -15,6 +16,17 @@ const inputClass =
  * rendered: the server has a different clock, and a date in the markup would
  * not survive hydration.
  */
+/**
+ * Longest values the inputs accept. The function cuts anything longer (see
+ * MAX_FIELD in netlify/lib/email.ts), so these only spare people a silent cut.
+ */
+const MAX_LENGTH = { textarea: 4000, url: 500, email: 254, other: 200 };
+
+function maxLength(type: Field["type"]) {
+  if (type === "textarea" || type === "url" || type === "email") return MAX_LENGTH[type];
+  return MAX_LENGTH.other;
+}
+
 function limitDate(days: number | undefined) {
   if (!days) return undefined;
   return (node: HTMLInputElement | null) => {
@@ -61,6 +73,8 @@ function Consent({ field }: { field: Field }) {
 
 export function ApplyForm({ form }: { form: FormSpec }) {
   const [status, setStatus] = useState<"idle" | "sending" | "sent" | "error">("idle");
+  // Bumped after a failed send, so the Turnstile widget remounts with a fresh token.
+  const [attempt, setAttempt] = useState(0);
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -78,6 +92,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
       setStatus("sent");
     } catch {
       setStatus("error");
+      setAttempt((n) => n + 1);
     }
   }
 
@@ -117,7 +132,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
             <label key={field.name} className={`block ${field.type === "textarea" ? "sm:col-span-2" : ""}`}>
               <Label field={field} />
               {field.type === "textarea" ? (
-                <textarea name={field.name} required={field.required} rows={5} className={inputClass} />
+                <textarea name={field.name} required={field.required} maxLength={maxLength(field.type)} rows={5} className={inputClass} />
               ) : field.type === "select" ? (
                 <select name={field.name} required={field.required} defaultValue="" className={`select ${inputClass}`}>
                   <option value="" disabled>
@@ -136,6 +151,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
                   required={field.required}
                   placeholder={field.placeholder}
                   min={field.min}
+                  maxLength={maxLength(field.type)}
                   ref={limitDate(field.type === "date" ? field.minDaysAhead : undefined)}
                   className={inputClass}
                 />
@@ -143,6 +159,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
             </label>
           );
         })}
+        <Turnstile key={attempt} />
       </div>
 
       <div className="mt-10 flex flex-wrap items-center gap-6">

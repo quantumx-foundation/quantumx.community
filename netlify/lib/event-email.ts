@@ -6,6 +6,7 @@ import {
   blank,
   C,
   escapeHtml,
+  emailAddress,
   escapeMultiline,
   mailtoLink,
   reader,
@@ -69,7 +70,7 @@ export function renderEventEmail(data: EventRequest) {
   const name = organiserName(data);
   const title = eventTitle(data);
   const where = eventPlace(data);
-  const email = get("email");
+  const email = emailAddress(get("email"));
   const days = daysAway(get("date"));
 
   const when = get("date")
@@ -89,7 +90,7 @@ export function renderEventEmail(data: EventRequest) {
     ["What the event is, and who it's for", escapeMultiline(get("about")) || blank],
     ["Organiser", escapeHtml(name)],
     ["Running it", escapeHtml(get("org")) || blank],
-    ["Email", email ? mailtoLink(email) : blank],
+    ["Email", email ? mailtoLink(email) : escapeHtml(get("email")) || blank],
     ["Phone", escapeHtml(get("phone")) || blank],
     ["A link to them", get("organiserLinks") ? renderLink(get("organiserLinks")) : blank],
     [

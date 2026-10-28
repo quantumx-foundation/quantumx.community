@@ -6,6 +6,7 @@ import {
   blank,
   C,
   escapeHtml,
+  emailAddress,
   escapeMultiline,
   mailtoLink,
   reader,
@@ -28,12 +29,12 @@ export function renderVolunteerEmail(data: Submission) {
   const get = reader(data);
   const name = volunteerName(data);
   const where = volunteerPlace(data);
-  const email = get("email");
+  const email = emailAddress(get("email"));
   const notConfirmed = `<span style="color:${C.muted};">Not confirmed</span>`;
 
   const entries: Entry[] = [
     ["Name", escapeHtml(name)],
-    ["Email", email ? mailtoLink(email) : blank],
+    ["Email", email ? mailtoLink(email) : escapeHtml(get("email")) || blank],
     ["Phone", escapeHtml(get("phone")) || blank],
     ["City", escapeHtml(get("city")) || blank],
     ["Country", escapeHtml(get("country")) || blank],

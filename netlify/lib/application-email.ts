@@ -6,6 +6,7 @@ import {
   blank,
   C,
   escapeHtml,
+  emailAddress,
   escapeMultiline,
   mailtoLink,
   reader,
@@ -30,11 +31,11 @@ export function renderApplicationEmail(data: Application) {
   const get = reader(data);
   const name = applicantName(data);
   const where = applicationPlace(data);
-  const email = get("email");
+  const email = emailAddress(get("email"));
 
   const entries: Entry[] = [
     ["Name", escapeHtml(name)],
-    ["Email", email ? mailtoLink(email) : blank],
+    ["Email", email ? mailtoLink(email) : escapeHtml(get("email")) || blank],
     ["City", escapeHtml(get("city")) || blank],
     ["Country", escapeHtml(get("country")) || blank],
     ["What they do", escapeMultiline(get("background")) || blank],

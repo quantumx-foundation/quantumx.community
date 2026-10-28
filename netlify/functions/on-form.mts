@@ -1,15 +1,17 @@
+import { createHash } from "node:crypto";
+import { getStore } from "@netlify/blobs";
 import type { FormSubmittedEvent } from "@netlify/functions";
 import { chapterAck, eventAck, gigAck, volunteerAck } from "../lib/ack-email.js";
 import { applicantName, applicationPlace, renderApplicationEmail, renderApplicationText } from "../lib/application-email.js";
 import { eventPlace, eventTitle, renderEventEmail, renderEventText } from "../lib/event-email.js";
-import type { Submission } from "../lib/email.js";
+import { emailAddress, type Submission } from "../lib/email.js";
 import { gigCompany, gigRole, renderGigEmail, renderGigText } from "../lib/gig-email.js";
 import { renderVolunteerEmail, renderVolunteerText, volunteerName, volunteerPlace } from "../lib/volunteer-email.js";
 
 type Letter = { subject: string; html: string; text: string };
 
 /** One entry per form declared in public/__forms.html. */
-const forms: Record<string, { alert: (data: Submission) => Letter; ack: (data: Submission) => Letter }> = {
+const forms: Record<string, { alert: (data: Submission) => Letter; ack: () => Letter }> = {
   "chapter-application": {
     alert: (data) => ({
       subject: `Chapter application: ${applicationPlace(data)} (${applicantName(data)})`,
@@ -44,10 +46,53 @@ const forms: Record<string, { alert: (data: Submission) => Letter; ack: (data: S
   },
 };
 
-/** Enough to catch a typo'd or empty address before we hand it to Resend. */
-function emailAddress(value: unknown) {
-  const address = typeof value === "string" ? value.trim() : "";
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(address) ? address : undefined;
+/**
+ * Daily ceilings, kept under Resend's free tier of 100 emails a day so a spam
+ * run can never use up the sends a real application needs. Alerts get the
+ * larger share: those are the ones the team cannot miss.
+ */
+const ALERTS_PER_DAY = 50;
+const ACKS_PER_DAY = 40;
+
+type Day = { alerts: number; acks: number };
+
+/** Counters and per-address marks, so limits hold across invocations. */
+function limits() {
+  return getStore({ name: "form-limits", consistency: "strong" });
+}
+
+/** The day's counters, keyed by UTC date. */
+async function readDay(today: string): Promise<Day> {
+  const day = (await limits().get(`day/${today}`, { type: "json" })) as Day | null;
+  return { alerts: day?.alerts ?? 0, acks: day?.acks ?? 0 };
+}
+
+/** One mark per address per day, stored as a hash so the store holds no email addresses. */
+function addressKey(address: string) {
+  return `ack/${createHash("sha256").update(address.toLowerCase()).digest("hex")}`;
+}
+
+/**
+ * Checks the Cloudflare Turnstile token the form sent. Passes when no secret
+ * is configured, so the forms keep working before Turnstile is set up.
+ */
+async function passesTurnstile(token: string | undefined) {
+  const secret = process.env.TURNSTILE_SECRET_KEY;
+  if (!secret) return true;
+  if (!token) return false;
+  try {
+    const response = await fetch("https://challenges.cloudflare.com/turnstile/v0/siteverify", {
+      method: "POST",
+      headers: { "Content-Type": "application/x-www-form-urlencoded" },
+      body: new URLSearchParams({ secret, response: token }).toString(),
+    });
+    const result = (await response.json()) as { success?: boolean };
+    return result.success === true;
+  } catch (error) {
+    // Cloudflare being down should not cost us a real application.
+    console.error("Could not reach Turnstile; letting the submission through:", error);
+    return true;
+  }
 }
 
 /**
@@ -69,7 +114,9 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
       }),
     });
     if (!response.ok) {
-      console.error(`Resend rejected the ${mail.label}:`, response.status, await response.text());
+      // 429 and 403 mean the quota or the key is gone, and every form after this one is failing too.
+      const quota = response.status === 429 || response.status === 403 ? " RESEND QUOTA OR KEY PROBLEM:" : "";
+      console.error(`Resend rejected the ${mail.label}:${quota}`, response.status, await response.text());
     }
   } catch (error) {
     console.error(`Could not send the ${mail.label}:`, error);
@@ -80,8 +127,11 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
  * Emails a form submission to the events inbox through Resend, and sends the
  * person who filled it in a short acknowledgement.
  * Runs after Netlify has verified the submission, so it cannot be hit directly.
+ * Netlify still stores every submission, so nothing is lost when a limit or
+ * the Turnstile check stops an email.
  *
- * Env vars: RESEND_API_KEY (required), RESEND_FROM and APPLICATIONS_TO (optional).
+ * Env vars: RESEND_API_KEY (required), RESEND_FROM, APPLICATIONS_TO and
+ * TURNSTILE_SECRET_KEY (optional).
  */
 const handlers = {
   async formSubmitted(event: FormSubmittedEvent) {
@@ -101,16 +151,63 @@ const handlers = {
       return;
     }
 
+    if (!(await passesTurnstile(data["cf-turnstile-response"]))) {
+      console.warn(`Turnstile check failed on a ${name} submission; no email sent.`);
+      return;
+    }
+
     const inbox = process.env.APPLICATIONS_TO ?? "events@quantumx.community";
     const sender = emailAddress(data.email);
+    const today = new Date().toISOString().slice(0, 10);
 
-    const mails = [{ ...form.alert(data), to: inbox, replyTo: sender, label: "alert" }];
-    if (sender) {
-      // Replies to the acknowledgement should reach the team, not bounce back
-      // to the sender's own address.
-      mails.push({ ...form.ack(data), to: sender, replyTo: inbox, label: "acknowledgement" });
+    // If the store cannot be read, still send the alert (the team must hear about
+    // real submissions) but not the acknowledgement, which is what spam is after.
+    let day: Day | null = null;
+    try {
+      day = await readDay(today);
+    } catch (error) {
+      console.error("Could not read the form limits; sending the alert only:", error);
+    }
+
+    const mails: (Letter & { to: string; replyTo?: string; label: string })[] = [];
+    if (!day || day.alerts < ALERTS_PER_DAY) {
+      mails.push({ ...form.alert(data), to: inbox, replyTo: sender, label: "alert" });
     } else {
+      console.error(`DAILY ALERT CAP REACHED (${ALERTS_PER_DAY}): ${name} submission kept in Netlify, not emailed.`);
+    }
+
+    if (!sender) {
       console.warn("No usable email on the submission; skipping the acknowledgement.");
+    } else if (day && day.acks >= ACKS_PER_DAY) {
+      console.warn(`Daily acknowledgement cap reached (${ACKS_PER_DAY}); skipping it.`);
+    } else if (day) {
+      try {
+        const store = limits();
+        const mark = addressKey(sender);
+        if ((await store.get(mark, { type: "text" })) === today) {
+          console.warn("This address already had an acknowledgement today; skipping it.");
+        } else {
+          await store.set(mark, today);
+          // Replies to the acknowledgement should reach the team, not bounce back
+          // to the sender's own address.
+          mails.push({ ...form.ack(), to: sender, replyTo: inbox, label: "acknowledgement" });
+        }
+      } catch (error) {
+        console.error("Could not check the address limit; skipping the acknowledgement:", error);
+      }
+    }
+
+    if (day) {
+      const next: Day = {
+        alerts: day.alerts + mails.filter((mail) => mail.label === "alert").length,
+        acks: day.acks + mails.filter((mail) => mail.label === "acknowledgement").length,
+      };
+      // Read then write is not atomic, so two submissions in the same instant can
+      // both count from the same number. The caps are well under Resend's limit,
+      // so a count that runs slightly low is harmless.
+      await limits()
+        .setJSON(`day/${today}`, next)
+        .catch((error) => console.error("Could not update the form limits:", error));
     }
 
     await Promise.all(mails.map((mail) => send(key, mail)));
