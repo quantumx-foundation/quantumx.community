@@ -5,14 +5,10 @@ import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { CrewGrid } from "@/components/crew";
 import { DiscordGate } from "@/components/discord-gate";
 import { EventCard, EventGrid } from "@/components/event-card";
-import { EventSupportPanel } from "@/components/event-support";
-import { FortuneCookie } from "@/components/fortune-cookie";
 import { NewsCard } from "@/components/news-card";
 import { PhotoStrip } from "@/components/photo-strip";
 import { PixelLogo } from "@/components/pixel-logo";
 import { Programs } from "@/components/programs";
-import { QubitPreview } from "@/components/qubit-preview";
-import { QuantumLoops } from "@/components/quantum-loops";
 import { SpeakerGrid } from "@/components/speaker-grid";
 import { Button, SectionHeading, Stat, Tag, container } from "@/components/ui";
 import { WorldMap } from "@/components/world-map";
@@ -112,6 +108,33 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Hosts */}
+      <section aria-labelledby="hosts-title" className={`${container} py-16`}>
+        <h2 id="hosts-title" className="text-4xl tracking-tight sm:text-5xl">
+          Rooms we&apos;ve been in
+        </h2>
+        <p className="mt-4 max-w-xl text-muted">
+          Programmes, institutions and venues we&apos;ve hosted with, spoken at or joined.
+        </p>
+        <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4">
+          {hosts.map((host, i) => (
+            <li
+              key={host.name}
+              className={`relative flex min-h-24 items-center justify-center border p-5 text-center leading-tight ${
+                i === 0 ? "border-pink text-lg" : "border-line"
+              }`}
+            >
+              {host.note && (
+                <span className="absolute left-0 top-0">
+                  <Tag>{host.note}</Tag>
+                </span>
+              )}
+              {host.name}
+            </li>
+          ))}
+        </ul>
+      </section>
+
       {/* Events */}
       <section aria-labelledby="events-title" className={`${container} py-16`}>
         <SectionHeading id="events-title" href="/events" linkLabel="All events">
@@ -124,10 +147,14 @@ export default function Home() {
             ))}
           </EventGrid>
         </div>
+        <p className="mt-8 text-muted">
+          Running your own quantum event?{" "}
+          <Link href="/events/support" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+            We&apos;ll back it with swag, food and a speaker
+          </Link>
+          .
+        </p>
       </section>
-
-      {/* Event support */}
-      <EventSupportPanel />
 
       {/* Moments */}
       <section aria-labelledby="moments-title" className="py-20">
@@ -144,14 +171,46 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Loops */}
-      <section aria-labelledby="loops-title" className={`${container} py-16`}>
-        <h2 id="loops-title" className="text-4xl tracking-tight sm:text-5xl">
-          Quantum, but make it funny
-        </h2>
-        <p className="mt-4 max-w-xl text-muted">For everyone who has ever waited on a job queue.</p>
-        <div className="mt-12">
-          <QuantumLoops />
+      {/* Flagship */}
+      <section aria-labelledby="hack-title" className={`${container} py-16`}>
+        <div className="grid border border-line bg-panel lg:grid-cols-[2fr_3fr]">
+          <div className="relative aspect-square lg:aspect-auto">
+            <Image
+              src={hackathon.poster}
+              alt="Quantum for Social Good Hackathon poster"
+              fill
+              sizes="(min-width: 1024px) 460px, 100vw"
+              className="object-cover"
+            />
+          </div>
+          <div className="relative p-6 pt-14 sm:p-10 sm:pt-16">
+            <div className="absolute left-0 top-0">
+              <Tag>Flagship event</Tag>
+            </div>
+            <p className="font-mono text-sm text-muted">
+              {hackathon.date} · {hackathon.venue}
+            </p>
+            <h2 id="hack-title" className="mt-3 text-3xl tracking-tight sm:text-4xl">
+              QX Hack: {hackathon.title}
+            </h2>
+            <p className="mt-4 max-w-lg text-muted">{hackathon.summary}</p>
+            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8">
+              {hackathon.stats.map((stat) => (
+                <Stat key={stat.label} {...stat} />
+              ))}
+            </div>
+            <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
+              <Button href="/hackathon">Explore QX Hack</Button>
+              <a
+                href={hackathon.winnersUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-pink"
+              >
+                See the winners ↗
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -184,6 +243,16 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Speakers */}
+      <section aria-labelledby="speakers-title" className={`${container} py-24`}>
+        <SectionHeading id="speakers-title" href="/speakers" linkLabel="All speakers">
+          Speakers
+        </SectionHeading>
+        <div className="mt-12">
+          <SpeakerGrid items={speakers.slice(0, 12)} />
+        </div>
+      </section>
+
       {/* On the road */}
       <section aria-labelledby="road-title" className={`${container} py-24`}>
         <SectionHeading id="road-title" href="/news" linkLabel="All news">
@@ -200,129 +269,35 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Flagship */}
-      <section aria-labelledby="hack-title" className={`${container} py-16`}>
-        <div className="grid border border-line bg-panel lg:grid-cols-[2fr_3fr]">
-          <div className="relative aspect-square lg:aspect-auto">
-            <Image
-              src={hackathon.poster}
-              alt="Quantum for Social Good Hackathon poster"
-              fill
-              sizes="(min-width: 1024px) 460px, 100vw"
-              className="object-cover"
-            />
-          </div>
-          <div className="relative p-6 pt-14 sm:p-10 sm:pt-16">
-            <div className="absolute left-0 top-0">
-              <Tag>Flagship event</Tag>
-            </div>
-            <p className="font-mono text-sm text-muted">
-              {hackathon.date} · {hackathon.venue}
-            </p>
-            <h2 id="hack-title" className="mt-3 text-3xl tracking-tight sm:text-4xl">
-              QX Hack: {hackathon.title}
-            </h2>
-            <p className="mt-4 max-w-lg text-muted">{hackathon.summary}</p>
-            <div className="mt-10 grid grid-cols-2 gap-x-6 gap-y-8">
-              {hackathon.stats.map((stat) => (
-                <Stat key={stat.label} {...stat} />
-              ))}
-            </div>
-            <div className="mt-10">
-              <Button href="/hackathon">Explore QX Hack</Button>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Speakers */}
-      <section aria-labelledby="speakers-title" className={`${container} py-24`}>
-        <SectionHeading id="speakers-title" href="/speakers" linkLabel="All speakers">
-          Speakers
-        </SectionHeading>
-        <div className="mt-12">
-          <SpeakerGrid items={speakers.slice(0, 12)} />
-        </div>
-      </section>
-
-      {/* Crew */}
-      <section aria-labelledby="crew-title" className={`${container} py-24`}>
-        <SectionHeading id="crew-title" href="/crew" linkLabel={crew.length ? "Meet the crew" : "Volunteer"}>
-          The crew
-        </SectionHeading>
-        <p className="mt-4 max-w-xl text-muted">
-          The volunteers who set up the room, look after speakers and make every event happen. Help at one near you
-          and your face goes up here.
-        </p>
-        <div className="mt-12">
-          <CrewGrid items={crew.slice(0, 11)} />
-        </div>
-      </section>
-
       {/* Programs */}
       <section id="programs" className={`${container} scroll-mt-8 py-24`}>
         <Programs />
       </section>
 
-      {/* Game */}
-      <section aria-labelledby="game-title" className={`${container} py-24`}>
-        <div className="grid items-center gap-10 border border-line p-6 sm:p-10 md:grid-cols-2">
-          <div>
-            <h2 id="game-title" className="text-4xl tracking-tight sm:text-5xl">
-              Qubit Blaster
-            </h2>
-            <p className="mt-4 max-w-sm text-muted">
-              A tiny arcade game about qubits. Match 0 and 1, measure a superposition and watch an entangled pair
-              collapse together. Two minutes, no maths, works on your phone.
-            </p>
-            <div className="mt-8">
-              <Button href="/game">Play now</Button>
-            </div>
+      {/* Crew: back once there are enough faces to fill the grid */}
+      {crew.length >= 8 && (
+        <section aria-labelledby="crew-title" className={`${container} py-24`}>
+          <SectionHeading id="crew-title" href="/crew" linkLabel="Meet the crew">
+            The crew
+          </SectionHeading>
+          <p className="mt-4 max-w-xl text-muted">
+            The volunteers who set up the room, look after speakers and make every event happen. Help at one near you
+            and your face goes up here.
+          </p>
+          <div className="mt-12">
+            <CrewGrid items={crew.slice(0, 11)} />
           </div>
-          <QubitPreview />
-        </div>
-      </section>
+        </section>
+      )}
 
-      {/* Fortune cookie */}
-      <section aria-labelledby="fortune-title" className={`${container} py-24`}>
-        <div className="grid items-center gap-10 border border-line p-6 sm:p-10 md:grid-cols-2">
-          <div>
-            <h2 id="fortune-title" className="text-4xl tracking-tight sm:text-5xl">
-              Quantum fortune
-            </h2>
-            <p className="mt-4 max-w-sm text-muted">
-              Crack the cookie and see what the wavefunction has in store for you. Results not guaranteed until
-              measured.
-            </p>
-          </div>
-          <FortuneCookie />
-        </div>
-      </section>
-
-      {/* Hosts */}
-      <section aria-labelledby="hosts-title" className={`${container} py-24`}>
-        <h2 id="hosts-title" className="text-4xl tracking-tight sm:text-5xl">
-          Rooms we&apos;ve been in
-        </h2>
-        <p className="mt-4 max-w-xl text-muted">Hosts, venues and programmes we&apos;ve run sessions with or joined.</p>
-        <ul className="mt-12 grid grid-cols-2 gap-3 md:grid-cols-3 md:gap-4 lg:grid-cols-5">
-          {hosts.map((host, i) => (
-            <li
-              key={host.name}
-              className={`relative flex min-h-32 items-center justify-center border border-line p-6 text-center text-lg leading-tight ${
-                i === 0 ? "text-xl" : ""
-              }`}
-            >
-              {host.note && (
-                <span className="absolute left-0 top-0">
-                  <Tag>{host.note}</Tag>
-                </span>
-              )}
-              {host.name}
-            </li>
-          ))}
-        </ul>
-      </section>
+      {/* Play */}
+      <p className={`${container} py-8 text-muted`}>
+        Got two minutes?{" "}
+        <Link href="/play" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+          Play Qubit Blaster
+        </Link>
+        , a tiny arcade game about qubits.
+      </p>
 
       <StartChapterBanner />
     </>

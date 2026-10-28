@@ -9,7 +9,7 @@ import { EVENTS_EMAIL, FOUNDATION_URL, formingChapters, liveChapters, listNames,
 const groups = [
   {
     title: "Explore",
-    links: [...navLinks, { label: "Qubit Blaster", href: "/game" }],
+    links: [...navLinks, { label: "Play", href: "/play" }],
   },
   {
     title: "Get involved",
