@@ -17,7 +17,7 @@ export function NewsCard({ item }: { item: NewsItem }) {
           alt=""
           fill
           sizes="(min-width: 1024px) 360px, (min-width: 640px) 50vw, 100vw"
-          className="object-cover grayscale contrast-110 transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
+          className="object-cover transition duration-500 group-hover:scale-[1.03]"
         />
         <div className="absolute left-0 top-0">
           <Tag tone={item.kind === "On the road" ? "purple" : item.kind === "Launch" ? "soft" : "purple"}>{item.kind}</Tag>

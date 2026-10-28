@@ -30,7 +30,7 @@ export default function HackathonPage() {
           fill
           preload
           sizes="100vw"
-          className="object-cover grayscale contrast-110"
+          className="object-cover"
         />
       </div>
 

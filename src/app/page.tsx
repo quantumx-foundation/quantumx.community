@@ -1,6 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { CircuitStrip } from "@/components/animations";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { CrewGrid } from "@/components/crew";
 import { DiscordGate } from "@/components/discord-gate";
@@ -60,7 +59,7 @@ export default function Home() {
         className={`${container} grid gap-10 pb-20 pt-12 sm:gap-12 sm:pt-20 md:grid-cols-2 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)]`}
       >
         <h1 className="md:col-span-2 lg:col-span-1">
-          <span className="sr-only">QuantumX Community, global</span>
+          <span className="sr-only">QuantumX Community</span>
           <span aria-hidden>
             <PixelLogo />
           </span>
@@ -96,8 +95,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-
-      <CircuitStrip />
 
       {/* Proof */}
       <section aria-label="Community in numbers" className={`${container} py-20`}>
@@ -163,7 +160,7 @@ export default function Home() {
             In the room
           </h2>
           <p className="mt-4 max-w-xl text-muted">
-            Workshops, meetups and hackathons from the last year. Hover for colour.
+            Workshops, meetups and hackathons from the last year.
           </p>
         </div>
         <div className="mt-12">

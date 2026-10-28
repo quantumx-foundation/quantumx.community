@@ -1,7 +1,7 @@
 export type Speaker = {
   name: string;
   title: string;
-  /** Photo lives at /images/speakers/<slug>.webp, dithered copy at /images/speakers/dither/<slug>.png. */
+  /** Photo lives at /images/speakers/<slug>.webp. */
   slug: string;
 };
 

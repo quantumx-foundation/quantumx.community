@@ -18,7 +18,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link href="/join" className="font-pixel text-sm uppercase tracking-[0.2em] text-purple hover:text-fg">
+        <Link href="/join?from=header" className="font-pixel text-sm uppercase tracking-[0.2em] text-purple hover:text-fg">
           Discord →
         </Link>
       </div>

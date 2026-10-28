@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { moments } from "@/content/moments";
 
-/** Full-bleed marquee of event photos that scrolls on its own. Black and white until hovered. */
+/** Full-bleed marquee of event photos that scrolls on its own. */
 export function PhotoStrip() {
   return (
     <div className="group overflow-hidden">
@@ -16,7 +16,7 @@ export function PhotoStrip() {
               alt={copy === 0 ? `Moment from a QuantumX community event, photo ${i + 1}` : ""}
               aria-hidden={copy === 1 || undefined}
               sizes="(min-width: 640px) 560px, 80vw"
-              className="mr-4 h-64 w-auto shrink-0 object-cover grayscale contrast-110 transition duration-500 hover:grayscale-0 sm:mr-8 sm:h-96"
+              className="mr-4 h-64 w-auto shrink-0 object-cover sm:mr-8 sm:h-96"
             />
           )),
         )}
