@@ -1,6 +1,7 @@
 "use client";
 
 import { useRef, useState, useSyncExternalStore } from "react";
+import { Turnstile } from "./turnstile";
 import { Button } from "./ui";
 import { FORM_ACTION } from "@/lib/forms";
 import { inviteFor } from "@/lib/site";
@@ -49,15 +50,21 @@ const inputClass =
 
 type Status = "idle" | "sending" | "error";
 
-/** Name and email, posted to the "discord" Netlify form. Used inline on /join and inside the popup. */
+/**
+ * Name and email, posted to the "discord" Netlify form, which emails them the
+ * invite (netlify/functions/on-form.mts). Used inline on /join and inside the popup.
+ */
 function GateForm({
   source,
   status,
+  attempt,
   autoFocus,
   onSubmit,
 }: {
   source: string;
   status: Status;
+  /** Bumped after a failed send, so the Turnstile widget remounts with a fresh token. */
+  attempt: number;
   autoFocus: boolean;
   onSubmit: (event: React.FormEvent<HTMLFormElement>) => void;
 }) {
@@ -104,6 +111,7 @@ function GateForm({
             className={inputClass}
           />
         </label>
+        <Turnstile key={attempt} />
         <button
           type="submit"
           disabled={status === "sending"}
@@ -116,7 +124,7 @@ function GateForm({
         {status === "error" ? (
           <span className="text-pink">That didn&apos;t send. Please try again.</span>
         ) : (
-          "Only for community news. No spam."
+          "We'll email you the invite too. Only community news after that, no spam."
         )}
       </p>
     </form>
@@ -141,6 +149,7 @@ export function DiscordGate({
   ask?: boolean;
 }) {
   const [status, setStatus] = useState<Status>("idle");
+  const [attempt, setAttempt] = useState(0);
   const dialog = useRef<HTMLDialogElement>(null);
   // The server can't see localStorage, so it always renders the locked gate.
   const unlocked = useSyncExternalStore(subscribe, isUnlocked, () => false);
@@ -161,6 +170,7 @@ export function DiscordGate({
       unlockDiscord();
     } catch {
       setStatus("error");
+      setAttempt((n) => n + 1);
     }
   }
 
@@ -168,7 +178,7 @@ export function DiscordGate({
   const invite = () => <Button href={inviteFor(source, currentRef())}>{label}</Button>;
 
   if (ask) {
-    return unlocked ? invite() : <GateForm source={source} status={status} autoFocus={false} onSubmit={onSubmit} />;
+    return unlocked ? invite() : <GateForm source={source} status={status} attempt={attempt} autoFocus={false} onSubmit={onSubmit} />;
   }
 
   return (
@@ -204,14 +214,15 @@ export function DiscordGate({
           {unlocked ? (
             <>
               <p className="mt-4 text-muted">
-                Chapters, events, study circles and the people behind them, all in one place.
+                Chapters, events, study circles and the people behind them, all in one place. A copy of the
+                invite is on its way to your inbox.
               </p>
               <div className="mt-8">{invite()}</div>
             </>
           ) : (
             <>
               <p className="mt-4 mb-6 text-muted">Tell us who you are and the invite is yours.</p>
-              <GateForm source={source} status={status} autoFocus onSubmit={onSubmit} />
+              <GateForm source={source} status={status} attempt={attempt} autoFocus onSubmit={onSubmit} />
             </>
           )}
         </div>

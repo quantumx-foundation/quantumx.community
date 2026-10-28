@@ -98,6 +98,29 @@ export function volunteerAck(): Ack {
   });
 }
 
+/** Sent after the Discord gate, so the invite is in their inbox as well as on the page. */
+export function discordInvite(): Ack {
+  const heading = "Here's your invite to the QuantumX Discord.";
+  const lines: [string, string] = [
+    "Chapters, events, study circles and the people behind them, all in one place.",
+    "Keep this email: the link works whenever you're ready to join.",
+  ];
+  const footnote =
+    "Someone asked for a QuantumX Discord invite on quantumx.community with this address. If this wasn't you, you can ignore this email.";
+  return {
+    subject: "Your QuantumX Discord invite",
+    html: renderNote({
+      eyebrow: "Discord invite",
+      heading,
+      preheader: "Your invite to the QuantumX Discord, as promised.",
+      lines,
+      cta: { href: DISCORD_URL, label: "Join the Discord" },
+      because: footnote,
+    }),
+    text: [heading, "", lines[0], lines[1], "", `Join: ${DISCORD_URL}`, "", footnote, ""].join("\n"),
+  };
+}
+
 export function gigAck(): Ack {
   return ack({
     subject: "We have your QuantumX gig board listing",

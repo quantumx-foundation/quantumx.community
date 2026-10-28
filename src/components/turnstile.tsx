@@ -57,7 +57,7 @@ export function Turnstile() {
         widget = turnstile.render(node, {
           sitekey: SITE_KEY,
           appearance: "interaction-only",
-          theme: "dark",
+          theme: "light",
           "refresh-expired": "auto",
         });
       })

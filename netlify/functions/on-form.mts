@@ -1,7 +1,7 @@
 import { createHash } from "node:crypto";
 import { getStore } from "@netlify/blobs";
 import type { FormSubmittedEvent } from "@netlify/functions";
-import { chapterAck, eventAck, gigAck, volunteerAck } from "../lib/ack-email.js";
+import { chapterAck, discordInvite, eventAck, gigAck, volunteerAck } from "../lib/ack-email.js";
 import { applicantName, applicationPlace, renderApplicationEmail, renderApplicationText } from "../lib/application-email.js";
 import { eventPlace, eventTitle, renderEventEmail, renderEventText } from "../lib/event-email.js";
 import { emailAddress, type Submission } from "../lib/email.js";
@@ -10,8 +10,13 @@ import { renderVolunteerEmail, renderVolunteerText, volunteerName, volunteerPlac
 
 type Letter = { subject: string; html: string; text: string };
 
-/** One entry per form declared in public/__forms.html. */
-const forms: Record<string, { alert: (data: Submission) => Letter; ack: () => Letter }> = {
+type Pool = "acks" | "invites";
+
+/**
+ * One entry per form declared in public/__forms.html. `alert` goes to the team,
+ * `ack` to the sender, counted against `pool` (acks unless it says otherwise).
+ */
+const forms: Record<string, { alert?: (data: Submission) => Letter; ack: () => Letter; pool?: Pool }> = {
   "chapter-application": {
     alert: (data) => ({
       subject: `Chapter application: ${applicationPlace(data)} (${applicantName(data)})`,
@@ -44,17 +49,23 @@ const forms: Record<string, { alert: (data: Submission) => Letter; ack: () => Le
     }),
     ack: gigAck,
   },
+  // No alert: the team reads Discord signups in Netlify. The sender gets the invite.
+  discord: {
+    ack: discordInvite,
+    pool: "invites",
+  },
 };
 
 /**
  * Daily ceilings, kept under Resend's free tier of 100 emails a day so a spam
  * run can never use up the sends a real application needs. Alerts get the
- * larger share: those are the ones the team cannot miss.
+ * largest share: those are the ones the team cannot miss. Discord invites have
+ * their own pool, so a rush of signups never costs an applicant their ack.
  */
-const ALERTS_PER_DAY = 50;
-const ACKS_PER_DAY = 40;
+const ALERTS_PER_DAY = 40;
+const CAPS: Record<Pool, number> = { acks: 25, invites: 30 };
 
-type Day = { alerts: number; acks: number };
+type Day = { alerts: number } & Record<Pool, number>;
 
 /** Counters and per-address marks, so limits hold across invocations. */
 function limits() {
@@ -64,12 +75,13 @@ function limits() {
 /** The day's counters, keyed by UTC date. */
 async function readDay(today: string): Promise<Day> {
   const day = (await limits().get(`day/${today}`, { type: "json" })) as Day | null;
-  return { alerts: day?.alerts ?? 0, acks: day?.acks ?? 0 };
+  return { alerts: day?.alerts ?? 0, acks: day?.acks ?? 0, invites: day?.invites ?? 0 };
 }
 
-/** One mark per address per day, stored as a hash so the store holds no email addresses. */
-function addressKey(address: string) {
-  return `ack/${createHash("sha256").update(address.toLowerCase()).digest("hex")}`;
+/** One mark per address per pool per day, stored as a hash so the store holds no email addresses. */
+function addressKey(pool: Pool, address: string) {
+  const prefix = pool === "acks" ? "ack" : "invite";
+  return `${prefix}/${createHash("sha256").update(address.toLowerCase()).digest("hex")}`;
 }
 
 /**
@@ -149,7 +161,8 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
 
 /**
  * Emails a form submission to the events inbox through Resend, and sends the
- * person who filled it in a short acknowledgement.
+ * person who filled it in a short acknowledgement (for the Discord form, the
+ * invite instead, with no alert to the team).
  * Runs after Netlify has verified the submission, so it cannot be hit directly.
  * Netlify still stores every submission, so nothing is lost when a limit or
  * the Turnstile check stops an email.
@@ -160,8 +173,6 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
 const handlers = {
   async formSubmitted(event: FormSubmittedEvent) {
     const { name, data } = readSubmission(event);
-    // Discord signups are only collected; Netlify keeps them, nobody needs an email.
-    if (name === "discord") return;
     const form = forms[name];
     if (!form) {
       // Names only, never values: these logs are not the place for applicants' details.
@@ -194,27 +205,31 @@ const handlers = {
     }
 
     const mails: (Letter & { to: string; replyTo?: string; label: string })[] = [];
-    if (!day || day.alerts < ALERTS_PER_DAY) {
+    if (!form.alert) {
+      // Nothing for the team on this form.
+    } else if (!day || day.alerts < ALERTS_PER_DAY) {
       mails.push({ ...form.alert(data), to: inbox, replyTo: sender, label: "alert" });
     } else {
       console.error(`DAILY ALERT CAP REACHED (${ALERTS_PER_DAY}): ${name} submission kept in Netlify, not emailed.`);
     }
 
+    const pool = form.pool ?? "acks";
+    const label = pool === "acks" ? "acknowledgement" : "invite";
     if (!sender) {
-      console.warn("No usable email on the submission; skipping the acknowledgement.");
-    } else if (day && day.acks >= ACKS_PER_DAY) {
-      console.warn(`Daily acknowledgement cap reached (${ACKS_PER_DAY}); skipping it.`);
+      console.warn(`No usable email on the submission; skipping the ${label}.`);
+    } else if (day && day[pool] >= CAPS[pool]) {
+      console.warn(`Daily ${label} cap reached (${CAPS[pool]}); skipping it.`);
     } else if (day) {
       try {
         const store = limits();
-        const mark = addressKey(sender);
+        const mark = addressKey(pool, sender);
         if ((await store.get(mark, { type: "text" })) === today) {
-          console.warn("This address already had an acknowledgement today; skipping it.");
+          console.warn(`This address already had an ${label} today; skipping it.`);
         } else {
           await store.set(mark, today);
           // Replies to the acknowledgement should reach the team, not bounce back
           // to the sender's own address.
-          mails.push({ ...form.ack(), to: sender, replyTo: inbox, label: "acknowledgement" });
+          mails.push({ ...form.ack(), to: sender, replyTo: inbox, label });
         }
       } catch (error) {
         console.error("Could not check the address limit; skipping the acknowledgement:", error);
@@ -222,9 +237,11 @@ const handlers = {
     }
 
     if (day) {
+      const count = (label: string) => mails.filter((mail) => mail.label === label).length;
       const next: Day = {
-        alerts: day.alerts + mails.filter((mail) => mail.label === "alert").length,
-        acks: day.acks + mails.filter((mail) => mail.label === "acknowledgement").length,
+        alerts: day.alerts + count("alert"),
+        acks: day.acks + count("acknowledgement"),
+        invites: day.invites + count("invite"),
       };
       // Read then write is not atomic, so two submissions in the same instant can
       // both count from the same number. The caps are well under Resend's limit,
