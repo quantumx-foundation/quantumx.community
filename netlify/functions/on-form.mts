@@ -1,11 +1,12 @@
 import { createHash } from "node:crypto";
 import { getStore } from "@netlify/blobs";
 import type { FormSubmittedEvent } from "@netlify/functions";
-import { chapterAck, discordInvite, eventAck, gigAck, volunteerAck } from "../lib/ack-email.js";
+import { chapterAck, discordInvite, eventAck, gigAck, speakerAck, volunteerAck } from "../lib/ack-email.js";
 import { applicantName, applicationPlace, renderApplicationEmail, renderApplicationText } from "../lib/application-email.js";
 import { eventPlace, eventTitle, renderEventEmail, renderEventText } from "../lib/event-email.js";
 import { emailAddress, type Submission } from "../lib/email.js";
 import { gigCompany, gigRole, renderGigEmail, renderGigText } from "../lib/gig-email.js";
+import { renderSpeakerEmail, renderSpeakerText, speakerName } from "../lib/speaker-email.js";
 import { renderVolunteerEmail, renderVolunteerText, volunteerName, volunteerPlace } from "../lib/volunteer-email.js";
 
 type Letter = { subject: string; html: string; text: string };
@@ -48,6 +49,14 @@ const forms: Record<string, { alert?: (data: Submission) => Letter; ack: () => L
       text: renderGigText(data),
     }),
     ack: gigAck,
+  },
+  speaker: {
+    alert: (data) => ({
+      subject: `Speaker: ${speakerName(data)}`,
+      html: renderSpeakerEmail(data),
+      text: renderSpeakerText(data),
+    }),
+    ack: speakerAck,
   },
   // No alert: the team reads Discord signups in Netlify. The sender gets the invite.
   discord: {
@@ -113,6 +122,7 @@ const telltales: [field: string, form: string][] = [
   ["organiser", "event-support"],
   ["availability", "volunteer"],
   ["role", "gig"],
+  ["jobTitle", "speaker"],
   ["source", "discord"],
 ];
 

@@ -9,7 +9,7 @@
     <!--
       Netlify detects forms by parsing static HTML at build time, so it cannot
       see forms rendered by React. This file declares them; the real ones at
-      /chapters/apply, /events/support, /crew and /gigs (and every
+      /chapters/apply, /events/support, /crew, /gigs and /speakers (and every
       "Join the Discord" button) post here. Keep the field names in
       sync with src/lib/forms.ts. cf-turnstile-response is added by
       src/components/turnstile.tsx and checked in netlify/functions/on-form.mts.
@@ -85,6 +85,18 @@
       <textarea name="about"></textarea>
       <input type="text" name="contact" />
       <input type="email" name="email" />
+    </form>
+
+    <form name="speaker" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="speaker" />
+      <input type="text" name="bot-field" />
+      <input type="hidden" name="cf-turnstile-response" />
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="social" />
+      <input type="text" name="workplace" />
+      <input type="text" name="jobTitle" />
     </form>
 
     <form name="discord" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>

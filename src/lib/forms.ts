@@ -173,6 +173,30 @@ export const gigForm: FormSpec = {
   ],
 };
 
+export const speakerForm: FormSpec = {
+  name: "speaker",
+  submit: "Apply to speak",
+  note: "Online or at any chapter. We reply to everyone.",
+  done: {
+    title: "Thanks, we've got it",
+    body: "We'll be in touch when there's a session that fits, usually within a couple of weeks. Join the Discord in the meantime: that's where chapters look for speakers.",
+  },
+  fields: [
+    { name: "name", label: "Your name", type: "text", required: true },
+    { name: "email", label: "Email", type: "email", required: true },
+    { name: "phone", label: "Phone or WhatsApp", type: "tel" },
+    {
+      name: "social",
+      label: "LinkedIn or X",
+      type: "text",
+      required: true,
+      placeholder: "linkedin.com/in/... or @handle",
+    },
+    { name: "workplace", label: "Where you work", type: "text", required: true, placeholder: "IBM Research" },
+    { name: "jobTitle", label: "Your title", type: "text", required: true, placeholder: "Quantum Software Engineer" },
+  ],
+};
+
 /** How far ahead an event has to be for us to have time to ship swag and budget food. */
 export const LEAD_DAYS = 45;
 
