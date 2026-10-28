@@ -15,9 +15,8 @@
 # Set NEXT_PUBLIC_TURNSTILE_SITE_KEY (Builds) and TURNSTILE_SECRET_KEY
 # (Functions) to turn on the Cloudflare bot check on those forms.
 
-# Applies to every response, pages and static files alike. The CSP only
-# carries directives that cannot break a script or a style: who may frame
-# the site, where forms may post, and no plugins or <base> tricks.
+# Static files only: the CDN serves them without asking Next. Pages get the
+# same headers from next.config.ts; keep the two in step.
 [[headers]]
   for = "/*"
   [headers.values]
