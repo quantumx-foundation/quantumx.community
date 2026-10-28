@@ -3,7 +3,7 @@ import Link from "next/link";
 export const container = "mx-auto w-full max-w-6xl px-4 sm:px-8";
 
 const buttonClass =
-  "inline-flex items-center gap-3 border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg focus-visible:bg-pink focus-visible:text-bg focus-visible:outline-none";
+  "inline-flex items-center gap-3 border border-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-purple transition-colors hover:bg-purple hover:text-bg focus-visible:bg-purple focus-visible:text-bg focus-visible:outline-none";
 
 /** Outline pixel button. External hrefs open in a new tab with an ↗. */
 export function Button({ href, children }: { href: string; children: React.ReactNode }) {
@@ -24,11 +24,11 @@ export function Button({ href, children }: { href: string; children: React.React
 }
 
 /** Small highlighted pixel label, like Select's "HEADLINE SPONSOR" tag. */
-export function Tag({ children, tone = "pink" }: { children: React.ReactNode; tone?: "pink" | "soft" | "outline" }) {
+export function Tag({ children, tone = "purple" }: { children: React.ReactNode; tone?: "purple" | "soft" | "outline" }) {
   const tones = {
-    pink: "bg-pink text-bg",
+    purple: "bg-purple text-bg",
     soft: "bg-soft text-ink",
-    outline: "border border-dim text-pink",
+    outline: "border border-dim text-purple",
   };
   return (
     <span className={`inline-block px-2 py-1 font-pixel text-xs uppercase tracking-widest ${tones[tone]}`}>
@@ -58,7 +58,7 @@ export function SectionHeading({
       </h2>
       {aside}
       {href && (
-        <Link href={href} className="font-pixel text-sm uppercase tracking-[0.2em] text-pink hover:text-fg">
+        <Link href={href} className="font-pixel text-sm uppercase tracking-[0.2em] text-purple hover:text-fg">
           {linkLabel} →
         </Link>
       )}

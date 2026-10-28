@@ -1,5 +1,5 @@
 const rows = [
-  { text: "QUANTUMX", bg: "bg-pink text-bg" },
+  { text: "QUANTUMX", bg: "bg-purple text-bg" },
   { text: "COMMUNITY", bg: "bg-soft text-ink" },
   { text: "GLOBAL", bg: "bg-fg text-bg" },
 ];

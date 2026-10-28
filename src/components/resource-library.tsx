@@ -20,7 +20,7 @@ export function ResourceLibrary() {
       <div className="flex flex-col gap-6 border-b border-line pb-8 lg:flex-row lg:items-start lg:justify-between">
         <nav aria-label="Areas" className="flex flex-wrap gap-x-5 gap-y-2 text-sm text-muted">
           {areas.map((area) => (
-            <a key={area} href={`#${slug(area)}`} className="hover:text-pink">
+            <a key={area} href={`#${slug(area)}`} className="hover:text-purple">
               {area}
             </a>
           ))}
@@ -33,7 +33,7 @@ export function ResourceLibrary() {
               aria-pressed={type === t}
               onClick={() => setType(t)}
               className={`cursor-pointer border px-3 py-1.5 font-pixel text-xs uppercase tracking-widest transition-colors ${
-                type === t ? "border-pink bg-pink text-bg" : "border-line text-muted hover:border-pink hover:text-fg"
+                type === t ? "border-purple bg-purple text-bg" : "border-line text-muted hover:border-purple hover:text-fg"
               }`}
             >
               {t}
@@ -60,12 +60,12 @@ export function ResourceLibrary() {
                     href={r.url}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="group relative flex h-full flex-col border border-line bg-panel p-5 pt-12 transition-colors hover:border-pink sm:p-6 sm:pt-14"
+                    className="group relative flex h-full flex-col border border-line bg-panel p-5 pt-12 transition-colors hover:border-purple sm:p-6 sm:pt-14"
                   >
                     <span className="absolute left-0 top-0">
-                      <Tag tone={r.type === "Workshop recording" ? "pink" : "outline"}>{r.type}</Tag>
+                      <Tag tone={r.type === "Workshop recording" ? "purple" : "outline"}>{r.type}</Tag>
                     </span>
-                    <span className="text-lg leading-snug group-hover:text-pink">
+                    <span className="text-lg leading-snug group-hover:text-purple">
                       {r.title} <span aria-hidden>↗</span>
                     </span>
                     <span className="mt-1 text-sm text-muted">{r.by}</span>

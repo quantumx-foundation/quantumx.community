@@ -35,7 +35,7 @@ export function EventSupportPanel() {
         <ul className="divide-y divide-line border-t border-line lg:border-l lg:border-t-0">
           {covers.map((item) => (
             <li key={item.title} className="p-6 sm:p-8">
-              <p className="font-pixel text-xs uppercase tracking-[0.2em] text-pink">{item.title}</p>
+              <p className="font-pixel text-xs uppercase tracking-[0.2em] text-purple">{item.title}</p>
               <p className="mt-3 text-sm leading-relaxed text-muted">{item.body}</p>
             </li>
           ))}

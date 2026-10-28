@@ -38,7 +38,7 @@ const jsonLd = {
   "@type": "Organization",
   name: "QuantumX Community",
   url: SITE_URL,
-  logo: `${SITE_URL}/app-icon.png`,
+  logo: `${SITE_URL}/logo.png`,
   sameAs: socials.map((s) => s.href),
   parentOrganization: { "@type": "Organization", name: "QuantumX Foundation", url: FOUNDATION_URL },
   areaServed: chapters.map((c) => c.name),
@@ -69,7 +69,7 @@ export default function Home() {
           <p className="text-xl leading-snug">
             A global community for people learning, researching and building quantum technology.
           </p>
-          <p aria-hidden className="mt-6 font-pixel text-2xl text-pink">
+          <p aria-hidden className="mt-6 font-pixel text-2xl text-purple">
             ↓
           </p>
           <dl className="mt-4 grid grid-cols-2 gap-6 text-muted">
@@ -90,7 +90,7 @@ export default function Home() {
           </p>
           <div className="mt-8 flex flex-col items-start gap-4">
             <DiscordGate source="home" />
-            <Link href="/events" className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-pink">
+            <Link href="/events" className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-purple">
               See upcoming events →
             </Link>
           </div>
@@ -121,7 +121,7 @@ export default function Home() {
             <li
               key={host.name}
               className={`relative flex min-h-24 items-center justify-center border p-5 text-center leading-tight ${
-                i === 0 ? "border-pink text-lg" : "border-line"
+                i === 0 ? "border-purple text-lg" : "border-line"
               }`}
             >
               {host.note && (
@@ -149,7 +149,7 @@ export default function Home() {
         </div>
         <p className="mt-8 text-muted">
           Running your own quantum event?{" "}
-          <Link href="/events/support" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+          <Link href="/events/support" className="text-purple underline decoration-dotted underline-offset-4 hover:text-fg">
             We&apos;ll back it with swag, food and a speaker
           </Link>
           .
@@ -205,7 +205,7 @@ export default function Home() {
                 href={hackathon.winnersUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-pink"
+                className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-purple"
               >
                 See the winners ↗
               </a>
@@ -230,7 +230,7 @@ export default function Home() {
         </SectionHeading>
         <p className="mt-4 max-w-2xl text-muted">
           India is live, and its cities are opening up one by one:{" "}
-          <Link href="/chapters/apply" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+          <Link href="/chapters/apply" className="text-purple underline decoration-dotted underline-offset-4 hover:text-fg">
             {listCities(formingCities)} are looking for leads
           </Link>
           .
@@ -293,7 +293,7 @@ export default function Home() {
       {/* Play */}
       <p className={`${container} py-8 text-muted`}>
         Got two minutes?{" "}
-        <Link href="/play" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+        <Link href="/play" className="text-purple underline decoration-dotted underline-offset-4 hover:text-fg">
           Play Qubit Blaster
         </Link>
         , a tiny arcade game about qubits.

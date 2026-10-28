@@ -10,7 +10,7 @@ import { inviteFor } from "@/lib/site";
 const UNLOCK_KEY = "qx-discord-unlocked";
 
 const buttonClass =
-  "inline-flex cursor-pointer items-center gap-3 border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg focus-visible:bg-pink focus-visible:text-bg focus-visible:outline-none disabled:opacity-60";
+  "inline-flex cursor-pointer items-center gap-3 border border-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-purple transition-colors hover:bg-purple hover:text-bg focus-visible:bg-purple focus-visible:text-bg focus-visible:outline-none disabled:opacity-60";
 
 function isUnlocked() {
   try {
@@ -46,7 +46,7 @@ function currentRef() {
 }
 
 const inputClass =
-  "mt-2 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink";
+  "mt-2 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-purple";
 
 type Status = "idle" | "sending" | "error";
 
@@ -115,14 +115,14 @@ function GateForm({
         <button
           type="submit"
           disabled={status === "sending"}
-          className="mt-2 inline-flex cursor-pointer items-center justify-center gap-3 border border-pink bg-pink px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="mt-2 inline-flex cursor-pointer items-center justify-center gap-3 border border-purple bg-purple px-6 py-3 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === "sending" ? "Sending..." : "Get invite"}
         </button>
       </div>
       <p aria-live="polite" className="mt-3 text-sm text-muted">
         {status === "error" ? (
-          <span className="text-pink">That didn&apos;t send. Please try again.</span>
+          <span className="text-purple">That didn&apos;t send. Please try again.</span>
         ) : (
           "We'll email you the invite too. Only community news after that, no spam."
         )}
@@ -204,11 +204,11 @@ export function DiscordGate({
             type="button"
             onClick={() => dialog.current?.close()}
             aria-label="Close"
-            className="absolute right-3 top-3 cursor-pointer px-2 py-1 font-mono text-lg text-muted transition-colors hover:text-pink"
+            className="absolute right-3 top-3 cursor-pointer px-2 py-1 font-mono text-lg text-muted transition-colors hover:text-purple"
           >
             ×
           </button>
-          <p id={`discord-gate-${source}`} className="pr-8 font-pixel text-2xl text-pink">
+          <p id={`discord-gate-${source}`} className="pr-8 font-pixel text-2xl text-purple">
             {unlocked ? "You're in" : "Join the Discord"}
           </p>
           {unlocked ? (

@@ -7,7 +7,7 @@ export type Colors = {
   muted: string;
   line: string;
   dim: string;
-  pink: string;
+  purple: string;
   soft: string;
   pale: string;
   ink: string;
@@ -55,7 +55,7 @@ export function GridCanvas({ scene, rows, label, fps = 12, className = "" }: Pro
       muted: token("muted"),
       line: token("line"),
       dim: token("dim"),
-      pink: token("pink"),
+      purple: token("purple"),
       soft: token("soft"),
       pale: token("pale"),
       ink: token("ink"),

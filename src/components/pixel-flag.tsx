@@ -134,7 +134,7 @@ export function BlankFlag({ className = "" }: { className?: string }) {
           y={y + 0.08}
           width={0.84}
           height={0.84}
-          fill={onPlus ? "var(--pink)" : "var(--line)"}
+          fill={onPlus ? "var(--purple)" : "var(--line)"}
         />,
       );
     }

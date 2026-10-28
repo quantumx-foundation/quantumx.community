@@ -8,7 +8,7 @@ import { FORM_ACTION, type Field, type FormSpec } from "@/lib/forms";
 import { EVENTS_EMAIL } from "@/lib/site";
 
 const inputClass =
-  "mt-3 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink";
+  "mt-3 w-full border border-line bg-bg px-4 py-3 text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-purple";
 
 /**
  * Pins a date input's earliest allowed day, counted from today in the
@@ -42,7 +42,7 @@ function Label({ field }: { field: Field }) {
     <>
       <span className="font-mono text-xs uppercase tracking-wider text-muted">
         {field.label}
-        {field.required && <span className="text-pink"> *</span>}
+        {field.required && <span className="text-purple"> *</span>}
       </span>
       {field.hint && <span className="mt-2 block text-sm text-muted">{field.hint}</span>}
     </>
@@ -54,18 +54,18 @@ function Consent({ field }: { field: Field }) {
   const [before, after] = field.link ? field.label.split("%s") : [field.label, ""];
   return (
     <label className="flex items-start gap-3 sm:col-span-2">
-      <input type="checkbox" name={field.name} required={field.required} value="yes" className="mt-1 size-4 accent-pink" />
+      <input type="checkbox" name={field.name} required={field.required} value="yes" className="mt-1 size-4 accent-purple" />
       <span className="text-sm text-muted">
         {before}
         {field.link && (
           <>
-            <Link href={field.link.href} className="text-pink underline decoration-dotted underline-offset-4">
+            <Link href={field.link.href} className="text-purple underline decoration-dotted underline-offset-4">
               {field.link.text}
             </Link>
             {after}
           </>
         )}
-        {field.required && <span className="text-pink"> *</span>}
+        {field.required && <span className="text-purple"> *</span>}
       </span>
     </label>
   );
@@ -98,8 +98,8 @@ export function ApplyForm({ form }: { form: FormSpec }) {
 
   if (status === "sent") {
     return (
-      <div className="border border-pink bg-panel p-8 sm:p-12">
-        <p className="font-pixel text-3xl text-pink">{form.done.title}</p>
+      <div className="border border-purple bg-panel p-8 sm:p-12">
+        <p className="font-pixel text-3xl text-purple">{form.done.title}</p>
         <p className="mt-6 max-w-xl text-muted">{form.done.body}</p>
         <div className="mt-8">
           <DiscordGate source="form" />
@@ -166,7 +166,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
         <button
           type="submit"
           disabled={status === "sending"}
-          className="inline-flex cursor-pointer items-center gap-3 border border-pink bg-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
+          className="inline-flex cursor-pointer items-center gap-3 border border-purple bg-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-bg transition-opacity hover:opacity-90 disabled:opacity-60"
         >
           {status === "sending" ? "Sending..." : form.submit}
           <span aria-hidden>→</span>
@@ -174,7 +174,7 @@ export function ApplyForm({ form }: { form: FormSpec }) {
         <p className="text-sm text-muted">{form.note}</p>
       </div>
 
-      <p aria-live="polite" className="mt-6 text-sm text-pink">
+      <p aria-live="polite" className="mt-6 text-sm text-purple">
         {status === "error" && (
           <>
             That didn&apos;t send. Please try again, or email us at{" "}

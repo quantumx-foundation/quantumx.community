@@ -45,14 +45,14 @@ export function WorldMap() {
           return (
             <g key={chapter.code}>
               <title>{`${chapter.name}: ${live ? "live" : "forming"}`}</title>
-              {live && <rect x={x - 0.6} y={y - 0.6} width={1.2} height={1.2} className="pin-pulse fill-pink" />}
+              {live && <rect x={x - 0.6} y={y - 0.6} width={1.2} height={1.2} className="pin-pulse fill-purple" />}
               <rect
                 x={x - 0.6}
                 y={y - 0.6}
                 width={1.2}
                 height={1.2}
                 strokeWidth={0.3}
-                className={live ? "fill-pink" : "fill-bg stroke-pink"}
+                className={live ? "fill-purple" : "fill-bg stroke-purple"}
               />
               <text
                 x={left ? x - 1.6 : x + 1.6}
@@ -60,7 +60,7 @@ export function WorldMap() {
                 textAnchor={left ? "end" : "start"}
                 dominantBaseline="middle"
                 fontSize={2}
-                className={`hidden font-pixel uppercase sm:inline ${live ? "fill-pink" : "fill-muted"}`}
+                className={`hidden font-pixel uppercase sm:inline ${live ? "fill-purple" : "fill-muted"}`}
               >
                 {chapter.short}
               </text>
@@ -70,10 +70,10 @@ export function WorldMap() {
       </svg>
       <figcaption className="mt-6 flex flex-wrap gap-x-6 gap-y-2 font-mono text-xs uppercase tracking-wider text-muted">
         <span className="flex items-center gap-2">
-          <span aria-hidden className="size-2.5 bg-pink" /> Live
+          <span aria-hidden className="size-2.5 bg-purple" /> Live
         </span>
         <span className="flex items-center gap-2">
-          <span aria-hidden className="size-2.5 border border-pink" /> Forming
+          <span aria-hidden className="size-2.5 border border-purple" /> Forming
         </span>
       </figcaption>
     </figure>

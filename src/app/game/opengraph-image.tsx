@@ -16,7 +16,7 @@ const BG = "#0c0a0f";
 const FG = "#f4eef6";
 const MUTED = "#958c9f";
 const LINE = "#2a2331";
-const PINK = "#e485b0";
+const PURPLE = "#c46bfc";
 const INK = "#2d1b55";
 const MIST = "#d7e4ff";
 const VIOLET = "#8b5cf6";
@@ -36,7 +36,7 @@ function Qubit({ x, y, label, superposed = false, bit = 0 }: { x: number; y: num
         alignItems: "center",
         justifyContent: "center",
         fontSize: 30,
-        background: superposed ? "rgba(139,92,246,0.28)" : bit === 0 ? MIST : PINK,
+        background: superposed ? "rgba(139,92,246,0.28)" : bit === 0 ? MIST : PURPLE,
         border: superposed ? `4px dashed ${VIOLET}` : "none",
         color: superposed ? MIST : INK,
       }}
@@ -52,8 +52,8 @@ export default function Image() {
       <div style={{ width: "100%", height: "100%", display: "flex", background: BG, color: FG, padding: 64 }}>
         {/* Left: what it is */}
         <div style={{ display: "flex", flexDirection: "column", justifyContent: "space-between", width: 600 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 18, color: PINK, fontSize: 26, letterSpacing: 6 }}>
-            <svg viewBox={MARK_VIEWBOX} width={44} height={34} fill={PINK}>
+          <div style={{ display: "flex", alignItems: "center", gap: 18, color: PURPLE, fontSize: 26, letterSpacing: 6 }}>
+            <svg viewBox={MARK_VIEWBOX} width={44} height={34} fill={PURPLE}>
               {MARK_PATHS.map((d) => (
                 <path key={d} d={d} />
               ))}
@@ -69,7 +69,7 @@ export default function Image() {
           </div>
 
           <div style={{ display: "flex", alignItems: "center", gap: 20 }}>
-            <div style={{ display: "flex", border: `2px solid ${PINK}`, color: PINK, padding: "14px 24px", fontSize: 22, letterSpacing: 4, whiteSpace: "nowrap", flexShrink: 0 }}>
+            <div style={{ display: "flex", border: `2px solid ${PURPLE}`, color: PURPLE, padding: "14px 24px", fontSize: 22, letterSpacing: 4, whiteSpace: "nowrap", flexShrink: 0 }}>
               PLAY NOW →
             </div>
             <div style={{ fontSize: 24, color: MUTED, whiteSpace: "nowrap" }}>quantumx.community/game</div>
@@ -92,7 +92,7 @@ export default function Image() {
           <div style={{ position: "absolute", left: 22, top: 18, fontSize: 22, color: FG }}>SCORE 12</div>
           <div style={{ position: "absolute", right: 22, top: 22, display: "flex", gap: 8 }}>
             {[0, 1, 2].map((i) => (
-              <div key={i} style={{ width: 18, height: 18, background: PINK }} />
+              <div key={i} style={{ width: 18, height: 18, background: PURPLE }} />
             ))}
           </div>
 
@@ -105,11 +105,11 @@ export default function Image() {
           <Qubit x={310} y={106} label="?" superposed />
           <Qubit x={386} y={106} label="?" superposed />
 
-          <div style={{ position: "absolute", left: 192, top: 318, width: 8, height: 28, background: PINK }} />
-          <div style={{ position: "absolute", left: 0, top: 410, width: "100%", borderTop: `3px dashed rgba(228,133,176,0.5)` }} />
+          <div style={{ position: "absolute", left: 192, top: 318, width: 8, height: 28, background: PURPLE }} />
+          <div style={{ position: "absolute", left: 0, top: 410, width: "100%", borderTop: `3px dashed rgba(196,107,252,0.5)` }} />
           <svg style={{ position: "absolute", left: 166, top: 414 }} width={60} height={50} viewBox="0 0 60 50">
             <path d="M30 0L60 50H0Z" fill={FG} />
-            <rect x={23} y={26} width={14} height={14} fill={PINK} />
+            <rect x={23} y={26} width={14} height={14} fill={PURPLE} />
           </svg>
         </div>
       </div>

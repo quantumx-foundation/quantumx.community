@@ -52,13 +52,13 @@ export default function CodeOfConductPage() {
       <section className={`${container} max-w-3xl pb-8`}>
         {sections.map((section, i) => (
           <div key={section.title} className="grid gap-4 border-b border-line py-10 md:grid-cols-[4rem_1fr]">
-            <p className="font-mono text-sm text-pink">0{i + 1}</p>
+            <p className="font-mono text-sm text-purple">0{i + 1}</p>
             <div>
               <h2 className="text-2xl tracking-tight">{section.title}</h2>
               <ul className="mt-5 space-y-3 text-muted">
                 {section.items.map((item) => (
                   <li key={item} className="flex gap-3">
-                    <span aria-hidden className="text-pink">
+                    <span aria-hidden className="text-purple">
                       ·
                     </span>
                     {item}
@@ -72,7 +72,7 @@ export default function CodeOfConductPage() {
           <h2 className="text-2xl tracking-tight">Reporting</h2>
           <p className="mt-4 text-muted">
             If something happens, tell an organiser at the event or email{" "}
-            <a href={`mailto:${EVENTS_EMAIL}`} className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
+            <a href={`mailto:${EVENTS_EMAIL}`} className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple">
               {EVENTS_EMAIL}
             </a>
             . Reports are handled in confidence.

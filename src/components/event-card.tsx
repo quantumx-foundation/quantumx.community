@@ -42,10 +42,10 @@ export function EventCard({ event, upcoming }: { event: EventItem; upcoming: boo
         />
       </div>
       <div className="flex flex-1 flex-col p-5">
-        <h3 className="text-lg leading-snug tracking-tight transition-colors group-hover:text-pink">{event.title}</h3>
+        <h3 className="text-lg leading-snug tracking-tight transition-colors group-hover:text-purple">{event.title}</h3>
         <div className="mt-3 flex flex-wrap gap-2 font-mono text-xs uppercase tracking-wider">
-          <span className="bg-pale px-2 py-1 text-pink">{event.kind}</span>
-          <span className={`border px-2 py-1 ${upcoming ? "border-pink text-pink" : "border-line text-muted"}`}>
+          <span className="bg-pale px-2 py-1 text-purple">{event.kind}</span>
+          <span className={`border px-2 py-1 ${upcoming ? "border-purple text-purple" : "border-line text-muted"}`}>
             {upcoming ? "Upcoming" : "Past"}
           </span>
         </div>
@@ -58,7 +58,7 @@ export function EventCard({ event, upcoming }: { event: EventItem; upcoming: boo
         </ul>
         <div className="mt-auto pt-6 text-center font-pixel text-xs uppercase tracking-[0.2em]">
           {event.url ? (
-            <span className="block bg-fg py-3 text-bg transition-colors group-hover:bg-pink">View details ↗</span>
+            <span className="block bg-fg py-3 text-bg transition-colors group-hover:bg-purple">View details ↗</span>
           ) : (
             <span className="block border border-line py-3 text-muted">Details soon</span>
           )}
@@ -66,7 +66,7 @@ export function EventCard({ event, upcoming }: { event: EventItem; upcoming: boo
       </div>
     </>
   );
-  const className = "group flex flex-col border border-line bg-bg transition-colors hover:border-pink";
+  const className = "group flex flex-col border border-line bg-bg transition-colors hover:border-purple";
   return event.url ? (
     <a href={event.url} target="_blank" rel="noopener noreferrer" className={className}>
       {body}

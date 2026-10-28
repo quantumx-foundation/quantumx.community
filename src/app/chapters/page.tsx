@@ -58,7 +58,7 @@ const faq = [
           href={FNB_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink"
+          className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple"
         >
           Food and beverages
         </a>{" "}
@@ -67,7 +67,7 @@ const faq = [
           href={SWAG_URL}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink"
+          className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple"
         >
           swag
         </a>{" "}
@@ -147,7 +147,7 @@ export default function ChaptersPage() {
         <ol className="mt-16 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, i) => (
             <li key={step.title}>
-              <p className="font-pixel text-4xl text-pink">0{i + 1}</p>
+              <p className="font-pixel text-4xl text-purple">0{i + 1}</p>
               <h3 className="mt-4 text-lg">{step.title}</h3>
               <p className="mt-3 text-muted">{step.body}</p>
             </li>

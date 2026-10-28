@@ -27,11 +27,11 @@ export function SiteFooter() {
     <footer className="mt-24">
       <div className={`${container} grid gap-12 py-16 lg:grid-cols-[1.4fr_3fr]`}>
         <div>
-          <LogoMark className="mb-6 h-10 w-auto text-pink" />
+          <LogoMark className="mb-6 h-10 w-auto text-purple" />
           <PixelLogo size="sm" />
           <p className="mt-8 max-w-xs text-sm text-muted">
             Live in {listNames(liveChapters)}. {formingChapters.length} chapters forming. A community of the{" "}
-            <a href={FOUNDATION_URL} className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
+            <a href={FOUNDATION_URL} className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple">
               QuantumX Foundation
             </a>
             .
@@ -47,7 +47,7 @@ export function SiteFooter() {
               <ul className="mt-4 space-y-3">
                 {group.links.map((link) => (
                   <li key={link.href}>
-                    <Link href={link.href} className="hover:text-pink">
+                    <Link href={link.href} className="hover:text-purple">
                       {link.label}
                     </Link>
                   </li>
@@ -60,13 +60,13 @@ export function SiteFooter() {
             <ul className="mt-4 space-y-3">
               {socials.map((link) => (
                 <li key={link.href}>
-                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="hover:text-pink">
+                  <a href={link.href} target="_blank" rel="noopener noreferrer" className="hover:text-purple">
                     {link.label} ↗
                   </a>
                 </li>
               ))}
               <li>
-                <a href={`mailto:${EVENTS_EMAIL}`} className="break-all hover:text-pink">
+                <a href={`mailto:${EVENTS_EMAIL}`} className="break-all hover:text-purple">
                   {EVENTS_EMAIL}
                 </a>
               </li>

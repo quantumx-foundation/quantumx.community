@@ -7,7 +7,7 @@ export function SiteHeader() {
   return (
     <header className={`${container} py-6`}>
       <div className="flex items-center justify-between gap-6">
-        <Link href="/" className="flex items-center gap-3 font-pixel text-sm uppercase tracking-[0.2em] text-pink">
+        <Link href="/" className="flex items-center gap-3 font-pixel text-sm uppercase tracking-[0.2em] text-purple">
           <LogoMark className="h-5 w-auto" />
           Community
         </Link>
@@ -18,7 +18,7 @@ export function SiteHeader() {
             </Link>
           ))}
         </nav>
-        <Link href="/join" className="font-pixel text-sm uppercase tracking-[0.2em] text-pink hover:text-fg">
+        <Link href="/join" className="font-pixel text-sm uppercase tracking-[0.2em] text-purple hover:text-fg">
           Discord →
         </Link>
       </div>

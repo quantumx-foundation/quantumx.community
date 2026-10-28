@@ -79,7 +79,7 @@ function CatLoop() {
         onPointerEnter={() => setObserved(true)}
         onPointerLeave={() => setObserved(false)}
       >
-        <Bitmap rows={CAT} x={2} y={2} className={`fill-pink transition-opacity duration-100 ${here ? "" : "opacity-15"}`} />
+        <Bitmap rows={CAT} x={2} y={2} className={`fill-purple transition-opacity duration-100 ${here ? "" : "opacity-15"}`} />
         <Bitmap rows={BOX} x={0} y={8} className="fill-muted" />
       </svg>
       <span className="absolute bottom-3 left-4 font-mono text-xs text-muted">
@@ -100,11 +100,11 @@ function QueueLoop() {
       <div className="w-full px-6 font-mono text-sm leading-relaxed sm:px-8">
         <p className="text-muted">&gt; job.submit()</p>
         <p className="mt-2 text-fg">
-          status: <span className="text-pink">QUEUED</span>
+          status: <span className="text-purple">QUEUED</span>
         </p>
         <p className="text-fg">
           position: <span className="tabular-nums">{position.toLocaleString("en-US")}</span>
-          {cycle > 30 && <span className="text-pink"> ↑</span>}
+          {cycle > 30 && <span className="text-purple"> ↑</span>}
         </p>
         <p className="text-muted">
           eta: {cycle > 30 ? "lol" : "soon"}

@@ -16,8 +16,8 @@ export const C = {
   fg: "#f4eef6",
   muted: "#958c9f",
   line: "#2a2331",
-  pink: "#e485b0",
-  soft: "#f0b3cf",
+  purple: "#b62dfa",
+  soft: "#e2b8fd",
   ink: "#2d1b55",
 } as const;
 
@@ -51,11 +51,11 @@ export function escapeMultiline(value: string) {
 export function renderLink(value: string) {
   const safe = escapeHtml(value);
   if (!/^https?:\/\//i.test(value.trim())) return safe;
-  return `<a href="${safe}" style="color:${C.pink};text-decoration:underline;">${safe}</a>`;
+  return `<a href="${safe}" style="color:${C.purple};text-decoration:underline;">${safe}</a>`;
 }
 
 export function mailtoLink(email: string) {
-  return `<a href="mailto:${escapeHtml(email)}" style="color:${C.pink};text-decoration:underline;">${escapeHtml(email)}</a>`;
+  return `<a href="mailto:${escapeHtml(email)}" style="color:${C.purple};text-decoration:underline;">${escapeHtml(email)}</a>`;
 }
 
 export const blank = `<span style="color:${C.muted};">(blank)</span>`;
@@ -81,7 +81,7 @@ export function emailAddress(value: unknown) {
  * The mark beside the stacked colour blocks from the hero lockup. Each word gets
  * its own table so the block hugs its text: rows of one table would all stretch
  * to the width of the longest word. The mark is a transparent PNG rather than
- * the site's inline SVG because Gmail and Outlook strip SVG, and it is pink
+ * the site's inline SVG because Gmail and Outlook strip SVG, and it is purple
  * rather than white so it reads on a dark background and on a client that
  * forces a light one.
  */
@@ -94,7 +94,7 @@ function wordmark() {
     <td valign="middle" style="padding-right:14px;">
       <img src="${LOGO}" width="54" height="42" alt="QuantumX" style="display:block;width:54px;height:42px;border:0;outline:none;text-decoration:none;" />
     </td>
-    <td valign="middle">${block("QUANTUMX", C.pink)}${block("COMMUNITY", C.soft)}</td>
+    <td valign="middle">${block("QUANTUMX", C.purple)}${block("COMMUNITY", C.soft)}</td>
   </tr></tbody></table>`;
 }
 
@@ -114,14 +114,14 @@ function row([label, value]: Entry, isLast: boolean) {
 /** A line above the table, for anything that needs the reader's attention. */
 export function notice(text: string) {
   return `<tr><td style="padding-bottom:20px;">
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${C.pink};"><tbody><tr>
-      <td style="padding:12px 20px;font-family:${MONO};font-size:12px;line-height:1.6;letter-spacing:0.5px;color:${C.pink};">${escapeHtml(text)}</td>
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="border:1px solid ${C.purple};"><tbody><tr>
+      <td style="padding:12px 20px;font-family:${MONO};font-size:12px;line-height:1.6;letter-spacing:0.5px;color:${C.purple};">${escapeHtml(text)}</td>
     </tr></tbody></table>
   </td></tr>`;
 }
 
 export type Email = {
-  /** Small pink line above the headline. */
+  /** Small purple line above the headline. */
   eyebrow: string;
   /** One sentence, already escaped. */
   heading: string;
@@ -137,14 +137,14 @@ export type Email = {
 };
 
 /**
- * The filled pink button, ink on pink like the site's primary buttons. Tables,
+ * The filled purple button, ink on purple like the site's primary buttons. Tables,
  * because a styled <a> alone loses its box in Outlook; bgcolor as well as the
  * style, because some clients drop one or the other.
  */
 export function button(href: string, label: string) {
   return `<tr><td style="padding-bottom:28px;">
   <table role="presentation" cellpadding="0" cellspacing="0" border="0"><tbody><tr>
-    <td bgcolor="${C.pink}" style="background:${C.pink};border:1px solid ${C.pink};">
+    <td bgcolor="${C.purple}" style="background:${C.purple};border:1px solid ${C.purple};">
       <a href="${escapeHtml(href)}"
          style="display:inline-block;padding:14px 26px;font-family:${MONO};font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:${C.ink};text-decoration:none;">
         ${escapeHtml(label)} &rarr;
@@ -182,7 +182,7 @@ function shell({ title, preheader, eyebrow, heading, rows }: { title: string; pr
 
 <tr><td style="padding-bottom:28px;">${wordmark()}</td></tr>
 
-<tr><td style="padding-bottom:6px;font-family:${MONO};font-size:10px;letter-spacing:2px;text-transform:uppercase;color:${C.pink};">${escapeHtml(eyebrow)}</td></tr>
+<tr><td style="padding-bottom:6px;font-family:${MONO};font-size:10px;letter-spacing:2px;text-transform:uppercase;color:${C.purple};">${escapeHtml(eyebrow)}</td></tr>
 
 <tr><td style="padding-bottom:28px;font-family:${SANS};font-size:26px;line-height:1.3;color:${C.fg};">
   ${heading}

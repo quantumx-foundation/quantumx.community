@@ -10,7 +10,7 @@ const MID = W / 2;
 type Tone = "outline" | "rim" | "top" | "light" | "chip" | "face" | "shine" | "blush";
 type Px = { x: number; y: number; tone: Tone };
 
-/** Baked-cookie browns, plus the site's pink for the cheeks. */
+/** Baked-cookie browns, plus the site's purple for the cheeks. */
 const fills: Record<Tone, string> = {
   outline: "#8a5530",
   rim: "#d08f55",
@@ -19,7 +19,7 @@ const fills: Record<Tone, string> = {
   chip: "#6b3f22",
   face: "#3a2316",
   shine: "#fff8f0",
-  blush: "var(--pink)",
+  blush: "var(--purple)",
 };
 
 const ellipse = (x: number, y: number, cx: number, cy: number, rx: number, ry: number) =>

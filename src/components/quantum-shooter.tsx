@@ -49,7 +49,7 @@ const TAU = Math.PI * 2;
 const BEST_KEY = "qx-community-qubit-blaster-best";
 
 // The original dark community palette, kept fixed so the game reads as an
-// arcade screen on the light site: near-black ground, brand pink for |1⟩
+// arcade screen on the light site: near-black ground, brand purple for |1⟩
 // and ink on the qubits. |0⟩ keeps the QFF mist blue so the two states stay
 // distinguishable at a glance.
 const C = {
@@ -58,7 +58,7 @@ const C = {
   dim: "rgba(244,238,246,0.6)",
   grid: "rgba(244,238,246,0.05)",
   zero: "#d7e4ff",
-  one: "#e485b0",
+  one: "#c46bfc",
   violet: "#8b5cf6",
   plum: "#2d1b55",
 };
@@ -526,7 +526,7 @@ export function QuantumShooter() {
       }
 
       // Danger line.
-      c.strokeStyle = "rgba(243,126,181,0.45)";
+      c.strokeStyle = "rgba(196,107,252,0.45)";
       c.setLineDash([6, 6]);
       c.beginPath();
       c.moveTo(0, FLOOR + R);
@@ -756,7 +756,7 @@ export function QuantumShooter() {
           onClick={(e) => {
             if (e.detail === 0) api.current?.toggle();
           }}
-          className="flex-1 touch-manipulation select-none border border-pink px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg"
+          className="flex-1 touch-manipulation select-none border border-purple px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-purple transition-colors hover:bg-purple hover:text-bg"
         >
           Switch to |{next}⟩{" "}
           <span className="hidden opacity-60 [@media(pointer:fine)]:inline">(X)</span>
@@ -770,7 +770,7 @@ export function QuantumShooter() {
             api.current?.setMuted(value);
           }}
           aria-pressed={muted}
-          className="touch-manipulation select-none border border-line px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:border-pink hover:text-pink"
+          className="touch-manipulation select-none border border-line px-3 py-3 font-pixel text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:border-purple hover:text-purple"
         >
           {muted ? "Sound off" : "Sound on"}
         </button>

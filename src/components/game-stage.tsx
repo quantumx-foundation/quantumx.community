@@ -17,13 +17,13 @@ export function GameStage() {
       className="mx-auto flex h-dvh w-full flex-col px-4 pb-4 sm:w-fit"
     >
       <div className="flex items-center justify-between gap-4 py-4">
-        <h1 className="flex items-center gap-2.5 font-pixel text-sm uppercase tracking-[0.2em] text-pink">
+        <h1 className="flex items-center gap-2.5 font-pixel text-sm uppercase tracking-[0.2em] text-purple">
           <LogoMark className="h-4 w-auto" />
           Qubit Blaster
         </h1>
         <Link
           href="/"
-          className="font-pixel text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-pink"
+          className="font-pixel text-xs uppercase tracking-[0.2em] text-muted transition-colors hover:text-purple"
         >
           Exit ✕
         </Link>

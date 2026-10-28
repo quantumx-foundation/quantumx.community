@@ -42,7 +42,7 @@ export default function HackathonPage() {
           {hackathon.winners.map((team, i) => (
             <li key={team} className="relative border border-line bg-panel p-6 pt-14">
               <span className="absolute left-0 top-0">
-                <Tag tone={i === 0 ? "pink" : "soft"}>{["1st", "2nd", "3rd"][i]} place</Tag>
+                <Tag tone={i === 0 ? "purple" : "soft"}>{["1st", "2nd", "3rd"][i]} place</Tag>
               </span>
               <p className="font-pixel text-3xl">{team}</p>
             </li>
@@ -52,7 +52,7 @@ export default function HackathonPage() {
           href={hackathon.winnersUrl}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-8 inline-block font-pixel text-sm uppercase tracking-[0.2em] text-pink hover:text-fg"
+          className="mt-8 inline-block font-pixel text-sm uppercase tracking-[0.2em] text-purple hover:text-fg"
         >
           Meet the winning teams ↗
         </a>
@@ -69,7 +69,7 @@ export default function HackathonPage() {
         <div className="mt-12 grid gap-12 md:grid-cols-2 lg:grid-cols-4">
           {hackathon.tracks.map((track, i) => (
             <div key={track.title}>
-              <p className="font-mono text-sm text-pink">0{i + 1}</p>
+              <p className="font-mono text-sm text-purple">0{i + 1}</p>
               <h3 className="mt-3 text-lg">{track.title}</h3>
               <p className="mt-3 text-muted">{track.body}</p>
             </div>

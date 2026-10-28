@@ -2,16 +2,16 @@
 
 :root {
   --bg: #ffffff;
-  --panel: #f8f4f8;
+  --panel: #f9f5fc;
   --fg: #1a1320;
   --muted: #6b6276;
-  --line: #ebe3ee;
-  --dim: #b98aa2;
-  --pink: #c8407f;
-  --soft: #f0b3cf;
-  --pale: #fbe3ee;
+  --line: #ece4f2;
+  --dim: #a98bbd;
+  --purple: #b62dfa;
+  --soft: #e2b8fd;
+  --pale: #f4e5fe;
   --ink: #2d1b55;
-  /* Secondary accent, used sparingly (the fortune cookie's prompt). Pink stays the brand colour. */
+  /* Secondary accent, used sparingly (the fortune cookie's prompt). Purple stays the brand colour. */
   --yellow: #9a6a00;
 }
 
@@ -22,7 +22,7 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-dim: var(--dim);
-  --color-pink: var(--pink);
+  --color-purple: var(--purple);
   --color-soft: var(--soft);
   --color-pale: var(--pale);
   --color-ink: var(--ink);
@@ -43,7 +43,7 @@ body {
 }
 
 ::selection {
-  background: var(--pink);
+  background: var(--purple);
   color: var(--bg);
 }
 

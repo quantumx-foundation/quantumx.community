@@ -38,7 +38,7 @@ function OpenChapterCard() {
   return (
     <Link
       href="/chapters/apply"
-      className="group scanlines relative flex flex-col border border-line p-5 pt-12 transition-colors hover:border-pink sm:p-6 sm:pt-14"
+      className="group scanlines relative flex flex-col border border-line p-5 pt-12 transition-colors hover:border-purple sm:p-6 sm:pt-14"
     >
       <div className="absolute left-0 top-0">
         <Tag tone="outline">Open</Tag>
@@ -50,7 +50,7 @@ function OpenChapterCard() {
       <p className="mt-1 text-sm text-muted">
         Not on the map yet? Start a chapter where you are.
       </p>
-      <span className="mt-3 font-pixel text-xs uppercase tracking-[0.2em] text-pink">Apply &rarr;</span>
+      <span className="mt-3 font-pixel text-xs uppercase tracking-[0.2em] text-purple">Apply &rarr;</span>
     </Link>
   );
 }
@@ -79,7 +79,7 @@ export function ChapterTable() {
       {chapters.map((chapter) => (
         <div key={chapter.code} className={`${row} border-b border-line`}>
           <span
-            className={`font-mono text-sm uppercase md:pt-1 ${chapter.status === "live" ? "text-pink" : "text-muted"}`}
+            className={`font-mono text-sm uppercase md:pt-1 ${chapter.status === "live" ? "text-purple" : "text-muted"}`}
           >
             {chapter.status}
           </span>
@@ -92,7 +92,7 @@ export function ChapterTable() {
         <span className="text-lg text-muted">Your city</span>
         <p className="col-start-2 text-muted md:col-start-auto">
           Not on the map yet? Start a chapter where you are.{" "}
-          <Link href="/chapters/apply" className="text-pink underline decoration-dotted underline-offset-4 hover:text-fg">
+          <Link href="/chapters/apply" className="text-purple underline decoration-dotted underline-offset-4 hover:text-fg">
             Here&apos;s how
           </Link>
           .
@@ -103,7 +103,7 @@ export function ChapterTable() {
 }
 
 const cityCard = "relative flex flex-col border border-line p-5 pt-12 sm:p-6 sm:pt-14";
-const cityLink = "mt-5 inline-block font-pixel text-xs uppercase tracking-[0.2em] text-pink hover:text-fg";
+const cityLink = "mt-5 inline-block font-pixel text-xs uppercase tracking-[0.2em] text-purple hover:text-fg";
 
 /**
  * Cities inside a live chapter that still need a lead of their own, plus an

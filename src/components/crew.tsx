@@ -9,18 +9,18 @@ function JoinCrewCard({ first }: { first?: boolean }) {
     <li className={first ? "col-span-2" : ""}>
       <Link
         href="/crew#join"
-        className={`group scanlines relative flex flex-col border border-line p-5 pt-12 transition-colors hover:border-pink ${
+        className={`group scanlines relative flex flex-col border border-line p-5 pt-12 transition-colors hover:border-purple ${
           first ? "min-h-64" : "aspect-[4/5]"
         }`}
       >
         <span className="absolute left-0 top-0">
           <Tag tone="outline">Open</Tag>
         </span>
-        <span aria-hidden className="flex flex-1 items-center justify-center font-pixel text-5xl text-dim transition-colors group-hover:text-pink">
+        <span aria-hidden className="flex flex-1 items-center justify-center font-pixel text-5xl text-dim transition-colors group-hover:text-purple">
           ?
         </span>
         <span className="text-lg leading-tight">{first ? "Be the first face here" : "This could be you"}</span>
-        <span className="mt-2 font-pixel text-xs uppercase tracking-[0.2em] text-pink">Volunteer &rarr;</span>
+        <span className="mt-2 font-pixel text-xs uppercase tracking-[0.2em] text-purple">Volunteer &rarr;</span>
       </Link>
     </li>
   );

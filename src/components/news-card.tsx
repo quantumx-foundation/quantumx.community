@@ -20,7 +20,7 @@ export function NewsCard({ item }: { item: NewsItem }) {
           className="object-cover grayscale contrast-110 transition duration-500 group-hover:scale-[1.03] group-hover:grayscale-0"
         />
         <div className="absolute left-0 top-0">
-          <Tag tone={item.kind === "On the road" ? "pink" : item.kind === "Launch" ? "soft" : "pink"}>{item.kind}</Tag>
+          <Tag tone={item.kind === "On the road" ? "purple" : item.kind === "Launch" ? "soft" : "purple"}>{item.kind}</Tag>
         </div>
       </div>
       <div className="flex flex-1 flex-col p-5">
@@ -28,9 +28,9 @@ export function NewsCard({ item }: { item: NewsItem }) {
           {item.country && <PixelFlag code={item.country} className="h-3 w-auto" />}
           {item.displayDate}
         </p>
-        <h3 className="mt-3 text-lg leading-snug group-hover:text-pink">{item.title}</h3>
+        <h3 className="mt-3 text-lg leading-snug group-hover:text-purple">{item.title}</h3>
         <p className="mt-2 flex-1 text-sm text-muted">{item.summary}</p>
-        <p className="mt-5 font-pixel text-xs uppercase tracking-[0.2em] text-pink">Read the post ↗</p>
+        <p className="mt-5 font-pixel text-xs uppercase tracking-[0.2em] text-purple">Read the post ↗</p>
       </div>
     </a>
   );

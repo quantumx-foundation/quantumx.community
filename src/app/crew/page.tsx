@@ -60,7 +60,7 @@ export default function CrewPage() {
             <ul className="mt-5 space-y-3 text-muted">
               {block.items.map((item) => (
                 <li key={item} className="flex gap-3">
-                  <span aria-hidden className="text-pink">
+                  <span aria-hidden className="text-purple">
                     ·
                   </span>
                   <span>{item}</span>
@@ -79,7 +79,7 @@ export default function CrewPage() {
         <p className="mt-4 max-w-2xl text-muted">
           Two minutes. Tell us where you are and how often you can help, and we&apos;ll reach out before the next
           event near you. Questions?{" "}
-          <a href={`mailto:${EVENTS_EMAIL}`} className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
+          <a href={`mailto:${EVENTS_EMAIL}`} className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple">
             {EVENTS_EMAIL}
           </a>
         </p>

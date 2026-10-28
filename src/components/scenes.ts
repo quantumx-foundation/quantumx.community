@@ -74,7 +74,7 @@ export const circuitScene: Scene = () => {
 
   return ({ cols, rows, t, colors: c, cell, fill }) => {
     if (cols !== built) build(cols, rows);
-    const tones = [c.pink, c.soft, c.pale];
+    const tones = [c.purple, c.soft, c.pale];
 
     // Classical data stream.
     for (let y = 0; y < rows; y++) {
@@ -83,7 +83,7 @@ export const circuitScene: Scene = () => {
         if (rand() < 0.04) data[i] = DATA[Math.floor(rand() * DATA.length)];
         if (rand() < 0.015) tone[i] = rand() < 0.3 ? Math.floor(rand() * 3) : -1;
         if (tone[i] >= 0) cell(x, y, data[i], c.ink, tones[tone[i]]);
-        else cell(x, y, data[i], c.pink);
+        else cell(x, y, data[i], c.purple);
       }
     }
 
@@ -108,7 +108,7 @@ export const circuitScene: Scene = () => {
         const wire = x > measure ? "═" : "─";
         const char = gate ? gate.char : wire;
         if (hot.has(k)) {
-          cell(x, y, gate ? char : "◆", gate ? c.pale : c.ink, gate ? c.fg : c.pink);
+          cell(x, y, gate ? char : "◆", gate ? c.pale : c.ink, gate ? c.fg : c.purple);
         } else if (trail.has(k)) {
           cell(x, y, char, c.ink, trail.get(k) === 1 ? c.soft : c.pale);
         } else if (gate?.kind === "gate" || gate?.kind === "measure") {
@@ -134,7 +134,7 @@ export const circuitScene: Scene = () => {
         } else {
           const arrow = ARROWS[((Math.round(phase / (Math.PI / 4)) % 8) + 8) % 8];
           if (Math.sin(phase * 3 + x) > 0.85) cell(x, y, arrow, c.pale, c.fg);
-          else cell(x, y, arrow, c.pink);
+          else cell(x, y, arrow, c.purple);
         }
       }
     }
@@ -158,7 +158,7 @@ export const arrowScene: Scene = () => {
       const head = dir === 1 ? pos : cols - 1 - pos;
       for (let x = 0; x < cols; x++) {
         const behind = (head - x) * dir;
-        if (p.show && behind === 0) cell(x, y, "◆", c.ink, y % 3 === 0 ? c.pink : c.soft);
+        if (p.show && behind === 0) cell(x, y, "◆", c.ink, y % 3 === 0 ? c.purple : c.soft);
         else if (p.show && behind > 0 && behind <= 3) cell(x, y, "·", c.dim);
         else cell(x, y, dir === 1 ? "→" : "←", c.dim);
       }
@@ -177,14 +177,14 @@ export const bitScene: Scene = () => {
       built = cols;
       bits = Array.from({ length: cols * rows }, () => (rand() < 0.5 ? "0" : "1"));
     }
-    const tones = [c.pale, c.soft, c.pink, c.fg];
+    const tones = [c.pale, c.soft, c.purple, c.fg];
     for (let y = 0; y < rows; y++) {
       for (let x = 0; x < cols; x++) {
         const i = y * cols + x;
         if (rand() < 0.03) bits[i] = bits[i] === "0" ? "1" : "0";
         const n = Math.sin((x + t * 3) * 0.23 + y * 1.3) + Math.sin((x - t * 2) * 0.11 + y * 0.7);
         const level = Math.min(4, Math.floor(((n + 2) / 4) * 5));
-        if (level === 0) cell(x, y, bits[i], c.pink);
+        if (level === 0) cell(x, y, bits[i], c.purple);
         else cell(x, y, bits[i], level === 4 ? c.pale : c.ink, tones[level - 1]);
       }
     }

@@ -19,7 +19,7 @@ export function EventsBrowser({ items }: { items: (EventItem & { upcoming: boole
     <div>
       <div className="flex flex-wrap items-baseline gap-x-6 gap-y-2 text-4xl tracking-tight sm:text-5xl">
         <h2>Events</h2>
-        <span aria-hidden className="font-pixel text-3xl text-pink">
+        <span aria-hidden className="font-pixel text-3xl text-purple">
           →
         </span>
         <div role="tablist" aria-label="Filter events" className="flex flex-wrap gap-x-5 gap-y-2 sm:gap-x-6">
@@ -32,7 +32,7 @@ export function EventsBrowser({ items }: { items: (EventItem & { upcoming: boole
               onClick={() => setFilter(tab)}
               className={`cursor-pointer transition-colors ${
                 tab === filter
-                  ? "text-fg underline decoration-pink decoration-dotted decoration-2 underline-offset-8"
+                  ? "text-fg underline decoration-purple decoration-dotted decoration-2 underline-offset-8"
                   : "text-muted hover:text-fg"
               }`}
             >

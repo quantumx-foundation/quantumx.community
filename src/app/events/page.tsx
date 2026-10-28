@@ -44,7 +44,7 @@ export default function EventsPage() {
               <div className="absolute left-0 top-0">
                 <Tag>Next up</Tag>
               </div>
-              <p className="font-mono text-sm text-pink">{next.displayDate}</p>
+              <p className="font-mono text-sm text-purple">{next.displayDate}</p>
               <h2 id="next-title" className="mt-3 text-3xl tracking-tight">
                 {next.title}
               </h2>
@@ -71,7 +71,7 @@ export default function EventsPage() {
             <p className="mt-3 text-muted">
               Subscribe to the calendar to hear about workshops, meetups and hackathons and RSVP in one tap.
               Running your own quantum event? We&apos;ll send{" "}
-              <Link href="/events/support" className="text-fg underline decoration-dotted underline-offset-4 hover:text-pink">
+              <Link href="/events/support" className="text-fg underline decoration-dotted underline-offset-4 hover:text-purple">
                 swag and cover the food
               </Link>
               .

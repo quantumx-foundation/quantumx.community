@@ -11,7 +11,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/events/support" },
 };
 
-const linkClass = "text-fg underline decoration-dotted underline-offset-4 hover:text-pink";
+const linkClass = "text-fg underline decoration-dotted underline-offset-4 hover:text-purple";
 
 const offer = [
   {
@@ -82,7 +82,7 @@ export default function EventSupportPage() {
             <ul className="mt-5 space-y-3 text-muted">
               {block.items.map((item, i) => (
                 <li key={i} className="flex gap-3">
-                  <span aria-hidden className="text-pink">
+                  <span aria-hidden className="text-purple">
                     ·
                   </span>
                   {/* One span, so an item made of several nodes stays one flex item. */}
@@ -115,7 +115,7 @@ export default function EventSupportPage() {
         <ol className="mt-12">
           {next.map((step, i) => (
             <li key={step.when} className="grid grid-cols-[3rem_minmax(0,1fr)] gap-x-6 gap-y-1 border-b border-line py-6 md:grid-cols-[4rem_12rem_minmax(0,1fr)]">
-              <span className="font-pixel text-2xl text-pink">0{i + 1}</span>
+              <span className="font-pixel text-2xl text-purple">0{i + 1}</span>
               <span className="text-lg">{step.when}</span>
               <p className="col-start-2 text-muted md:col-start-auto">{step.what}</p>
             </li>

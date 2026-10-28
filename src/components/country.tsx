@@ -6,7 +6,7 @@ export function Place({ country, city }: { country: FlagCode | "online"; city: s
   return (
     <span className="inline-flex items-center gap-2">
       {country === "online" ? (
-        <span aria-hidden className="font-pixel text-pink">
+        <span aria-hidden className="font-pixel text-purple">
           ◎
         </span>
       ) : (

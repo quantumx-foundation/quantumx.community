@@ -30,7 +30,7 @@ function shortDate(date: string) {
 }
 
 const selectClass =
-  "w-full cursor-pointer border border-line bg-bg px-3 py-2.5 text-sm text-fg outline-none transition-colors focus:border-pink";
+  "w-full cursor-pointer border border-line bg-bg px-3 py-2.5 text-sm text-fg outline-none transition-colors focus:border-purple";
 
 function Select({
   label,
@@ -93,7 +93,7 @@ export function JobBoard({ gigs }: { gigs: Gig[] }) {
             value={filters.query}
             onChange={(e) => set("query")(e.target.value)}
             placeholder="Role, organisation or city"
-            className="mt-2 w-full border border-line bg-bg px-3 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-pink"
+            className="mt-2 w-full border border-line bg-bg px-3 py-2.5 text-sm text-fg outline-none transition-colors placeholder:text-muted/60 focus:border-purple"
           />
         </label>
         <Select
@@ -136,7 +136,7 @@ export function JobBoard({ gigs }: { gigs: Gig[] }) {
               setFilters(none);
               setShown(PAGE);
             }}
-            className="cursor-pointer font-pixel text-xs uppercase tracking-[0.2em] text-pink hover:text-fg"
+            className="cursor-pointer font-pixel text-xs uppercase tracking-[0.2em] text-purple hover:text-fg"
           >
             Clear filters ×
           </button>
@@ -154,7 +154,7 @@ export function JobBoard({ gigs }: { gigs: Gig[] }) {
                   className="group grid gap-x-6 gap-y-1 py-5 md:grid-cols-[minmax(0,2.2fr)_minmax(0,1.3fr)_minmax(0,1fr)_9rem] md:items-baseline"
                 >
                   <span className="leading-snug">
-                    <span className="text-lg group-hover:text-pink">{gig.role}</span>
+                    <span className="text-lg group-hover:text-purple">{gig.role}</span>
                     {gig.url && <span aria-hidden> ↗</span>}
                     <span className="mt-1 block font-mono text-xs text-muted">
                       {gig.type}
@@ -196,7 +196,7 @@ export function JobBoard({ gigs }: { gigs: Gig[] }) {
           <button
             type="button"
             onClick={() => setShown((n) => n + PAGE)}
-            className="cursor-pointer border border-pink px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-pink transition-colors hover:bg-pink hover:text-bg"
+            className="cursor-pointer border border-purple px-7 py-4 font-pixel text-sm uppercase tracking-[0.2em] text-purple transition-colors hover:bg-purple hover:text-bg"
           >
             Show more ({results.length - shown} left)
           </button>
