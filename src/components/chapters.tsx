@@ -16,12 +16,15 @@ function ChapterCard({ chapter, featured }: { chapter: Chapter; featured?: boole
         {live ? <Tag>● Live</Tag> : <Tag tone="outline">Forming</Tag>}
       </div>
       <div className="flex flex-1 items-center justify-center py-4">
-        <PixelFlag
-          code={chapter.code}
-          className={`w-full transition duration-500 ${featured ? "max-w-72" : "max-w-40"} ${
-            live ? "" : "opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0"
-          }`}
-        />
+        {live ? (
+          <PixelFlag code={chapter.code} className={`w-full ${featured ? "max-w-72" : "max-w-40"}`} />
+        ) : (
+          // Forming flags sit in brand purple and show their real colours on hover.
+          <div className="grid w-full max-w-40 [&>*]:col-start-1 [&>*]:row-start-1">
+            <PixelFlag code={chapter.code} tone="brand" className="w-full transition-opacity duration-500 group-hover:opacity-0" />
+            <PixelFlag code={chapter.code} decorative className="w-full opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
+          </div>
+        )}
       </div>
       <h3 className="mt-6 text-lg leading-tight">{chapter.name}</h3>
       <p className="mt-1 text-sm text-muted">{chapter.summary}</p>

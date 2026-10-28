@@ -146,8 +146,34 @@ export function BlankFlag({ className = "" }: { className?: string }) {
   );
 }
 
-/** A flag drawn as a dot-matrix of pixels. */
-export function PixelFlag({ code, className = "" }: { code: FlagCode; className?: string }) {
+/**
+ * Recolours a flag pixel into the brand ramp by its brightness, so a flag
+ * keeps its shapes (bands, stars, crosses) but reads in our purple.
+ */
+function toBrand(hex: string) {
+  const n = parseInt(hex.slice(1), 16);
+  const lum = (0.299 * (n >> 16) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+  if (lum < 0.2) return "var(--ink)";
+  if (lum < 0.55) return "var(--purple)";
+  if (lum < 0.85) return "var(--soft)";
+  return "var(--pale)";
+}
+
+/**
+ * A flag drawn as a dot-matrix of pixels. `brand` draws it in the purple
+ * ramp instead of its own colours.
+ */
+export function PixelFlag({
+  code,
+  tone = "true",
+  decorative = false,
+  className = "",
+}: {
+  code: FlagCode;
+  tone?: "true" | "brand";
+  decorative?: boolean;
+  className?: string;
+}) {
   const dots = [];
   for (let y = 0; y < H; y++) {
     for (let x = 0; x < W; x++) {
@@ -158,7 +184,7 @@ export function PixelFlag({ code, className = "" }: { code: FlagCode; className?
           y={y + 0.08}
           width={0.84}
           height={0.84}
-          fill={paint[code](x + 0.5, y + 0.5)}
+          fill={tone === "brand" ? toBrand(paint[code](x + 0.5, y + 0.5)) : paint[code](x + 0.5, y + 0.5)}
         />,
       );
     }
@@ -166,8 +192,9 @@ export function PixelFlag({ code, className = "" }: { code: FlagCode; className?
   return (
     <svg
       viewBox={`0 0 ${W} ${H}`}
-      role="img"
-      aria-label={`Flag of ${names[code]}`}
+      role={decorative ? undefined : "img"}
+      aria-label={decorative ? undefined : `Flag of ${names[code]}`}
+      aria-hidden={decorative || undefined}
       shapeRendering="crispEdges"
       className={className}
     >
