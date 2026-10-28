@@ -40,31 +40,20 @@ export default function HackathonPage() {
             <div className="absolute left-0 top-0">
               <Tag>Hosted with</Tag>
             </div>
-            {/* White-on-transparent logo, inverted for the light panel. */}
-            <div className="relative h-14 w-56 sm:h-16 sm:w-64">
-              <Image src={hackathon.banner} alt="" fill sizes="256px" className="object-contain object-left invert" />
-            </div>
-            <h2 id="venue-title" className="mt-8 text-3xl tracking-tight sm:text-4xl">
-              {hackathon.venue}
+            {/* The logo is the heading. It is white-on-transparent, so it is inverted for the light panel. */}
+            <h2 id="venue-title" className="relative h-16 w-64 sm:h-20 sm:w-80">
+              <Image
+                src={hackathon.banner}
+                alt={hackathon.venue}
+                fill
+                sizes="320px"
+                className="object-contain object-left invert"
+              />
             </h2>
-            <p className="mt-4 max-w-lg text-muted">
+            <p className="mt-8 max-w-lg text-muted">
               One room, one day: teams built side by side from the morning kickoff to the final pitches, with
               mentors on the floor and food on us.
             </p>
-            <dl className="mt-10 border-t border-line">
-              {[
-                { key: "Date", value: hackathon.date },
-                ...hackathon.format.filter((row) => row.key === "Mode" || row.key === "Entry"),
-              ].map((row) => (
-                <div
-                  key={row.key}
-                  className="grid grid-cols-[6rem_minmax(0,1fr)] gap-4 border-b border-line py-4 sm:grid-cols-[8rem_minmax(0,1fr)] sm:gap-6"
-                >
-                  <dt className="font-mono text-sm uppercase text-muted">{row.key}</dt>
-                  <dd>{row.value}</dd>
-                </div>
-              ))}
-            </dl>
             <div className="mt-10 flex flex-wrap items-center gap-x-8 gap-y-4">
               <Button href={hackathon.lumaUrl}>Event page</Button>
               <a
@@ -159,9 +148,8 @@ export default function HackathonPage() {
                 </li>
               ))}
             </ul>
-            <div className="mt-12 flex flex-wrap gap-4">
+            <div className="mt-12">
               <Button href={hackathon.rulesUrl}>Full rules</Button>
-              <Button href={hackathon.lumaUrl}>Event page</Button>
             </div>
           </div>
         </div>
