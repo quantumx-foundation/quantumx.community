@@ -11,6 +11,7 @@ import { Programs } from "@/components/programs";
 import { SpeakerGrid } from "@/components/speaker-grid";
 import { Button, SectionHeading, Stat, Tag, container } from "@/components/ui";
 import { WorldMap } from "@/components/world-map";
+import { associates } from "@/content/associates";
 import { crew } from "@/content/crew";
 import { isUpcoming, sortedEvents } from "@/content/events";
 import { hackathon } from "@/content/hackathon";
@@ -56,43 +57,44 @@ export default function Home() {
 
       {/* Hero */}
       <section
-        className={`${container} grid gap-10 pb-20 pt-12 sm:gap-12 sm:pt-20 md:grid-cols-2 lg:grid-cols-[auto_minmax(0,1fr)_minmax(0,1fr)]`}
+        className={`${container} grid items-center gap-12 py-12 sm:py-16 lg:min-h-[calc(100svh-6rem)] lg:grid-cols-2 lg:gap-16`}
       >
-        <h1 className="md:col-span-2 lg:col-span-1">
-          <span className="sr-only">QuantumX Community</span>
-          <span aria-hidden>
-            <PixelLogo />
-          </span>
-        </h1>
-        <div>
-          <p className="text-xl leading-snug">
+        <div className="max-w-xl">
+          <h1>
+            <span className="sr-only">QuantumX Community</span>
+            <span aria-hidden>
+              <PixelLogo />
+            </span>
+          </h1>
+          <p className="mt-10 text-2xl leading-snug">
             A global community for people learning, researching and building quantum technology.
           </p>
-          <p aria-hidden className="mt-6 font-pixel text-2xl text-purple">
-            ↓
+          <p className="mt-4 text-lg leading-snug text-muted">
+            Free and open to students, researchers and builders. Everything starts on Discord.
           </p>
-          <dl className="mt-4 grid grid-cols-2 gap-6 text-muted">
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-wider">Live in</dt>
-              <dd className="mt-1 text-lg text-fg">{listNames(liveChapters)}</dd>
-            </div>
-            <div>
-              <dt className="font-mono text-xs uppercase tracking-wider">Next</dt>
-              <dd className="mt-1 text-fg">{listNames(formingChapters)}</dd>
-            </div>
+          <dl className="mt-10 grid grid-cols-[5rem_minmax(0,1fr)] items-baseline gap-x-6 gap-y-3 border-t border-line pt-6">
+            <dt className="font-mono text-xs uppercase tracking-wider text-muted">Live in</dt>
+            <dd className="leading-6">{listNames(liveChapters)}</dd>
+            <dt className="font-mono text-xs uppercase tracking-wider text-muted">Next</dt>
+            <dd className="leading-6">{listNames(formingChapters)}</dd>
           </dl>
-        </div>
-        <div>
-          <p className="text-xl leading-snug">
-            Free and open to students, researchers and builders.
-            <span className="text-muted"> Everything starts on Discord.</span>
-          </p>
-          <div className="mt-8 flex flex-col items-start gap-4">
+          <div className="mt-10 flex flex-col items-start gap-5">
             <DiscordGate source="home" />
             <Link href="/events" className="font-pixel text-sm uppercase tracking-[0.2em] text-muted hover:text-purple">
               See upcoming events →
             </Link>
           </div>
+        </div>
+        <div className="flex justify-center">
+          <Image
+            src="/images/hero/dilution-refrigerator.webp"
+            alt="A dilution refrigerator, the cryostat that cools superconducting qubits to near absolute zero"
+            width={1100}
+            height={1100}
+            preload
+            sizes="(min-width: 1024px) 540px, 90vw"
+            className="h-auto w-full max-w-sm sm:max-w-md lg:max-h-[34rem] lg:w-auto lg:max-w-full"
+          />
         </div>
       </section>
 
@@ -103,6 +105,37 @@ export default function Home() {
             <Stat key={stat.label} {...stat} />
           ))}
         </div>
+      </section>
+
+      {/* Associates */}
+      <section aria-labelledby="associates-title" className={`${container} py-16`}>
+        <div className="mx-auto max-w-2xl text-center">
+          <h2 id="associates-title" className="font-mono text-sm uppercase tracking-[0.2em] text-purple">
+            Trusted associates
+          </h2>
+          <p className="mt-4 text-lg text-muted">
+            Research groups, industry collaborators and communities we build with.
+          </p>
+        </div>
+        <ul className="mx-auto mt-14 grid max-w-6xl grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-4 lg:gap-y-16">
+          {associates.map((associate) => (
+            <li key={associate.name} className="flex items-center justify-center">
+              <div
+                className={`relative w-full max-w-[9.5rem] opacity-60 transition-opacity duration-300 hover:opacity-100 ${
+                  associate.tall ? "h-14 sm:h-[4.5rem]" : "h-10 sm:h-12"
+                }`}
+              >
+                <Image
+                  src={associate.logo}
+                  alt={associate.name}
+                  fill
+                  sizes="160px"
+                  className="object-contain invert"
+                />
+              </div>
+            </li>
+          ))}
+        </ul>
       </section>
 
       {/* Hosts */}

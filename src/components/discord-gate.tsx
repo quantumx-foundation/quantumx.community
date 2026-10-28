@@ -131,14 +131,14 @@ function GateForm({
 }
 
 /**
- * "Join the Discord", behind a name and email. Everywhere but /join it is a
+ * "Get access to the community", behind a name and email. Everywhere but /join it is a
  * link to /join?from=<source>, which asks for both; once they're sent to the
  * "discord" Netlify form, every gate becomes the invite button itself.
  * `ask` is /join's mode: the form on the page.
  * `source` tags the invite and the submission with where the visitor came from.
  */
 export function DiscordGate({
-  label = "Join the Discord",
+  label = "Get access to the community",
   source = "site",
   ask = false,
 }: {

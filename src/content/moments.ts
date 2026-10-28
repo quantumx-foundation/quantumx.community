@@ -6,7 +6,7 @@ export const moments = [
   { src: "/images/moments/image-5.webp", width: 1400, height: 934 },
   { src: "/images/moments/image-6.webp", width: 1400, height: 786 },
   { src: "/images/moments/image-7.webp", width: 1400, height: 786 },
-  { src: "/images/moments/image-8.webp", width: 1400, height: 934 },
+  { src: "/images/moments/image-8.webp", width: 934, height: 1400 },
   { src: "/images/moments/image-9.webp", width: 1400, height: 786 },
   { src: "/images/moments/image-10.webp", width: 1400, height: 786 },
   { src: "/images/moments/image-11.webp", width: 1400, height: 786 },
