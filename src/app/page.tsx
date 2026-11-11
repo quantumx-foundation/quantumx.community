@@ -117,9 +117,10 @@ export default function Home() {
             Research groups, industry collaborators and communities we build with.
           </p>
         </div>
-        <ul className="mx-auto mt-14 grid max-w-6xl grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-4 lg:gap-y-16">
+        {/* Flex, not grid, so a short last row sits centred. */}
+        <ul className="mx-auto mt-14 flex max-w-6xl flex-wrap justify-center gap-y-12 lg:gap-y-16">
           {associates.map((associate) => (
-            <li key={associate.name} className="flex items-center justify-center">
+            <li key={associate.name} className="flex basis-1/2 items-center justify-center px-4 sm:basis-1/4">
               <div
                 className={`relative w-full max-w-[9.5rem] opacity-60 transition-opacity duration-300 hover:opacity-100 ${
                   associate.tall ? "h-14 sm:h-[4.5rem]" : "h-10 sm:h-12"
@@ -130,7 +131,7 @@ export default function Home() {
                   alt={associate.name}
                   fill
                   sizes="160px"
-                  className="object-contain invert"
+                  className={`object-contain ${associate.dark ? "" : "invert"}`}
                 />
               </div>
             </li>
