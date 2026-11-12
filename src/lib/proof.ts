@@ -12,11 +12,11 @@ const countries = new Set<string>([
 ]);
 
 export const proof = [
-  { value: "2000+", label: "Community members" },
+  { value: "6000+", label: "Community members" },
   { value: "30+", label: "Events run or joined" },
   { value: String(cities.size), label: "Cities" },
   { value: String(countries.size), label: "Countries on the ground" },
-  { value: "300+", label: "Hackers at QX Hack" },
+  { value: "600+", label: "Quantum hackers" },
   { value: "$1,57,355.00", label: "Deployed on community" },
 ];
 
