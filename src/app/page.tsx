@@ -1,5 +1,6 @@
 import Image from "next/image";
 import Link from "next/link";
+import BuildathonPartnerBand from "@/components/buildathon-partner-band";
 import { ChapterGrid, StartChapterBanner } from "@/components/chapters";
 import { CrewGrid } from "@/components/crew";
 import { DiscordGate } from "@/components/discord-gate";
@@ -106,6 +107,8 @@ export default function Home() {
           ))}
         </div>
       </section>
+
+      <BuildathonPartnerBand />
 
       {/* Associates */}
       <section aria-labelledby="associates-title" className={`${container} py-16`}>
