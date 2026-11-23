@@ -10,7 +10,7 @@ export const speakers: Speaker[] = [
   { name: "Dr. Subarna Roy", title: "Chief Data Scientist & Quantum Ambassador, IBM", slug: "subarna-roy" },
   { name: "Shaik Aleem Ur Rehaman", title: "Principal Design Engineer, Microsoft", slug: "shaik-aleem-ur-rehaman" },
   { name: "Vandna Chaturvedi", title: "C-DAC India", slug: "vandna-chaturvedi" },
-  { name: "Toji Thomas", title: "Technical Support Engineer, Thorlabs", slug: "toji-thomas" },
+  { name: "Dr. Toji Thomas", title: "Technical Support Engineer, Thorlabs", slug: "toji-thomas" },
   { name: "Dr. Kameshwari AVS", title: "Assistant Professor, VIT Vellore", slug: "kameshwari-avs" },
   { name: "Dr. Manjunath R Kounte", title: "Dean-Academics, Professor & HOD, Electronics and Communication Engineering", slug: "manjunath-r-kounte" },
   { name: "Dr. Tabassum Ara", title: "Professor & Head, AI & ML, HKBK College of Engineering", slug: "tabassum-ara" },
