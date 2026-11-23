@@ -72,10 +72,10 @@ export const events: EventItem[] = [
     url: "https://luma.com/79i0vamg",
   },
   {
-    title: "Qiskit Fall Fest: QuantumX Summit",
+    title: "QuantumX Summit",
     date: "2026-11-28",
     displayDate: "Nov 28, 2026",
-    venue: "Startup Park Bengaluru",
+    venue: "Startup Park",
     city: "Bengaluru",
     country: "in",
     kind: "Summit",
