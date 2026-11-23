@@ -46,7 +46,7 @@ const jsonLd = {
 };
 
 export default function Home() {
-  const upcoming = sortedEvents().slice(0, 3);
+  const upcoming = sortedEvents().slice(0, 6);
   const onTheRoad = news.filter((n) => n.kind === "On the road");
 
   return (
