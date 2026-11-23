@@ -53,7 +53,7 @@ export const events: EventItem[] = [
     title: "Qiskit Fall Fest 2026: Quantum and Qiskit 101",
     date: "2026-11-06",
     displayDate: "Nov 6, 2026",
-    venue: "Startup Park, Bengaluru",
+    venue: "Quad AI School, Bengaluru",
     city: "Bengaluru",
     country: "in",
     kind: "Workshop",
