@@ -9,7 +9,7 @@
     <!--
       Netlify detects forms by parsing static HTML at build time, so it cannot
       see forms rendered by React. This file declares them; the real ones at
-      /chapters/apply, /events/support, /crew, /gigs and /speakers (and every
+      /chapters/apply, /events/support, /crew, /gigs, /speakers and /game (and every
       "Join the Discord" button) post here. Keep the field names in
       sync with src/lib/forms.ts. cf-turnstile-response is added by
       src/components/turnstile.tsx and checked in netlify/functions/on-form.mts.
@@ -107,6 +107,12 @@
       <input type="email" name="email" />
       <input type="text" name="source" />
       <input type="text" name="ref" />
+    </form>
+
+    <form name="player" method="post" data-netlify="true" netlify-honeypot="bot-field" hidden>
+      <input type="hidden" name="form-name" value="player" />
+      <input type="text" name="bot-field" />
+      <input type="email" name="email" />
     </form>
   </body>
 </html>

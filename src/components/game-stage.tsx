@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { GameGate } from "./game-gate";
 import { LogoMark } from "./logo-mark";
 import { QuantumShooter } from "./quantum-shooter";
 
@@ -7,7 +8,7 @@ import { QuantumShooter } from "./quantum-shooter";
  *
  * The site header and footer are dropped on this route (see SiteChrome), so
  * the stage is exactly one screen tall: a title row, then the game sized to
- * the height that leaves. Exit is the one way back to the site, like Close on
+ * the height that leaves. GameGate asks for an email before the first game. Exit is the one way back to the site, like Close on
  * the QFF26 popup.
  */
 export function GameStage() {
@@ -29,7 +30,9 @@ export function GameStage() {
         </Link>
       </div>
       <div className="flex min-h-0 flex-1 flex-col justify-center">
-        <QuantumShooter />
+        <GameGate>
+          <QuantumShooter />
+        </GameGate>
       </div>
     </section>
   );

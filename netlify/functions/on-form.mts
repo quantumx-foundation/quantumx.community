@@ -65,6 +65,9 @@ const forms: Record<string, { alert?: (data: Submission) => Letter; ack: () => L
   },
 };
 
+/** Forms declared in public/__forms.html whose submissions are only stored. "player" is the /game email gate. */
+const storeOnly = new Set(["player"]);
+
 /**
  * Daily ceilings, kept under Resend's free tier of 100 emails a day so a spam
  * run can never use up the sends a real application needs. Alerts get the
@@ -183,6 +186,8 @@ async function send(key: string, mail: Letter & { to: string; replyTo?: string; 
 const handlers = {
   async formSubmitted(event: FormSubmittedEvent) {
     const { name, data } = readSubmission(event);
+    // Kept in Netlify only: no alert, no email to the sender.
+    if (storeOnly.has(name)) return;
     const form = forms[name];
     if (!form) {
       // Names only, never values: these logs are not the place for applicants' details.
