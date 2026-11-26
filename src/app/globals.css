@@ -166,3 +166,237 @@ body {
     opacity: 0;
   }
 }
+
+/* Qubit Blaster's email gate (src/components/game-gate.tsx): an arcade attract
+   screen in the game's fixed dark palette. */
+.gate {
+  background: #0c0a0f;
+  color: #f4eef6;
+}
+
+.gate-grid {
+  background-image:
+    linear-gradient(rgba(244, 238, 246, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(244, 238, 246, 0.05) 1px, transparent 1px);
+  background-size: 5cqw 5cqw;
+}
+
+.gate-scanlines {
+  background-image: repeating-linear-gradient(to bottom, rgba(0, 0, 0, 0.22) 0 1px, transparent 1px 3px);
+}
+
+/* Darkens the edges and the band behind the form, so the falling qubits never fight the text. */
+.gate-vignette {
+  background:
+    radial-gradient(ellipse 70% 45% at 50% 52%, rgba(12, 10, 15, 0.92), rgba(12, 10, 15, 0.55) 60%, transparent 100%),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0, 0, 0, 0.6) 100%);
+}
+
+.gate-qubit {
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  border-radius: 9999px;
+  font-family: var(--font-mono);
+  font-weight: 700;
+  line-height: 1;
+  color: #2d1b55;
+  /* So the digit inside can be sized to the qubit (cqw below). */
+  container-type: inline-size;
+  transition:
+    background-color 0.3s,
+    border-color 0.3s,
+    box-shadow 0.3s;
+}
+
+.gate-qubit > span {
+  font-size: 55cqw;
+}
+
+.gate-qubit-zero {
+  background: #d7e4ff;
+  box-shadow: 0 0 18px rgba(215, 228, 255, 0.35);
+}
+
+.gate-qubit-one {
+  background: #c46bfc;
+  box-shadow: 0 0 18px rgba(196, 107, 252, 0.5);
+  animation: gate-collapse 0.35s ease-out;
+}
+
+.gate-qubit-sup {
+  position: relative;
+  background: rgba(139, 92, 246, 0.28);
+  border: 2px dashed #8b5cf6;
+}
+
+.gate-qubit-sup > span {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+}
+
+.gate-sup-zero {
+  color: #d7e4ff;
+}
+
+.gate-sup-one {
+  color: #c46bfc;
+}
+
+.gate-link {
+  border-top: 2px dashed #8b5cf6;
+}
+
+/* Measured: every superposed qubit on screen collapses to |1⟩. */
+.gate[data-collapsed] .gate-qubit-sup {
+  background: #c46bfc;
+  border-color: #c46bfc;
+  box-shadow: 0 0 22px rgba(196, 107, 252, 0.7);
+}
+
+.gate[data-collapsed] .gate-qubit-sup > span {
+  animation: none;
+  opacity: 0;
+}
+
+.gate[data-collapsed] .gate-qubit-sup > .gate-sup-one {
+  opacity: 1;
+  color: #2d1b55;
+}
+
+.gate[data-collapsed] .gate-fall {
+  opacity: 0.9;
+  transition: opacity 0.3s;
+}
+
+.gate[data-collapsed] .gate-link {
+  border-top-style: solid;
+  border-color: #c46bfc;
+}
+
+@keyframes gate-collapse {
+  from {
+    transform: scale(1.35);
+  }
+}
+
+/* Background qubits sit back, so the copy and the field stay the focus. */
+.gate-fall {
+  opacity: 0.45;
+  animation: gate-fall linear infinite;
+  will-change: transform;
+}
+
+@keyframes gate-fall {
+  from {
+    transform: translateY(-20cqw);
+  }
+  to {
+    transform: translateY(160cqw);
+  }
+}
+
+.gate-title {
+  text-shadow:
+    0 0 24px rgba(196, 107, 252, 0.55),
+    0 4px 0 #2d1b55;
+}
+
+.gate-blink {
+  animation: gate-blink 1.1s steps(1, end) infinite;
+}
+
+.gate[data-collapsed] .gate-blink {
+  animation: none;
+  color: #c46bfc;
+}
+
+@keyframes gate-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+.gate-field {
+  background: #0c0a0f;
+  border-color: rgba(244, 238, 246, 0.2);
+}
+
+.gate-field:focus-within {
+  border-color: #c46bfc;
+  box-shadow:
+    0 0 0 1px #c46bfc,
+    0 0 28px rgba(196, 107, 252, 0.35);
+}
+
+.gate-start {
+  box-shadow:
+    0 4px 0 #2d1b55,
+    0 0 32px rgba(196, 107, 252, 0.45);
+  animation: gate-pulse 2s ease-in-out infinite;
+}
+
+.gate-start:active {
+  box-shadow:
+    0 3px 0 #2d1b55,
+    0 0 32px rgba(196, 107, 252, 0.45);
+}
+
+@keyframes gate-pulse {
+  50% {
+    box-shadow:
+      0 4px 0 #2d1b55,
+      0 0 52px rgba(196, 107, 252, 0.75);
+  }
+}
+
+.gate[data-error] .gate-form {
+  animation: gate-shake 0.4s ease-in-out;
+}
+
+@keyframes gate-shake {
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+}
+
+.gate-flash {
+  opacity: 0;
+  background: radial-gradient(circle at 50% 55%, #f4eef6, #c46bfc 35%, transparent 70%);
+}
+
+.gate[data-collapsed] .gate-flash {
+  animation: gate-flash 1.1s ease-out forwards;
+}
+
+@keyframes gate-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.2);
+  }
+  25% {
+    opacity: 0.85;
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gate-fall,
+  .gate-blink,
+  .gate-start,
+  .gate-qubit-one,
+  .gate[data-error] .gate-form,
+  .gate[data-collapsed] .gate-flash {
+    animation: none;
+  }
+}
